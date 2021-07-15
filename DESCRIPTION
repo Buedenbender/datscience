@@ -9,12 +9,11 @@ Description: Contains some utility functions for data science purposes.
     vector of given variables names and a grouping variable
 Depends:
     pacman,
-    psych,
     Hmisc,
     tidyverse,
+    xtable,
     dplyr,
     tidyr,
-    survival,
     ggplot2,
     ggpubr,
     rstatix,

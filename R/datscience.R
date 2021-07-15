@@ -24,7 +24,7 @@ cols_rename <- function(df,old,new){
   return(df)
 }
 
-#' Seaches Columns Starting with a Regex
+#' Seaches Column Names Starting with an [Reg]Expression
 #'
 #' Prints out all Cols that start with a given string
 #' no need to at .. to the regex. Helpful for very long data.frames
@@ -43,18 +43,6 @@ colstartsw <- function(regex = "",df){
 }
 
 
-#' Gives the Maximum Values Ignoring NAs
-#'
-#' A version of max that just ignores NA Values
-#'
-#' @param x Numeric Vector.
-#'
-#' @example
-#' max.ina(c(2,3,12,23,12,NA,23))
-#'
-#' @export
-max.ina <- function(x) ifelse( !all(is.na(x)), max(x, na.rm=T), NA)
-
 #'  Creates Boxplots with Significance Makers
 #' @description
 #' Based on the following: Guide https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/
@@ -70,12 +58,15 @@ max.ina <- function(x) ifelse( !all(is.na(x)), max(x, na.rm=T), NA)
 #'
 #'
 #' @examples
-#' boxplot_t_test(mtcars,c("mpg","hp"),group="am")
+#'  \dontrun{boxplot_t_test(mtcars,c("mpg","hp"),group="am")}
 #'
 #' @return List(Plot and stats)
 #'
 #' @export
-#' @import dplyr tidyr rstatix ggpubr ggplot2
+#' @import dplyr
+#' @import rstatix
+#' @import ggplot2
+#' @importFrom ggpubr ggboxplot
 boxplot_t_test <- function(df,dependentvars,group,adjust_p ="BH",ylimits = c(0,150)){
   usethis::use_pipe()
   df_s <- df %>%
@@ -176,6 +167,8 @@ my_apa <- function(df){
 #'    labels_cols = 1:10)
 #'
 #' @export
+#' @import xtable
+#' @importFrom Hmisc rcorr
 corstars <- function(x, method=c("pearson", "spearman"),
                      removeTriangle=c("upper", "lower"),
                      result=c("none", "html", "latex"),
@@ -232,7 +225,6 @@ corstars <- function(x, method=c("pearson", "spearman"),
     else print(xtable::xtable(Rnew, caption = caption),
                type="latex")
   }
-  browser()
 }
 
 
@@ -242,7 +234,7 @@ corstars <- function(x, method=c("pearson", "spearman"),
 #   - Creates two files .csv for the table and a .bib for the citations
 #   - Requires some manual processing: Importing of the CSV in the Word Processing Program and Importing the .bib in
 #     In the Reference Managementtool, e.g. Mendeley
-#' @param outputdirectory A character vector for the output directory (for the two files, .bib and .csv). Default ist ./
+#' @param outdirectory A character vector for the output directory (for the two files, .bib and .csv). Default ist ./
 #'
 #' @return Two Files for a Package List and Citations for the Appendix of the Paper
 #'
@@ -310,7 +302,7 @@ citations_appendix <- function(outdirectory = "./"){
 #'
 #'
 #' @export
-#' @import psych ggplot2
+#' @import ggplot2
 
 pretty_scree <- function(parallel,fa,quant=.95){
   # Abbreviations

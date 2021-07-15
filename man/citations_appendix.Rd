@@ -7,7 +7,7 @@
 citations_appendix(outdirectory = "./")
 }
 \arguments{
-\item{outputdirectory}{A character vector for the output directory (for the two files, .bib and .csv). Default ist ./}
+\item{outdirectory}{A character vector for the output directory (for the two files, .bib and .csv). Default ist ./}
 }
 \value{
 Two Files for a Package List and Citations for the Appendix of the Paper
