@@ -16,7 +16,6 @@ Depends:
     tidyr,
     survival,
     ggplot2,
-    xtable,
     ggpubr,
     rstatix,
     knitr,
