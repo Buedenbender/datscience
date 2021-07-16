@@ -10,13 +10,15 @@ getCIs(boot_obj)
 \item{boot_obj}{boot::boot object}
 }
 \value{
-Confidence intervalls for all statistics
+A data.frame with Confidence intervalls for
+all statistics, as well as the observed value
 }
 \description{
 Determines the CI for a vector of statistics / mutliple stats.
 As boot::boot.ci only returns CI for the first statistic in a boot_object
 getCIs (given a boot::boot object), creates CI for all statistics.
-Code by Ben Bolker, Check the original Source: https://stackoverflow.com/a/31818160/7318488
+Code by Ben Bolker, Check the
+original Source: https://stackoverflow.com/a/31818160/7318488
 }
 \author{
 Ben Bolker

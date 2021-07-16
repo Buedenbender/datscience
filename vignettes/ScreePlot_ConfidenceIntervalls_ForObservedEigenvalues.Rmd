@@ -1,0 +1,79 @@
+---
+title: "Pretty Scree Plot - Parallel Analysis and CIs for Eigenvalues "
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+One of the most pressing and important question
+in factor analysis (fa) or principale component analysis (pca)
+is the number of factors to retain 
+
+# Example Results Pretty - Scree-Plot + CI 
+For PCA & EFA
+
+PICTURE 2B Inserted
+
+# Example Scree-Plot including CIs
+
+For the popular mtcars dataset 
+
+```{r setup}
+library(datscience)
+library(boot)
+# Run a Parallel Analysis (Horn, 1965), save the parallel object
+parallel_analysis <- psych::fa.parallel(mtcars, fa="both")
+```
+
+
+## Create Bootstrapped Confidence Intervals for observed Eigenvalues
+
+### PCA Eigenvalues CIs
+
+```{r pcaeigen, warning=FALSE}
+PCA_bootObj <- booted_eigenvalues(mtcars, iterations = 500, fa = "pc")
+PCA_bootObj
+
+PCA_CIs <- getCIs(PCA_bootObj)
+PCA_CIs
+```
+
+### EFA Eigenvalues CIs
+
+```{r faeigen, warning=FALSE}
+EFA_bootObj <- booted_eigenvalues(mtcars, iterations = 500, fa = "fa")
+EFA_bootObj
+
+EFA_CIs <- getCIs(EFA_bootObj)
+EFA_bootObj
+```
+
+### Create Pretty Scree
+
+```{r prettyscree}
+PCA_Plot <- pretty_scree(parallel_analysis,fa="pc")
+EFA_Plot <- pretty_scree(parallel_analysis,fa="fa")
+```
+
+### Adding Confidence Intervals for Observed Eigenvalues
+
+```{r addCIs}
+
+PCA_Plot <- add_ci_2plot(PCA_Plot,PCA_CIs,type="errorbars")
+EFA_Plot <- add_ci_2plot(EFA_Plot,EFA_CIs,type="band")
+
+PCA_Plot
+EFA_Plot
+
+```
+
+

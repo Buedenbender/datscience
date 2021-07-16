@@ -22,5 +22,7 @@ a given vector (old) with the element of another vector (new)
 }
 \examples{
 iris.renamed <- cols_rename(iris,"Sepal.Length","Sepal Length")
-iris.renamed2 <- cols_rename(iris,c("Sepal.Length", "Sepal.Width"),c("SLength","SWidth"))
+iris.renamed2 <- cols_rename(iris,
+                             c("Sepal.Length", "Sepal.Width"),
+                             c("SLength","SWidth"))
 }

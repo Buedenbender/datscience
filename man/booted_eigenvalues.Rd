@@ -6,7 +6,8 @@
 Uses boot::boot to create x resampled Eigenvalues
 Eigenvalues can be extracted for PCA as well as EFA
 Different Factor Methods are available for more details, see ?psych::fa()
-Allows for extraction of Eigenvalues based on Pearson as well as Polychoric Correlation Matrices}
+Allows for extraction of Eigenvalues based on Pearson
+as well as Polychoric Correlation Matrices}
 \usage{
 booted_eigenvalues(
   df,
@@ -21,21 +22,26 @@ booted_eigenvalues(
 
 \item{iterations}{= number of resamples for the bootstrap}
 
-\item{cor}{=  either "pearson" or "poly" for polychoric correlations, defaults to "pearson"}
+\item{cor}{=  either "pearson" or "poly" for polychoric correlations,
+defaults to "pearson"}
 
-\item{fa}{= either "pc" or "fa" for [common] factor analysis or prinicipal component, defaults to "pc"}
+\item{fa}{= either "pc" for prinicipal component or
+"fa" for [common] factor analysis, defaults to "pc"}
 
-\item{fm}{= in case of EFA or common factor analysis factor method check psych::fa for more details, defaults to minres}
+\item{fm}{= factor method to use, irrelevant for pca.
+For available factor methods check psych::fa for more details, defaults to minres}
 }
 \value{
-A boot object (boot::boot()), that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls
+A boot object (boot::boot()),
+that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls
 }
 \description{
 Booted Eigenvalues
 Uses boot::boot to create x resampled Eigenvalues
 Eigenvalues can be extracted for PCA as well as EFA
 Different Factor Methods are available for more details, see ?psych::fa()
-Allows for extraction of Eigenvalues based on Pearson as well as Polychoric Correlation Matrices
+Allows for extraction of Eigenvalues based on Pearson
+as well as Polychoric Correlation Matrices
 }
 \author{
 Björn Büdenbender
