@@ -45,7 +45,7 @@ Further some users might encounter: `(System Error 267 @win/processx.c:1040)` in
 with the remotes package in standalone mode in a fresh R-sessions (no packages loaded) (see also this [stackoverflow posting](https://stackoverflow.com/q/68400661/7318488)):
 ``` r
 Sys.setenv(R_REMOTES_STANDALONE="true")
-remotes::install_github("rstudio/gt")
+remotes::install_github("Buedenbender/datscience")
 ```
 
 ## Example
