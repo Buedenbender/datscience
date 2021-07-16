@@ -6,9 +6,9 @@
 
 
 This is a small statistics / datascience utility package.
-Some functions were written by myself.
-For other functions I just debugged or wrapped the content
-tutorials/guides into functions.
+The content of the package were written by partly by me.
+Those I wrote not myself are cited and referenced in the documentation of  
+the function (see the man dir, or ? e.g. ?corstars)
 
 
 ## List of Functions available in datscience Package
