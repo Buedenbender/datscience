@@ -393,7 +393,7 @@ pretty_scree <- function(parallel,fa,quant=.95){
 #' Different Factor Methods are available for more details, see ?psych::fa()
 #' Allows for extraction of Eigenvalues based on Pearson as well as Polychoric Correlation Matrices
 #'
-#' @param d = the complete data.frame
+#' @param df = the complete data.frame
 #' @param iterations = number of resamples for the bootstrap
 #' @param cor =  either "pearson" or "poly" for polychoric correlations, defaults to "pearson"
 #' @param fa = either "pc" or "fa" for [common] factor analysis or prinicipal component, defaults to "pc"
@@ -409,7 +409,6 @@ pretty_scree <- function(parallel,fa,quant=.95){
 
 booted_eigenvalues <- function(df,iterations=1000,cor="pearson",fa="pc",fm="minres"){
 
-  # Helper Function that extracts eigenvalues
   eigenvalues_extractor <- function(d,i,cor,fa,fm){
     d2 <- d[i,]
     if (cor == "pearson") {
@@ -443,19 +442,21 @@ booted_eigenvalues <- function(df,iterations=1000,cor="pearson",fa="pc",fm="minr
 
 
 #' Get Boot Strapped CIs
+#'
 #' @description
 #' Determines the CI for a vector of statistics / mutliple stats.
 #' As boot::boot.ci only returns CI for the first statistic in a boot_object
 #' getCIs (given a boot::boot object), creates CI for all statistics.
 #' Code by Ben Bolker, Check the original Source: https://stackoverflow.com/a/31818160/7318488
-#' @param boot::boot object
+#'
+#' @param boot_obj boot::boot object
 #'
 #' @return Confidence intervalls for all statistics
 #'
 #' @author Ben Bolker
 #'
 #' @export
-#' @import boot
+#' @importFrom boot boot.ci
 
 getCIs <- function(boot_obj){
 

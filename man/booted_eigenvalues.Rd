@@ -17,6 +17,8 @@ booted_eigenvalues(
 )
 }
 \arguments{
+\item{df}{= the complete data.frame}
+
 \item{iterations}{= number of resamples for the bootstrap}
 
 \item{cor}{=  either "pearson" or "poly" for polychoric correlations, defaults to "pearson"}
@@ -24,8 +26,6 @@ booted_eigenvalues(
 \item{fa}{= either "pc" or "fa" for [common] factor analysis or prinicipal component, defaults to "pc"}
 
 \item{fm}{= in case of EFA or common factor analysis factor method check psych::fa for more details, defaults to minres}
-
-\item{d}{= the complete data.frame}
 }
 \value{
 A boot object (boot::boot()), that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls

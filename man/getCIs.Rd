@@ -7,7 +7,7 @@
 getCIs(boot_obj)
 }
 \arguments{
-\item{boot::boot}{object}
+\item{boot_obj}{boot::boot object}
 }
 \value{
 Confidence intervalls for all statistics
