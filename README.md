@@ -34,14 +34,19 @@ devtools::install_github("Buedenbender/datscience")
 
 Plese note, that datscience depends on many usefull packages (e.g. dplyr, ggplot2, ...).
 
-#### R-Version 4 and above Troubleshoot
+#### Installation Troubleshoot
 
 To install datscience you might need to update some required packages (most prominently e.g. [stringi](https://cran.r-project.org/web/packages/stringi/index.html).
-Since R-Version 4.x you probably will need to manually download and install Rtools in advance,
-to be able to successfully update stringi. A quick guide is given on the cran website:
+Since R-Version 4.x you probably will need to manually download and install Rtools (and add it to the path) in advance,
+to be able to successfully update stringi. A quick guide on RTools is given on the cran website:
 https://cran.r-project.org/bin/windows/Rtools/
 
-
+Further some users might encounter: `(System Error 267 @win/processx.c:1040)` in this case, you can try to install `datscience`  
+with the remotes package in standalone mode in a fresh R-sessions (no packages loaded) (see also this [stackoverflow posting](https://stackoverflow.com/q/68400661/7318488)):
+``` r
+Sys.setenv(R_REMOTES_STANDALONE="true")
+remotes::install_github("rstudio/gt")
+```
 
 ## Example
 
