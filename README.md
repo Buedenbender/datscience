@@ -21,6 +21,7 @@ the function (see the man dir, or ? e.g. ?corstars)
  - max.ina()
  - my_apa()
  - pretty_scree()
+ - booted_eigenvalues()
  - get_CIs()
 ``` 
 
