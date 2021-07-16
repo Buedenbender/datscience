@@ -7,10 +7,9 @@ Maintainer: Björn Büdenbender <b_buedenbender@yahoo.de>
 Description: Contains some utility functions for data science purposes.
     I.e. boxplot_t_test creates boxplots including sign. levels for a
     vector of given variables names and a grouping variable
-Depends:
+Imports:
     pacman,
     Hmisc,
-    tidyverse,
     xtable,
     dplyr,
     tidyr,
@@ -18,10 +17,11 @@ Depends:
     ggpubr,
     rstatix,
     knitr,
-    kableExtra
+    kableExtra,
+    boot,
+    magrittr
 License: GPL-2 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Imports: 
-    magrittr
+

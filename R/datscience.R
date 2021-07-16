@@ -67,6 +67,7 @@ colstartsw <- function(regex = "",df){
 #' @import rstatix
 #' @import ggplot2
 #' @importFrom ggpubr ggboxplot
+#' @importFrom tidyr pivot_longer
 boxplot_t_test <- function(df,dependentvars,group,adjust_p ="BH",ylimits = c(0,150)){
   usethis::use_pipe()
   df_s <- df %>%
@@ -381,4 +382,33 @@ pretty_scree <- function(parallel,fa,quant=.95){
     apatheme
   #Call the plot. Looks pretty!
   return(p)
+}
+
+#' Get Boot Strapped CIs
+#' @description
+#' Determines the CI for a vector of statistics / mutliple stats.
+#' As boot::boot.ci only returns CI for the first statistic in a boot_object
+#' getCIs (given a boot::boot object), creates CI for all statistics.
+#' Code by Ben Bolker, Check the original Source: https://stackoverflow.com/a/31818160/7318488
+#' @param boot::boot object
+#'
+#' @return Confidence intervalls for all statistics
+#'
+#' @author Ben Bolker
+#'
+#' @export
+#' @import boot
+
+getCIs <- function(boot_obj){
+
+  getCI <- function(x,w) {
+    b1 <- boot::boot.ci(x,index=w)
+    ## extract info for all CI types
+    tab <- t(sapply(b1[-(1:3)],function(x) tail(c(x),2)))
+    ## combine with metadata: CI method, index
+    tab <- cbind(w,rownames(tab),as.data.frame(tab))
+    colnames(tab) <- c("index","method","lwr","upr")
+    tab
+  }
+  return(do.call(rbind,lapply(1:ncol(boot_obj$t),getCI,x=boot_obj)))
 }
