@@ -68,6 +68,7 @@ colstartsw <- function(regex = "",df){
 #' @import ggplot2
 #' @importFrom ggpubr ggboxplot
 #' @importFrom tidyr pivot_longer
+#' @importFrom usethis use_pipe
 boxplot_t_test <- function(df,dependentvars,group,adjust_p ="BH",ylimits = c(0,150)){
   usethis::use_pipe()
   df_s <- df %>%
@@ -111,16 +112,17 @@ boxplot_t_test <- function(df,dependentvars,group,adjust_p ="BH",ylimits = c(0,1
 #' @return Table
 #'
 #' @export
-#' @import kableExtra knitr xtable
+#' @importFrom kableExtra kable_styling row_spec column_spec
+#' @import knitr xtable
 my_apa <- function(df){
   kableExtra::kable(df,
         format = "html", algin= "1", booktabs = T) %>%
-    kable_styling(full_width = TRUE,position = "left")%>%
-    row_spec(0,extra_css = "border-top:1.5px solid black; border-bottom:1.5px solid black;") %>%
-    row_spec(nrow(df), extra_css = "border-bottom:1.5px solid black;") %>%
-    row_spec(0:nrow(df), align = "c", background = "#FFFFFF") %>%
-    column_spec(1, extra_css = "text-align: left;") %>%
-    column_spec(1:ncol(df),extra_css = "border-right:0;border-top:0;")
+    kableExtra::kable_styling(full_width = TRUE,position = "left")%>%
+    kableExtra::row_spec(0,extra_css = "border-top:1.5px solid black; border-bottom:1.5px solid black;") %>%
+    kableExtra::row_spec(nrow(df), extra_css = "border-bottom:1.5px solid black;") %>%
+    kableExtra::row_spec(0:nrow(df), align = "c", background = "#FFFFFF") %>%
+    kableExtra::column_spec(1, extra_css = "text-align: left;") %>%
+    kableExtra::column_spec(1:ncol(df),extra_css = "border-right:0;border-top:0;")
 }
 
 
@@ -383,6 +385,62 @@ pretty_scree <- function(parallel,fa,quant=.95){
   #Call the plot. Looks pretty!
   return(p)
 }
+
+
+#' Booted Eigenvalues
+#' Uses boot::boot to create x resampled Eigenvalues
+#' Eigenvalues can be extracted for PCA as well as EFA
+#' Different Factor Methods are available for more details, see ?psych::fa()
+#' Allows for extraction of Eigenvalues based on Pearson as well as Polychoric Correlation Matrices
+#'
+#' @param d = the complete data.frame
+#' @param iterations = number of resamples for the bootstrap
+#' @param cor =  either "pearson" or "poly" for polychoric correlations, defaults to "pearson"
+#' @param fa = either "pc" or "fa" for [common] factor analysis or prinicipal component, defaults to "pc"
+#' @param fm = in case of EFA or common factor analysis factor method check psych::fa for more details, defaults to minres
+#'
+#' @return A boot object (boot::boot()), that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls
+#'
+#' @author Björn Büdenbender
+#'
+#' @export
+#' @importFrom boot boot
+#' @importFrom psych fa polychoric
+
+booted_eigenvalues <- function(df,iterations=1000,cor="pearson",fa="pc",fm="minres"){
+
+  # Helper Function that extracts eigenvalues
+  eigenvalues_extractor <- function(d,i,cor,fa,fm){
+    d2 <- d[i,]
+    if (cor == "pearson") {
+      rx <- cor(d2,use="pairwise")
+      nobs <- NA
+    }
+    else if (cor == "poly") {
+      poly_cor = psych::polychoric(d2, correct=FALSE)
+      rx <- poly_cor$rho
+      nobs <- poly_cor$n.obs
+    }
+
+    if (fa == "pc"){
+      res <- eigen(rx)$values
+    }  else if (fa == "fa") {
+      res <- psych::fa(rx,nfactors=1,rotate="none", fm=fm,warnings=FALSE,n.obs = nobs)$values
+    }
+    return(res)
+  }
+
+  boot_obj <- boot::boot(d=df,
+                         # Helper Function to Extract Eigenvalues
+                         eigenvalues_extractor,
+                         # Number of Resamples
+                         R=iterations,
+                         # Parameters for the Eigenvalue Extraction
+                         fa=fa, fm = fm,cor=cor
+  )
+  return(boot_obj)
+}
+
 
 #' Get Boot Strapped CIs
 #' @description
