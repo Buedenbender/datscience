@@ -1,5 +1,5 @@
 ---
-title: "Pretty Scree Plot - Parallel Analysis and CIs for Eigenvalues "
+title: "Pretty Scree Plot with CIs for Eigenvalues "
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues}
@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+# Purpose
 
 One of the most pressing and important question
 in factor analysis (fa) or principale component analysis (pca)
@@ -23,7 +24,7 @@ For PCA & EFA
 
 PICTURE 2B Inserted
 
-# Example Scree-Plot including CIs
+# Producing the Example Plots
 
 For the popular mtcars dataset 
 

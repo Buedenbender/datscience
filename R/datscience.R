@@ -538,7 +538,7 @@ getCIs <- function(boot_obj) {
     colnames(tab) <- c("index", "method", "lwr", "upr", "observed")
     tab
   }
-  return(do.call(rbind, lapply(c(1:boot_obj$t), getCI, x = boot_obj)))
+  return(do.call(rbind, lapply(c(1:ncol(boot_obj$t)), getCI, x = boot_obj)))
 }
 
 
