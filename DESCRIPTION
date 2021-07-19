@@ -13,6 +13,7 @@ Imports:
     xtable,
     dplyr,
     tidyr,
+    utils,
     ggplot2,
     ggpubr,
     rstatix,
@@ -20,8 +21,7 @@ Imports:
     kableExtra,
     boot,
     magrittr,
-    psych,
-    usethis
+    psych
 License: GPL-2 
 Encoding: UTF-8
 LazyData: true

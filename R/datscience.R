@@ -70,8 +70,8 @@ colstartsw <- function(regex = "", df) {
 #' @import ggplot2
 #' @importFrom ggpubr ggboxplot
 #' @importFrom tidyr pivot_longer
-#' @importFrom usethis use_pipe
 #' @importFrom ggpubr theme_pubr
+#' @importFrom magrittr "%>%"
 boxplot_t_test <-
   function(df,
            dependentvars,
@@ -79,7 +79,6 @@ boxplot_t_test <-
            adjust_p = "BH",
            ylimits = c(0, 150)) {
     variables <- NULL
-    usethis::use_pipe()
     df_s <- df %>%
       dplyr::select(dependentvars, group) %>%
       dplyr::as_tibble()
@@ -284,7 +283,11 @@ corstars <- function(x,
 #' citations_appendix()
 #'
 #' @export
-#' @import pacman utils knitr
+#' @importFrom utils write.csv maintainer packageVersion
+#' @importFrom dplyr add_row
+#' @importFrom knitr write_bib
+#' @importFrom magrittr "%>%"
+#' @importFrom pacman p_loaded
 citations_appendix <- function(outdirectory = "./") {
   # Helper Function extract the last n chars of a string
   substrRight <- function(x, n) {
@@ -526,6 +529,7 @@ booted_eigenvalues <-
 #'
 #' @export
 #' @importFrom boot boot.ci
+#' @importFrom utils tail
 
 getCIs <- function(boot_obj) {
   getCI <- function(x, w) {
@@ -566,8 +570,8 @@ getCIs <- function(boot_obj) {
 #'
 #' @export
 #' @importFrom dplyr rename select mutate
-#' @importFrom usethis use_pipe
 #' @importFrom ggplot2 geom_ribbon geom_errorbar aes
+#' @importFrom magrittr "%>%"
 
 add_ci_2plot <- function(plot,
                          CIs,
@@ -579,7 +583,6 @@ add_ci_2plot <- function(plot,
 
   # globalVariables(c("mpg", "hp", "mpg_div_hp"))
   method <- index <- observed<-lwr<-upr<- NULL
-  usethis::use_pipe()
 
   cis <- CIs %>% filter(method == met) %>%
     dplyr::rename(num = index) %>%
