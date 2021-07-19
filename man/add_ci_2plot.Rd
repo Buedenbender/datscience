@@ -11,7 +11,8 @@ add_ci_2plot(
   color = "darkseagreen3",
   outline = "black",
   transparency = 0.5,
-  type = "band"
+  type = "band",
+  lt = "dotted"
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ the color of the area between Upper and Lower}
 \item{transparency}{Alpha value, how transparent shall the filling color be}
 
 \item{type}{either "band" or "errorbars", defaults to "band"}
+
+\item{lt}{Linetype, 0 for no outline around the band, other options include: "dotted", "dashed", "solid"}
 }
 \value{
 A new pretty_plot with the Parallel Analysis,

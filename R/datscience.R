@@ -562,6 +562,7 @@ getCIs <- function(boot_obj) {
 #' @param outline Color of the Outline for the Area
 #' @param transparency Alpha value, how transparent shall the filling color be
 #' @param type either "band" or "errorbars", defaults to "band"
+#' @param lt Linetype, 0 for no outline around the band, other options include: "dotted", "dashed", "solid"
 #'
 #' @return A new pretty_plot with the Parallel Analysis,
 #' including CIs around the observed Eigenvalues.
@@ -579,7 +580,8 @@ add_ci_2plot <- function(plot,
                          color = "darkseagreen3",
                          outline = "black",
                          transparency = 0.5,
-                         type = "band") {
+                         type = "band",
+                         lt = "dotted") {
 
   # globalVariables(c("mpg", "hp", "mpg_div_hp"))
   method <- index <- observed<-lwr<-upr<- NULL
@@ -597,7 +599,7 @@ add_ci_2plot <- function(plot,
         fill = color,
         color = outline,
         alpha = transparency,
-        linetype = 2
+        linetype = lt
       )
   } else if (type == "errorbars") {
     new_plot <-
