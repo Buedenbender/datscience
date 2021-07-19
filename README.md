@@ -13,16 +13,17 @@ the function (see the man dir, or ? e.g. ?corstars)
 
 ## List of Functions available in datscience Package
 ``` 
- - boxplot_t_test()
- - citation_appendix()
+ - boxplot_t_test()       - Vizualisation of independent sample t-Test with Boxplots
+ - citation_appendix()    - Creates Citations of used packages for the appendix
  - cols_rename()
  - colstartsw()
- - corstars()
+ - corstars()             - Correlations + ** marking sig. in the console - Code adopted from Dominik Vogel
  - max.ina()
- - my_apa()
- - pretty_scree()
- - booted_eigenvalues()
- - get_CIs()
+ - my_apa()               - Draws an APA ready table (of e.g. a data.frame)
+ - pretty_scree()         - Takes an psych::fa.parallel object and creates a beautiful APA ready plot - Code adopted from John Sakaluk
+ - booted_eigenvalues()   - Bootstraps Eigenvalues (either for PCA or FA)
+ - get_CIs()              - Takes a boot::boot object and constructs CIs for multiple stats - Code adopte from Ben Bolker
+ - add_ci_2plot()         - Adds the bootstrapped CIs as a band or errorbar to the pretty scree
 ``` 
 
 ## Installation
