@@ -328,7 +328,7 @@ citations_appendix <- function(outdirectory = "./") {
 
   utils::write.csv(
     x = appendix_packages,
-    file = paste0(outdirectory, "Appendix Table Packages"),
+    file = paste0(outdirectory, "Appendix Table Packages.csv"),
     row.names = FALSE
   )
 }
