@@ -6,9 +6,11 @@
 
 
 This is a small statistics / datascience utility package.
-The content of the package were written by partly by me.
-Those I wrote not myself are cited and referenced in the documentation of  
-the function (see the man dir, or ? e.g. ?corstars)
+Some functions were not written directly by myself.
+E.g. the pretty_scree function was developed in a blogg post by John Sakaluk  
+and just wrapped and expanded by me. Functions not developed by me 
+are allways cited and referenced in the documentation of  
+the function (see the man dir, or ? e.g. ?corstars).
 
 
 ## List of Functions available in datscience Package
