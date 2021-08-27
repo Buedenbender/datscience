@@ -8,10 +8,11 @@ corstars(
   x,
   method = c("pearson", "spearman"),
   removeTriangle = c("upper", "lower", FALSE),
-  rmDiag = TRUE,
+  rmDiag = c(TRUE, FALSE),
+  rmLastCol = c(TRUE, FALSE),
   result = c("none", "html", "latex"),
   labels_rows = colnames(x),
-  labels_cols = labels_rows[1:(length(labels_rows) - 1)],
+  labels_cols = labels_rows[1:length(labels_rows)],
   sig.level = 0.05,
   caption = c("Correlation"),
   filename = ""
@@ -25,6 +26,8 @@ corstars(
 \item{removeTriangle}{remove upper or lower triangle, or FALSE for not removing any triangle}
 
 \item{rmDiag}{if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE}
+
+\item{rmLastCol}{chose if the last column can be removed, to shorten the table if necessary, default = TRUE}
 
 \item{result}{Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")}
 

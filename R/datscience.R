@@ -175,6 +175,7 @@ my_apa <- function(df) {
 #' @param method correlation method. "pearson"" or "spearman"" is supported
 #' @param removeTriangle remove upper or lower triangle, or FALSE for not removing any triangle
 #' @param rmDiag if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE
+#' @param rmLastCol chose if the last column can be removed, to shorten the table if necessary, default = TRUE
 #' @param result Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")
 #' @param labels_rows Labels for the rows (i.e., variable names). Length musst be same as number of variables
 #' @param labels_cols Labels for columns. Length musst be same as number of variables - 1
@@ -220,18 +221,19 @@ my_apa <- function(df) {
 #' @importFrom Hmisc rcorr
 corstars <- function(x,
                      method = c("pearson", "spearman"),
-                     removeTriangle = c("upper", "lower",FALSE),
-                     rmDiag = TRUE,
+                     removeTriangle = c("upper", "lower", FALSE),
+                     rmDiag = c(TRUE, FALSE),
+                     rmLastCol = c(TRUE, FALSE),
                      result = c("none", "html", "latex"),
                      labels_rows = colnames(x),
-                     labels_cols = labels_rows[1:(length(labels_rows) - 1)],
+                     labels_cols = labels_rows[1:length(labels_rows)],
                      sig.level = 0.05,
                      caption = c("Correlation"),
                      filename = "") {
   requireNamespace("Hmisc", quietly = TRUE)
   requireNamespace("xtable", quietly = TRUE)
-  stopifnot(length(labels_rows) == ncol(x))
-  stopifnot(length(labels_cols) == ncol(x) - 1)
+  # stopifnot(length(labels_rows) == ncol(x))
+  # stopifnot(length(labels_cols) == ncol(x))
   # Compute correlation matrix
   x <- as.matrix(x)
   correlation_matrix <- Hmisc::rcorr(x, type = method[1])
@@ -259,21 +261,24 @@ corstars <- function(x,
   ## remove upper triangle of correlation matrix
   if (removeTriangle[1] == "upper") {
     Rnew <- as.matrix(Rnew)
-    Rnew[upper.tri(Rnew, diag = rmDiag)] <- ""
+    Rnew[upper.tri(Rnew, diag = rmDiag[1])] <- ""
     Rnew <- as.data.frame(Rnew)
     ## remove lower triangle of correlation matrix
   } else if (removeTriangle[1] == "lower") {
     Rnew <- as.matrix(Rnew)
-    Rnew[lower.tri(Rnew, diag = rmDiag)] <- ""
+    Rnew[lower.tri(Rnew, diag = rmDiag[1])] <- ""
     Rnew <- as.data.frame(Rnew)
   } else {
     Rnew <- as.data.frame(as.matrix(Rnew))
   }
 
   ## remove last column and return the correlation matrix
-  Rnew <- cbind(Rnew[1:length(Rnew) - 1])
+  if (rmLastCol[1]) {
+    Rnew <- cbind(Rnew[1:length(Rnew) - 1])
+    colnames(Rnew) <- labels_cols[1:length(labels_cols) - 1]
+  }
   rownames(Rnew) <- labels_rows
-  colnames(Rnew) <- labels_cols
+
   if (result[1] == "none") {
     return(Rnew)
   } else {
