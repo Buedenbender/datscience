@@ -734,13 +734,13 @@ apa_corrTable <- function(df,
   filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
   switch(filetype,
          .docx = {
-           flextable::save_as_docx(table, path = filename)
+           flextable::save_as_docx(corr_table, path = filename)
          },
          .pptx = {
-           flextable::save_as_pptx(table, path = filename)
+           flextable::save_as_pptx(corr_table, path = filename)
          },
          .html = {
-           flextable::save_as_html(table, path = filename)
+           flextable::save_as_html(corr_table, path = filename)
          },
          {
            print("Not saving the apa table to file, just returning the flextable")
