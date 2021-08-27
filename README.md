@@ -23,7 +23,8 @@ the function (see the man dir, or ? e.g. ?corstars).
  - max.ina()
  - my_apa()               - Draws an APA ready table (of e.g. a data.frame)
  
-# Functions to produce nice parallel analysis - scree plots after and include confidence intervals around the observed eigenvalues.
+# Functions to produce nice parallel analysis - scree plots. 
+        Additionally give the option to include confidence intervals around the observed eigenvalues.
  - pretty_scree()         - Takes an psych::fa.parallel object and creates a beautiful APA ready plot - Code adopted from John Sakaluk
  - booted_eigenvalues()   - Bootstraps Eigenvalues (either for PCA or FA)
  - get_CIs()              - Takes a boot::boot object and constructs CIs for multiple stats - Code adopte from Ben Bolker
