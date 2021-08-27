@@ -18,5 +18,4 @@ This is also possible in Templates for RMarkdown
 }
 \examples{
 my_apa(iris)
-
 }

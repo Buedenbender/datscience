@@ -17,7 +17,6 @@ Function to create a package table with the following columns: Packagename | Ver
 }
 \examples{
 citations_appendix()
-
 }
 \author{
 Björn Büdenbender

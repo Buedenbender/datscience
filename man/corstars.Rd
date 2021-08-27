@@ -7,7 +7,8 @@
 corstars(
   x,
   method = c("pearson", "spearman"),
-  removeTriangle = c("upper", "lower"),
+  removeTriangle = c("upper", "lower", FALSE),
+  rmDiag = TRUE,
   result = c("none", "html", "latex"),
   labels_rows = colnames(x),
   labels_cols = labels_rows[1:(length(labels_rows) - 1)],
@@ -21,7 +22,9 @@ corstars(
 
 \item{method}{correlation method. "pearson"" or "spearman"" is supported}
 
-\item{removeTriangle}{remove upper or lower triangle}
+\item{removeTriangle}{remove upper or lower triangle, or FALSE for not removing any triangle}
+
+\item{rmDiag}{if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE}
 
 \item{result}{Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")}
 
@@ -46,25 +49,32 @@ https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R
 }
 \examples{
 # Console output
-corstars(mtcars, method="pearson", removeTriangle="upper", result="none",
-   caption = "Correlations",
-   sig.level = 0.1,
-   labels_rows = c("(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
-                   "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
-                   "(9) am", "(10) gear",
-                   "(11) carb"),
-   labels_cols = 1:10)
+corstars(mtcars,
+  method = "pearson", removeTriangle = "upper", result = "none",
+  caption = "Correlations",
+  sig.level = 0.1,
+  labels_rows = c(
+    "(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
+    "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
+    "(9) am", "(10) gear",
+    "(11) carb"
+  ),
+  labels_cols = 1:10
+)
 
 # HTML output
-corstars(mtcars, method="pearson", removeTriangle="upper", result="html",
-   caption = "Correlations", filename = "corr.html",
-   sig.level = 0.1,
-   labels_rows = c("(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
-                   "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
-                   "(9) am", "(10) gear",
-                   "(11) carb"),
-   labels_cols = 1:10)
-
+corstars(mtcars,
+  method = "pearson", removeTriangle = "upper", result = "html",
+  caption = "Correlations", filename = "corr.html",
+  sig.level = 0.1,
+  labels_rows = c(
+    "(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
+    "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
+    "(9) am", "(10) gear",
+    "(11) carb"
+  ),
+  labels_cols = 1:10
+)
 }
 \author{
 Dominik Vogel (Debugged by Björn Büdenbender)

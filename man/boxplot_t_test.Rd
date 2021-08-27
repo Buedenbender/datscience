@@ -28,6 +28,8 @@ with facetwrap for all DVs and calculates an independent sample T-Test
 to include significance bars
 }
 \examples{
- \dontrun{boxplot_t_test(mtcars,c("mpg","hp"),group="am")}
+\dontrun{
+boxplot_t_test(mtcars, c("mpg", "hp"), group = "am")
+}
 
 }

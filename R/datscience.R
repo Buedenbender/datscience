@@ -12,10 +12,12 @@
 #' @return df data.frame
 #'
 #' @examples
-#' iris.renamed <- cols_rename(iris,"Sepal.Length","Sepal Length")
-#' iris.renamed2 <- cols_rename(iris,
-#'                              c("Sepal.Length", "Sepal.Width"),
-#'                              c("SLength","SWidth"))
+#' iris.renamed <- cols_rename(iris, "Sepal.Length", "Sepal Length")
+#' iris.renamed2 <- cols_rename(
+#'   iris,
+#'   c("Sepal.Length", "Sepal.Width"),
+#'   c("SLength", "SWidth")
+#' )
 #' @export
 cols_rename <- function(df, old, new) {
   if (!is.null(new)) {
@@ -37,8 +39,7 @@ cols_rename <- function(df, old, new) {
 #'
 #'
 #' @examples
-#' colstartsw(iris,"Sepal")
-#'
+#' colstartsw(iris, "Sepal")
 #' @export
 colstartsw <- function(regex = "", df) {
   s_phrase <- paste0("^", regex, "..")
@@ -61,7 +62,9 @@ colstartsw <- function(regex = "", df) {
 #'
 #'
 #' @examples
-#'  \dontrun{boxplot_t_test(mtcars,c("mpg","hp"),group="am")}
+#' \dontrun{
+#' boxplot_t_test(mtcars, c("mpg", "hp"), group = "am")
+#' }
 #'
 #' @return List(Plot and stats)
 #'
@@ -86,8 +89,10 @@ boxplot_t_test <-
 
     # Pivot Table
     df_p <- df_s %>%
-      tidyr::pivot_longer(-all_of(group), names_to = "variables", values_to =
-                            "value")
+      tidyr::pivot_longer(-all_of(group),
+        names_to = "variables", values_to =
+          "value"
+      )
 
     # Calc T Test
     stat.test <- df_p %>%
@@ -109,7 +114,7 @@ boxplot_t_test <-
         ggtheme = ggpubr::theme_pubr(border = TRUE)
       ) +
       # ylim(ylimits)+
-      ggplot2::facet_wrap( ~ variables)
+      ggplot2::facet_wrap(~variables)
 
     stat.test <- stat.test %>% rstatix::add_xy_position(x = group)
     p1 <-
@@ -127,7 +132,6 @@ boxplot_t_test <-
 #'
 #' @examples
 #' my_apa(iris)
-#'
 #' @return Table
 #'
 #' @export
@@ -135,22 +139,28 @@ boxplot_t_test <-
 #' @import knitr xtable
 my_apa <- function(df) {
   kableExtra::kable(df,
-                    format = "html",
-                    algin = "1",
-                    booktabs = TRUE) %>%
-  kableExtra::kable_styling(full_width = TRUE, position = "left") %>%
-  kableExtra::row_spec(0,
-  extra_css =
-    "border-top:1.5px solid black; border-bottom:1.5px solid black;") %>%
-  kableExtra::row_spec(nrow(df),
-                       extra_css = "border-bottom:1.5px solid black;") %>%
-  kableExtra::row_spec(0:nrow(df),
-                       align = "c",
-                       background = "#FFFFFF") %>%
-  kableExtra::column_spec(1,
-                          extra_css = "text-align: left;") %>%
-  kableExtra::column_spec(seq_along(df),
-                          extra_css = "border-right:0;border-top:0;")
+    format = "html",
+    algin = "1",
+    booktabs = TRUE
+  ) %>%
+    kableExtra::kable_styling(full_width = TRUE, position = "left") %>%
+    kableExtra::row_spec(0,
+      extra_css =
+        "border-top:1.5px solid black; border-bottom:1.5px solid black;"
+    ) %>%
+    kableExtra::row_spec(nrow(df),
+      extra_css = "border-bottom:1.5px solid black;"
+    ) %>%
+    kableExtra::row_spec(0:nrow(df),
+      align = "c",
+      background = "#FFFFFF"
+    ) %>%
+    kableExtra::column_spec(1,
+      extra_css = "text-align: left;"
+    ) %>%
+    kableExtra::column_spec(seq_along(df),
+      extra_css = "border-right:0;border-top:0;"
+    )
 }
 
 
@@ -163,7 +173,8 @@ my_apa <- function(df) {
 #'
 #' @param x a matrix containing the data
 #' @param method correlation method. "pearson"" or "spearman"" is supported
-#' @param removeTriangle remove upper or lower triangle
+#' @param removeTriangle remove upper or lower triangle, or FALSE for not removing any triangle
+#' @param rmDiag if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE
 #' @param result Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")
 #' @param labels_rows Labels for the rows (i.e., variable names). Length musst be same as number of variables
 #' @param labels_cols Labels for columns. Length musst be same as number of variables - 1
@@ -178,31 +189,39 @@ my_apa <- function(df) {
 #'
 #' @examples
 #' # Console output
-#' corstars(mtcars, method="pearson", removeTriangle="upper", result="none",
-#'    caption = "Correlations",
-#'    sig.level = 0.1,
-#'    labels_rows = c("(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
-#'                    "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
-#'                    "(9) am", "(10) gear",
-#'                    "(11) carb"),
-#'    labels_cols = 1:10)
+#' corstars(mtcars,
+#'   method = "pearson", removeTriangle = "upper", result = "none",
+#'   caption = "Correlations",
+#'   sig.level = 0.1,
+#'   labels_rows = c(
+#'     "(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
+#'     "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
+#'     "(9) am", "(10) gear",
+#'     "(11) carb"
+#'   ),
+#'   labels_cols = 1:10
+#' )
 #'
 #' # HTML output
-#' corstars(mtcars, method="pearson", removeTriangle="upper", result="html",
-#'    caption = "Correlations", filename = "corr.html",
-#'    sig.level = 0.1,
-#'    labels_rows = c("(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
-#'                    "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
-#'                    "(9) am", "(10) gear",
-#'                    "(11) carb"),
-#'    labels_cols = 1:10)
-#'
+#' corstars(mtcars,
+#'   method = "pearson", removeTriangle = "upper", result = "html",
+#'   caption = "Correlations", filename = "corr.html",
+#'   sig.level = 0.1,
+#'   labels_rows = c(
+#'     "(1) mpg", "(2) cyl", "(3) disp", "(4) hp",
+#'     "(5) drat", "(6) wt", "(7) qsec", "(8) vs",
+#'     "(9) am", "(10) gear",
+#'     "(11) carb"
+#'   ),
+#'   labels_cols = 1:10
+#' )
 #' @export
 #' @import xtable
 #' @importFrom Hmisc rcorr
 corstars <- function(x,
                      method = c("pearson", "spearman"),
-                     removeTriangle = c("upper", "lower"),
+                     removeTriangle = c("upper", "lower",FALSE),
+                     rmDiag = TRUE,
                      result = c("none", "html", "latex"),
                      labels_rows = colnames(x),
                      labels_cols = labels_rows[1:(length(labels_rows) - 1)],
@@ -213,7 +232,7 @@ corstars <- function(x,
   requireNamespace("xtable", quietly = TRUE)
   stopifnot(length(labels_rows) == ncol(x))
   stopifnot(length(labels_cols) == ncol(x) - 1)
-  #Compute correlation matrix
+  # Compute correlation matrix
   x <- as.matrix(x)
   correlation_matrix <- Hmisc::rcorr(x, type = method[1])
   R <- correlation_matrix$r # Matrix of correlation coeficients
@@ -240,29 +259,34 @@ corstars <- function(x,
   ## remove upper triangle of correlation matrix
   if (removeTriangle[1] == "upper") {
     Rnew <- as.matrix(Rnew)
-    Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+    Rnew[upper.tri(Rnew, diag = rmDiag)] <- ""
     Rnew <- as.data.frame(Rnew)
     ## remove lower triangle of correlation matrix
-  }    else if (removeTriangle[1] == "lower") {
+  } else if (removeTriangle[1] == "lower") {
     Rnew <- as.matrix(Rnew)
-    Rnew[lower.tri(Rnew, diag = TRUE)] <- ""
+    Rnew[lower.tri(Rnew, diag = rmDiag)] <- ""
     Rnew <- as.data.frame(Rnew)
+  } else {
+    Rnew <- as.data.frame(as.matrix(Rnew))
   }
 
   ## remove last column and return the correlation matrix
   Rnew <- cbind(Rnew[1:length(Rnew) - 1])
   rownames(Rnew) <- labels_rows
   colnames(Rnew) <- labels_cols
-  if (result[1] == "none")
+  if (result[1] == "none") {
     return(Rnew)
-  else{
-    if (result[1] == "html")
+  } else {
+    if (result[1] == "html") {
       print(xtable::xtable(Rnew, caption = caption),
-            type = "html",
-            file = filename)
-    else
+        type = "html",
+        file = filename
+      )
+    } else {
       print(xtable::xtable(Rnew, caption = caption),
-            type = "latex")
+        type = "latex"
+      )
+    }
   }
 }
 
@@ -282,7 +306,6 @@ corstars <- function(x,
 #'
 #' @examples
 #' citations_appendix()
-#'
 #' @export
 #' @importFrom utils write.csv maintainer packageVersion
 #' @importFrom dplyr add_row
@@ -360,8 +383,9 @@ pretty_scree <- function(parallel, fa, quant = .95) {
   #   - cf = Common Factor
   #   - pc = Prinicipal Components
   # Calculate quantiles for eigenvalues, for sim. pc and cf
-  percentile <- apply(parallel$values, 2, function(x)
-    stats::quantile(x, quant))
+  percentile <- apply(parallel$values, 2, function(x) {
+    stats::quantile(x, quant)
+  })
 
   # If Screeplot should be prettified for principal components
   if (fa == "pc") {
@@ -375,8 +399,7 @@ pretty_scree <- function(parallel, fa, quant = .95) {
     obs <- data.frame(parallel$pc.values)
     percentile1 <- percentile[index]
     noi <- parallel$ncomp
-  }
-  else if (fa == "fa") {
+  } else if (fa == "fa") {
     index <- grep("Fsim", names(percentile))
     if (length(index) == 0) {
       index <- grep("Sim", names(percentile))
@@ -389,17 +412,17 @@ pretty_scree <- function(parallel, fa, quant = .95) {
     noi <- parallel$nfact
   }
   # Create Data Frame for Observed Eigenvalues
-  obs$type <- c('Observed Data')
+  obs$type <- c("Observed Data")
   obs$num <- c(row.names(obs))
   obs$num <- as.numeric(obs$num)
-  colnames(obs) <- c('eigenvalue', 'type', 'num')
-  #Create data frame called with simulated eigenvalue data
+  colnames(obs) <- c("eigenvalue", "type", "num")
+  # Create data frame called with simulated eigenvalue data
   sim <- data.frame(percentile1)
-  sim$type <- c('Simulated Data (95th %ile)')
+  sim$type <- c("Simulated Data (95th %ile)")
   sim$num <- c(row.names(obs))
   sim$num <- as.numeric(sim$num)
-  colnames(sim) <- c('eigenvalue', 'type', 'num')
-  #Merge the two data frames (obs and sim) together into data frame called eigendat
+  colnames(sim) <- c("eigenvalue", "type", "num")
+  # Merge the two data frames (obs and sim) together into data frame called eigendat
   eigendat <- rbind(obs, sim)
 
   # Create an APA Theme for the Plot
@@ -409,31 +432,33 @@ pretty_scree <- function(parallel, fa, quant = .95) {
       panel.grid.minor = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank(),
       panel.border = ggplot2::element_blank(),
-      text = ggplot2::element_text(family = 'Arial'),
+      text = ggplot2::element_text(family = "Arial"),
       legend.title = ggplot2::element_blank(),
       legend.position = c(.7, .8),
-      axis.line.x = ggplot2::element_line(color = 'black'),
-      axis.line.y = ggplot2::element_line(color = 'black')
+      axis.line.x = ggplot2::element_line(color = "black"),
+      axis.line.y = ggplot2::element_line(color = "black")
     )
 
-  #Use data from eigendat. Map number of factors to x-axis, eigenvalue to y-axis, and give different data point shapes depending on whether eigenvalue is observed or simulated
+  # Use data from eigendat. Map number of factors to x-axis, eigenvalue to y-axis, and give different data point shapes depending on whether eigenvalue is observed or simulated
   p <- ggplot2::ggplot(eigendat, aes(x = num, y = eigenvalue, shape = type)) +
-    #Add lines connecting data points
+    # Add lines connecting data points
     ggplot2::geom_line() +
-    #Add the data points.
+    # Add the data points.
     ggplot2::geom_point(size = 4) +
-    #Label the y-axis 'Eigenvalue'
-    ggplot2::scale_y_continuous(name = 'Eigenvalue') +
-    #Label the x-axis 'Factor Number', and ensure that it ranges from 1-max # of factors, increasing by one with each 'tick' mark.
-    ggplot2::scale_x_continuous(name = 'Factor Number',
-                                breaks = min(eigendat$num):max(eigendat$num)) +
-    #Manually specify the different shapes to use for actual and simulated data, in this case, white and black circles.
+    # Label the y-axis 'Eigenvalue'
+    ggplot2::scale_y_continuous(name = "Eigenvalue") +
+    # Label the x-axis 'Factor Number', and ensure that it ranges from 1-max # of factors, increasing by one with each 'tick' mark.
+    ggplot2::scale_x_continuous(
+      name = "Factor Number",
+      breaks = min(eigendat$num):max(eigendat$num)
+    ) +
+    # Manually specify the different shapes to use for actual and simulated data, in this case, white and black circles.
     ggplot2::scale_shape_manual(values = c(16, 1)) +
-    #Add vertical line indicating parallel analysis suggested max # of factors to retain
-    ggplot2::geom_vline(xintercept = noi, linetype = 'dashed') +
-    #Apply our apa-formatting theme
+    # Add vertical line indicating parallel analysis suggested max # of factors to retain
+    ggplot2::geom_vline(xintercept = noi, linetype = "dashed") +
+    # Apply our apa-formatting theme
     apatheme
-  #Call the plot. Looks pretty!
+  # Call the plot. Looks pretty!
   return(p)
 }
 
@@ -474,8 +499,7 @@ booted_eigenvalues <-
       if (cor == "pearson") {
         rx <- cor(d2, use = "pairwise")
         nobs <- NA
-      }
-      else if (cor == "poly") {
+      } else if (cor == "poly") {
         poly_cor <- psych::polychoric(d2, correct = FALSE)
         rx <- poly_cor$rho
         nobs <- poly_cor$n.obs
@@ -483,7 +507,7 @@ booted_eigenvalues <-
 
       if (fa == "pc") {
         res <- eigen(rx)$values
-      }  else if (fa == "fa") {
+      } else if (fa == "fa") {
         res <-
           psych::fa(
             rx,
@@ -536,8 +560,9 @@ getCIs <- function(boot_obj) {
   getCI <- function(x, w) {
     b1 <- boot::boot.ci(x, index = w)
     ## extract info for all CI types
-    tab <- t(sapply(b1[-(1:3)], function(x)
-      tail(c(x), 2)))
+    tab <- t(sapply(b1[-(1:3)], function(x) {
+      tail(c(x), 2)
+    }))
     ## combine with metadata: CI method, index
     tab <- cbind(w, rownames(tab), as.data.frame(tab), x$t0[w])
     colnames(tab) <- c("index", "method", "lwr", "upr", "observed")
@@ -585,13 +610,16 @@ add_ci_2plot <- function(plot,
                          lt = "dotted") {
 
   # globalVariables(c("mpg", "hp", "mpg_div_hp"))
-  method <- index <- observed<-lwr<-upr<- NULL
+  method <- index <- observed <- lwr <- upr <- NULL
 
-  cis <- CIs %>% filter(method == met) %>%
+  cis <- CIs %>%
+    filter(method == met) %>%
     dplyr::rename(num = index) %>%
     dplyr::select(-method) %>%
-    dplyr::mutate(type = "Observed Data",
-                  eigenvalue = observed)
+    dplyr::mutate(
+      type = "Observed Data",
+      eigenvalue = observed
+    )
   if (type == "band") {
     new_plot <-
       plot + ggplot2::geom_ribbon(

@@ -16,6 +16,5 @@ Prints out all Cols that start with a given string
 no need to at .. to the regex. Helpful for very long data.frames
 }
 \examples{
-colstartsw(iris,"Sepal")
-
+colstartsw(iris, "Sepal")
 }
