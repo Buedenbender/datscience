@@ -245,9 +245,25 @@ corstars <- function(x,
   #        mystars <- ifelse(p < .01,"**", ifelse(p < .05, "* ", "  ")),
   #        ifelse(sig.level == 0.05,
   #               mystars <- ifelse(p < .05, "*", " "),""))
+  if (sig.level == .001) {
+    mystars <-
+      ifelse(p < .001, "*", " ")
+  } else if (sig.level == .01) {
+    mystars <-
+      ifelse(p < .001, "**",
+        ifelse(p < .01, "* ", "  ")
+      )
+  } else {
+    mystars <-
+      ifelse(p < .001, "****",
+        ifelse(p < .001, "*** ",
+          ifelse(p < .01, "**  ",
+            ifelse(p < .05, "*   ", "    ")
+          )
+        )
+      )
+  }
 
-  mystars <-
-    ifelse(p < .001, "****", ifelse(p < .001, "*** ", ifelse(p < .01, "**  ", ifelse(p < .05, "*   ", "    "))))
 
   ## trunctuate the correlation matrix to two decimal
   R <- format(round(cbind(rep(-1.11, ncol(
@@ -647,4 +663,89 @@ add_ci_2plot <- function(plot,
   }
 
   return(new_plot)
+}
+
+
+#' Create APA Publication Ready Correlation Table and Export to Word or Powerpoint
+#'
+#' @description
+#' The Idea was inspired by a blog post of my colleague Remi Theriault
+#' https://remi-theriault.com/blog_table.html
+#' Which utilized the ability of flextable to be able to get a nicely
+#' according to APA style formatted table directly from R into .docx (word)
+#' I built on that idea and created a function that creates a correlation table
+#' together with the summary stats of your choice
+
+#' @param df Data.frame, mandatory argument. Consider filtering before passing it e.g. with dplyr::select() and dplyr::filter()
+#' @param summarystats A vector with the summary stats to be included at the bottom below the correlation.
+#' Options are one or all of c("mean","sd","median","range","min","max","skew","kurtosis","se")
+#' @param method Type of correlation. Options are currently: "pearson" or "spearman"
+#' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
+#' @param sig.level How many stars per level of significance, options include .05 .01 or .001
+#' @param filename Path and filename were the APA ready table should be saved, options include the common filetypes
+#' .docx (Word), .pptx (Powerpoint), .html (Webpage)
+#'
+#' @return A flextable object with APA ready correlation table.
+#'
+#' @author Björn Büdenbender (Inspired by Remi Theriault)
+#'
+#' @export
+#' @importFrom stringr str_to_title str_sub str_to_lower
+#' @importFrom magrittr "%>%"
+#' @importFrom psych describe
+#' @importFrom tibble rownames_to_column
+#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties save_as_docx save_as_pptx save_as_html
+apa_corrTable <- function(df,
+                          summarystats = c("mean", "sd"),
+                          method = "pearson",
+                          rmDiag = FALSE,
+                          sig.level = 0.05,
+                          filename = "") {
+  # Creating Correlation table
+  datscience::corstars(df,
+                       rmLastCol = FALSE,
+                       rmDiag = rmDiag,
+                       method = method,
+                       sig.level = sig.level
+  ) -> correlations
+  # Getting Descriptives
+  for (stat in summarystats) {
+    correlations[stringr::str_to_title(stat), ] <- psych::describe(df)[[stat]] %>% round(., 2)
+  }
+  # Creating APA Table
+  flextable::flextable(correlations %>% tibble::rownames_to_column(" ")) -> corr_table
+  # Formatting of the table by Remi Theriault, check his blog https://remi-theriault.com/blog_table.html
+  nice.borders <- list("width" = 1, color = "black", style = "solid")
+  corr_table %>%
+    flextable::theme_booktabs(.) %>%
+    flextable::hline_top(part = "head", border = nice.borders) %>%
+    flextable::hline_bottom(part = "head", border = nice.borders) %>%
+    flextable::hline_top(part = "body", border = nice.borders) %>%
+    flextable::hline_bottom(part = "body", border = nice.borders) %>%
+    flextable::fontsize(part = "all", size = 12) %>%
+    flextable::font(part = "all", fontname = "Arial") %>%
+    # align(align = "center", part = "all") %>%
+    # line_spacing(space = 1.5, part = "all") %>%
+    flextable::height(height = 0.55, part = "body") %>%
+    # hrule(rule = "exact", part = "all") %>%
+    flextable::height(height = 0.55, part = "head") %>%
+    flextable::set_table_properties(layout = "autofit") -> corr_table
+  # # If filename was supplied save table to path and filetype provided
+  filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
+  switch(filetype,
+         .docx = {
+           flextable::save_as_docx(table, path = filename)
+         },
+         .pptx = {
+           flextable::save_as_pptx(table, path = filename)
+         },
+         .html = {
+           flextable::save_as_html(table, path = filename)
+         },
+         {
+           print("Not saving the apa table to file, just returning the flextable")
+           print("   remember just use flextable::save_as_word to save it later")
+         }
+  )
+  return(corr_table)
 }

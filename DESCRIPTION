@@ -21,7 +21,10 @@ Imports:
     kableExtra,
     boot,
     magrittr,
-    psych
+    psych,
+    flextable,
+    stringr,
+    tibble
 License: GPL-2 
 Encoding: UTF-8
 LazyData: true
