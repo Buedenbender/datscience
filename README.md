@@ -12,7 +12,7 @@ and briefly expanded by me. Functions that are not developed by me are always
 cited and referenced in the documentation of the function (see the man dir, or ? e.g. ?corstars).
 
 
-## List of Functions available in datscience Package
+## List of Functions Available in Datscience Package 
 ``` 
  - boxplot_t_test()       - Vizualisation of independent sample t-Test with Boxplots
  - citation_appendix()    - Creates Citations of used packages for the appendix
@@ -20,6 +20,7 @@ cited and referenced in the documentation of the function (see the man dir, or ?
  - colstartsw()
  - corstars()             - Correlations + ** marking sig. in the console - Code adopted from Dominik Vogel
  - my_apa()               - Draws an APA ready table (of e.g. a data.frame)
+ - apa_corrTable()        - Creates (and exports directly to .docx or .pptx) an APA publication ready correlation table
  
 # Functions to produce nice parallel analysis - scree plots. 
         Additionally give the option to include confidence intervals around the observed eigenvalues.
