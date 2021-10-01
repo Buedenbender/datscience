@@ -315,10 +315,11 @@ corstars <- function(x,
 #' R Package Citations
 #' @description
 #' Function to create a package table with the following columns: Packagename | Version | Maintainer | Citation
-#   - Creates two files .csv for the table and a .bib for the citations
-#   - Requires some manual processing: Importing of the CSV in the Word Processing Program and Importing the .bib in
-#     In the Reference Managementtool, e.g. Mendeley
+#   - Creates the table either as .csv or .docx and a .bib for the citations
+#   - Requires some manual processing: Importing the .bib in
+#     in the Reference Managementtool, e.g. Mendeley, and adding them to the table
 #' @param outdirectory A character vector for the output directory (for the two files, .bib and .csv). Default ist ./
+#' @param filename Should end with .docx to save the output directly to a .docx file
 #'
 #' @return Two Files for a Package List and Citations for the Appendix of the Paper
 #'
@@ -333,7 +334,8 @@ corstars <- function(x,
 #' @importFrom knitr write_bib
 #' @importFrom magrittr "%>%"
 #' @importFrom pacman p_loaded
-citations_appendix <- function(outdirectory = "./") {
+#' #' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties save_as_docx
+citations_appendix <- function(outdirectory = "./", filename = NA) {
   # Helper Function extract the last n chars of a string
   substrRight <- function(x, n) {
     substr(x, nchar(x) - n + 1, nchar(x))
@@ -371,11 +373,36 @@ citations_appendix <- function(outdirectory = "./") {
     )
   }
 
-  utils::write.csv(
-    x = appendix_packages,
-    file = paste0(outdirectory, "Appendix Table Packages.csv"),
-    row.names = FALSE
-  )
+  # Generating output table (either .csv or .docx)
+  flextable::flextable(appendix_packages) -> out_table
+  # Formatting of the table by Remi Theriault, check his blog https://remi-theriault.com/blog_table.html
+  nice.borders <- list("width" = 1, color = "black", style = "solid")
+  out_table %>%
+    flextable::theme_booktabs(.) %>%
+    flextable::hline_top(part = "head", border = nice.borders) %>%
+    flextable::hline_bottom(part = "head", border = nice.borders) %>%
+    flextable::hline_top(part = "body", border = nice.borders) %>%
+    flextable::hline_bottom(part = "body", border = nice.borders) %>%
+    flextable::fontsize(part = "all", size = 12) %>%
+    flextable::font(part = "all", fontname = "Arial") %>%
+    flextable::align(align = "center", part = "header") %>%
+    # line_spacing(space = 1.5, part = "all") %>%
+    flextable::height(height = 0.55, part = "body") %>%
+    # hrule(rule = "exact", part = "all") %>%
+    flextable::height(height = 0.55, part = "head") %>%
+    flextable::set_table_properties(layout = "autofit") -> out_table
+
+  # # If filename was supplied save table to path and filetype provided
+  filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
+  if (!is.na(filename) & filetype == ".docx"  ) {
+    flextable::save_as_docx(out_table, path = paste0(outdirectory,filename))
+  }else{
+    utils::write.csv(
+      x = appendix_packages,
+      file = paste0(outdirectory, "Appendix Table Packages.csv"),
+      row.names = FALSE
+    )
+  }
 }
 
 
@@ -703,10 +730,10 @@ apa_corrTable <- function(df,
                           filename = "") {
   # Creating Correlation table
   datscience::corstars(df,
-                       rmLastCol = FALSE,
-                       rmDiag = rmDiag,
-                       method = method,
-                       sig.level = sig.level
+    rmLastCol = FALSE,
+    rmDiag = rmDiag,
+    method = method,
+    sig.level = sig.level
   ) -> correlations
   # Getting Descriptives
   for (stat in summarystats) {
@@ -733,19 +760,19 @@ apa_corrTable <- function(df,
   # # If filename was supplied save table to path and filetype provided
   filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
   switch(filetype,
-         .docx = {
-           flextable::save_as_docx(corr_table, path = filename)
-         },
-         .pptx = {
-           flextable::save_as_pptx(corr_table, path = filename)
-         },
-         .html = {
-           flextable::save_as_html(corr_table, path = filename)
-         },
-         {
-           print("Not saving the apa table to file, just returning the flextable")
-           print("   remember just use flextable::save_as_word to save it later")
-         }
+    .docx = {
+      flextable::save_as_docx(corr_table, path = filename)
+    },
+    .pptx = {
+      flextable::save_as_pptx(corr_table, path = filename)
+    },
+    .html = {
+      flextable::save_as_html(corr_table, path = filename)
+    },
+    {
+      print("Not saving the apa table to file, just returning the flextable")
+      print("   remember just use flextable::save_as_word to save it later")
+    }
   )
   return(corr_table)
 }
