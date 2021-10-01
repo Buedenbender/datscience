@@ -330,7 +330,7 @@ corstars <- function(x,
 #' citations_appendix()
 #' @export
 #' @importFrom utils write.csv maintainer packageVersion
-#' @importFrom dplyr add_row
+#' @importFrom dplyr add_row arrange
 #' @importFrom knitr write_bib
 #' @importFrom magrittr "%>%"
 #' @importFrom pacman p_loaded
@@ -374,7 +374,7 @@ citations_appendix <- function(outdirectory = "./", filename = NA) {
   }
 
   # Generating output table (either .csv or .docx)
-  flextable::flextable(appendix_packages) -> out_table
+  flextable::flextable(appendix_packages %>% dplyr::arrange(Packagename)) -> out_table
   # Formatting of the table by Remi Theriault, check his blog https://remi-theriault.com/blog_table.html
   nice.borders <- list("width" = 1, color = "black", style = "solid")
   out_table %>%
