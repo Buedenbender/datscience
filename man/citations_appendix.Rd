@@ -4,10 +4,12 @@
 \alias{citations_appendix}
 \title{R Package Citations}
 \usage{
-citations_appendix(outdirectory = "./")
+citations_appendix(outdirectory = "", filename = NA)
 }
 \arguments{
-\item{outdirectory}{A character vector for the output directory (for the two files, .bib and .csv). Default ist ./}
+\item{outdirectory}{A character vector for the output directory (for the two files, .bib and .csv). Default is current working dir}
+
+\item{filename}{Should end with .docx to save the output directly to a .docx file}
 }
 \value{
 Two Files for a Package List and Citations for the Appendix of the Paper

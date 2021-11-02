@@ -32,7 +32,7 @@ Options are one or all of c("mean","sd","median","range","min","max","skew","kur
 A flextable object with APA ready correlation table.
 }
 \description{
-The Idea was inspired by a blogg post of my colleague Remi Theriault
+The Idea was inspired by a blog post of my colleague Remi Theriault
 https://remi-theriault.com/blog_table.html
 Which utilized the ability of flextable to be able to get a nicely
 according to APA style formatted table directly from R into .docx (word)

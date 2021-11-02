@@ -1,5 +1,43 @@
 ########################## Info ############################
 # Code by M. Sc. Bjoern Buedenbender (University of Mannheim)
+
+#' Check if file exists, else append a integer number
+#'
+#' @description
+#' In cases you want to write to a file, however you do not want to override existing
+#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
+#' Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
+#' @param path Character containing the path with fileextensions
+#' @param ignore_file_extension Boolean currently only supports True, thus file extension will be
+#' ignore in giving new filenames
+#' @param n_digits Integer number of leadings 0 before the filename
+#'
+#' @return A new path and filename that currently does not exists
+#'
+#' @author spacedman stackoverflow (advanced by Björn Büdenbender)
+#'
+#' @importFrom xfun file_ext
+#' @importFrom stringr str_replace
+#' @export
+serialNext <- function(path,ignore_file_extension=T,n_digits = 3){
+  # Currently only supports ignore file extension case
+  # Check if file exists, if not just return filename
+  if(!file.exists(path)){return(path)}
+  # Extract file extensions
+  if(ignore_file_extension){
+    extension <- xfun::file_ext(path)
+    filename <- stringr::str_replace(path,"\\..*$","")
+  }
+  i=1
+  # Append 3 digit integer number with leading 0
+  repeat {
+    f = paste(filename,stringr::str_pad(i,n_digits,pad="0"),sep="_")
+    if(!file.exists(f)){return(paste0(f,".",extension))}
+    i=i+1
+  }
+}
+
+
 #' Rename specific columns of a data.frame
 #'
 #' Replace the column names of a data.frame entrywise for each element
@@ -318,7 +356,7 @@ corstars <- function(x,
 #   - Creates the table either as .csv or .docx and a .bib for the citations
 #   - Requires some manual processing: Importing the .bib in
 #     in the Reference Managementtool, e.g. Mendeley, and adding them to the table
-#' @param outdirectory A character vector for the output directory (for the two files, .bib and .csv). Default ist ./
+#' @param outdirectory A character vector for the output directory (for the two files, .bib and .csv). Default is current working dir
 #' @param filename Should end with .docx to save the output directly to a .docx file
 #'
 #' @return Two Files for a Package List and Citations for the Appendix of the Paper
@@ -334,21 +372,18 @@ corstars <- function(x,
 #' @importFrom knitr write_bib
 #' @importFrom magrittr "%>%"
 #' @importFrom pacman p_loaded
-#' #' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties save_as_docx
-citations_appendix <- function(outdirectory = "./", filename = NA) {
-  # Helper Function extract the last n chars of a string
+#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties save_as_docx
+citations_appendix <- function(outdirectory = "", filename = NA) {
   substrRight <- function(x, n) {
     substr(x, nchar(x) - n + 1, nchar(x))
   }
 
-  # Controlling if the ending slash is present
-  if (outdirectory != "./") {
+  if (outdirectory != "") {
     if (substrRight(outdirectory, 1) != "/") {
       outdirectory <- paste0(outdirectory, "/")
     }
   }
 
-  # Check if Outdirectory Exist, Else Create it
   if (!file.exists(outdirectory)) {
     dir.create(outdirectory)
   }
@@ -777,35 +812,10 @@ apa_corrTable <- function(df,
   return(corr_table)
 }
 
-#' Check if file exists, else append a integer number
-#'
-#' @description
-#' In cases you want to write to a file, however you do not want to override existing
-#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
-#' Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
-#' @param prefix Character containing the path with fileextensions
-#' @param ignore_file_extension Boolean currently only supports True, thus file extension will be
-#' ignore in giving new filenames
-#'
-#' @return A new path and filename that currently does not exists
-#'
-#' @author Spacedman stackoverflow (advanced by Björn Büdenbender)
-#'
+
+
+#' ABC
 #' @export
-#' @importFrom tools file_ext
-#' @importFrom stringr str_replace
-serialNext <- function(prefix,ignore_file_extension=T){
-  # Currently only supports ignore file extension case
-  # Check if file exists, if not just return filename
-  if(!file.exists(prefix)){return(prefix)}
-  if(ignore_file_extension){
-    extension <- tools::file_ext(filename)
-    filename <- stringr::str_replace(prefix,"\\..*$","")
-  }
-  i=1
-  repeat {
-    f = paste(filename,i,sep="_")
-    if(!file.exists(f)){return(paste0(f,".",extension))}
-    i=i+1
-  }
+testfunction <- function(){
+  print("test")
 }
