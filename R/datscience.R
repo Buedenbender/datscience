@@ -776,3 +776,36 @@ apa_corrTable <- function(df,
   )
   return(corr_table)
 }
+
+#' Check if file exists, else append a integer number
+#'
+#' @description
+#' In cases you want to write to a file, however you do not want to override existing
+#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
+#' Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
+#' @param prefix Character containing the path with fileextensions
+#' @param ignore_file_extension Boolean currently only supports True, thus file extension will be
+#' ignore in giving new filenames
+#'
+#' @return A new path and filename that currently does not exists
+#'
+#' @author Spacedman stackoverflow (advanced by Björn Büdenbender)
+#'
+#' @export
+#' @importFrom tools file_ext
+#' @importFrom stringr str_replace
+serialNext <- function(prefix,ignore_file_extension=T){
+  # Currently only supports ignore file extension case
+  # Check if file exists, if not just return filename
+  if(!file.exists(prefix)){return(prefix)}
+  if(ignore_file_extension){
+    extension <- tools::file_ext(filename)
+    filename <- stringr::str_replace(prefix,"\\..*$","")
+  }
+  i=1
+  repeat {
+    f = paste(filename,i,sep="_")
+    if(!file.exists(f)){return(paste0(f,".",extension))}
+    i=i+1
+  }
+}
