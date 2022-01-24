@@ -813,9 +813,26 @@ apa_corrTable <- function(df,
 }
 
 
-
-#' ABC
+#' Determine Number of Decimals by a Simple Convention (Based on N)
+#'
+#' @description
+#' A simple convention for the determination of the appropriate number of decimals
+#' https://support.jmir.org/hc/en-us/articles/360019690851-Guidelines-for-Reporting-Statistics
+#' will be applied, e.g.,  n
+#'    - <100: no decimal,
+#'    - < 1000: 1 decimals,
+#'    - > 1001: 2 decimals
+#'
+#' @param n Number of observations (e.g., participants in a study)
+#'
+#' @return int the appropriate number of decimals, based on sample size (n)
+#'
+#' @author Björn Büdenbender
+#'
 #' @export
-testfunction <- function(){
-  print("test")
+get_number_of_decimals <- function(n){
+  if (n < 100) nod <- 0
+  else if (n < 1000) nod <- 1
+  else nod <- 2
+  return(nod)
 }

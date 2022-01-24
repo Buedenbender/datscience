@@ -29,6 +29,7 @@ cited and referenced in the documentation of the function (see the man dir, or ?
  - get_CIs()              - Takes a boot::boot object and constructs CIs for multiple stats - Code adopte from Ben Bolker
  - add_ci_2plot()         - Adds the bootstrapped CIs as a band or errorbar to the pretty scree
  - serialNext()           - Checks if file exists, if it does append an integer number before the file extension
+ - get_number_of_decimals() - Applies a simple convention for the number of appreciated decimals, based on sample size
 ``` 
 
 ## Installation
