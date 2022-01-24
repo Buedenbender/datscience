@@ -10,7 +10,8 @@ apa_corrTable(
   method = "pearson",
   rmDiag = FALSE,
   sig.level = 0.05,
-  filename = ""
+  filepath = "",
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -25,8 +26,10 @@ Options are one or all of c("mean","sd","median","range","min","max","skew","kur
 
 \item{sig.level}{How many stars per level of significance, options include .05 .01 or .001}
 
-\item{filename}{Path and filename were the APA ready table should be saved, options include the common filetypes
+\item{filepath}{(Optional) Path and filename were the APA ready table should be saved, options include the common filetypes
 .docx (Word), .pptx (Powerpoint), .html (Webpage)}
+
+\item{overwrite}{(Optional) Should the file, if already existing be overwritten}
 }
 \value{
 A flextable object with APA ready correlation table.

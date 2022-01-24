@@ -8,7 +8,9 @@ format_flextable(
   ft,
   font = "Times New Roman",
   fontsize = 12,
-  table_caption = c("Table x", "Some Description of the Table")
+  table_caption = c("Table x", "Some Description of the Table"),
+  table_note = NA,
+  ...
 )
 }
 \arguments{
@@ -19,6 +21,11 @@ format_flextable(
 \item{fontsize}{Default is 12, bigger font size is not recommended.}
 
 \item{table_caption}{Takes a character vector, with - the Title and # (e.g., "Table 1"); - and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample )}
+
+\item{table_note}{Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
+Please note that you will need to manually set the formatting (i.e., setting italic for p values).}
+
+\item{...}{Additional Parameters, not utiliezd in this function, catches exception from passing of previous functions}
 }
 \value{
 An APA style formatted flextable object.

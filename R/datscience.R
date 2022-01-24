@@ -1,6 +1,91 @@
 ########################## Info ############################
 # Code by M. Sc. Bjoern Buedenbender (University of Mannheim)
 
+
+#################### Basic Functions / Stand Alone ######################
+#' Determine Number of Decimals by a Simple Convention (Based on N)
+#'
+#' @description
+#' A simple convention for the determination of the appropriate number of decimals
+#' https://support.jmir.org/hc/en-us/articles/360019690851-Guidelines-for-Reporting-Statistics
+#' will be applied, e.g.,  n
+#'    - <100: no decimal,
+#'    - < 1000: 1 decimals,
+#'    - > 1001: 2 decimals
+#'
+#' @param n Number of observations (e.g., participants in a study)
+#'
+#' @return int the appropriate number of decimals, based on sample size (n)
+#'
+#' @author Björn Büdenbender
+#'
+#' @export
+get_number_of_decimals <- function(n) {
+  if (n < 100) {
+    nod <- 0
+  } else if (n < 1000) {
+    nod <- 1
+  } else {
+    nod <- 2
+  }
+  return(nod)
+}
+
+
+#' Check if file exists, else append a integer number
+#'
+#' @description
+#' In cases you want to write to a file, however you do not want to override existing
+#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
+#' Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
+#' @param path Character containing the path with fileextensions
+#' @param n_digits  (Optional) Integer, number of leadings 0 before the filename. Default is n_digits = 3
+#' @param maxruns (Optional) Integer, Default is maxruns = 500.
+#'
+#' @return Character, a filename that currently does not exists, with indices.
+#'
+#' @author spacedman stackoverflow (advanced by Björn Büdenbender)
+#'
+#' @importFrom xfun file_ext
+#' @importFrom stringr str_replace str_pad
+#' @importFrom tools file_path_sans_ext
+#' @export
+serialNext <- function(path,
+                       n_digits = 3,
+                       maxruns = 500) {
+  # Currently only supports ignore file extension case
+  # Check if file exists, if not just return filename
+  if (!file.exists(path)) {
+    return(path)
+  }
+
+  # Extract file extensions
+  extension <- xfun::file_ext(path)
+  # Extract filename
+  filename <- tools::file_path_sans_ext(path)
+  # Initialize Counter
+  i <- 1
+
+  # Append 3 digit integer number with leading 0
+  repeat {
+    f <- paste0(paste(filename,
+      stringr::str_pad(i, n_digits, pad = "0"),
+      sep = "_"
+    ), ".", extension)
+    if (!file.exists(f)) {
+      return(f)
+    } else if (i > maxruns) {
+      print(paste0("All file names up until: ", basename(f), " are already taken."))
+      print("Make sure this is intended. To solve this, you can either:")
+      print(paste(" - increase maxruns arguments above:", maxruns))
+      print(paste(" - Change (e.g., increase) the n_digits above:", n_digits))
+
+      break
+    }
+    i <- i + 1
+  }
+}
+
 #' Format a Flextable in Accordance with APA 7th Standards
 #'
 #' @description
@@ -13,6 +98,9 @@
 #' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
 #' @param fontsize Default is 12, bigger font size is not recommended.
 #' @param table_caption Takes a character vector, with - the Title and # (e.g., "Table 1"); - and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample )
+#' @param table_note Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
+#' Please note that you will need to manually set the formatting (i.e., setting italic for p values).
+#' @param ... Additional Parameters, not utiliezd in this function, catches exception from passing of previous functions
 #'
 #' @return An APA style formatted flextable object.
 #'
@@ -20,9 +108,11 @@
 #'
 #' @export
 #' @importFrom magrittr "%>%"
-#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties add_header_lines bold italic
-format_flextable <- function(ft,font = "Times New Roman", fontsize=12,
-                             table_caption=c("Table x","Some Description of the Table")) {
+#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties add_header_lines add_footer_lines bold italic
+format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
+                             table_caption = c("Table x", "Some Description of the Table"),
+                             table_note = NA,
+                             ...) {
   nice.borders <- list("width" = 1, color = "black", style = "solid")
   formatted_ft <- ft %>%
     flextable::theme_booktabs(.) %>%
@@ -30,56 +120,76 @@ format_flextable <- function(ft,font = "Times New Roman", fontsize=12,
     flextable::hline_bottom(part = "head", border = nice.borders) %>%
     flextable::hline_top(part = "body", border = nice.borders) %>%
     flextable::hline_bottom(part = "body", border = nice.borders) %>%
-    flextable::fontsize(part = "all", size = fontsize) %>%
-    flextable::font(part = "all", fontname = font) %>%
     # align(align = "center", part = "all") %>%
     # line_spacing(space = 1.5, part = "all") %>%
     flextable::height(height = 0.55, part = "body") %>%
     # hrule(rule = "exact", part = "all") %>%
     flextable::height(height = 0.55, part = "head") %>%
-    flextable::set_table_properties(layout = "autofit") %>%
-    flextable::add_header_lines(values=rev(table_caption)) %>%
-    flextable::bold(part="header",i=1) %>%
-    flextable::italic(part="header",i=2)
+    flextable::set_table_properties(layout = "autofit")
+  # If provided, add table caption
+  if (!is.na(table_caption)) {
+    formatted_ft <- formatted_ft %>%
+      flextable::add_header_lines(values = rev(table_caption)) %>%
+      flextable::bold(part = "header", i = 1) %>%
+      flextable::italic(part = "header", i = 2)
+  }
+  # If provdied, add table note
+  if (!is.na(table_note)) {
+    formatted_ft <- formatted_ft %>%
+      flextable::add_footer_lines(values = table_note)
+  }
+  formatted_ft <- formatted_ft %>%
+    flextable::fontsize(part = "all", size = fontsize) %>%
+    flextable::font(part = "all", fontname = font)
+
+
   return(formatted_ft)
 }
 
-#' Check if file exists, else append a integer number
+
+#' Saves a Given Flextable Object
 #'
 #' @description
-#' In cases you want to write to a file, however you do not want to override existing
-#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
-#' Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
-#' @param path Character containing the path with fileextensions
-#' @param ignore_file_extension Boolean currently only supports True, thus file extension will be
-#' ignore in giving new filenames
-#' @param n_digits Integer number of leadings 0 before the filename
+#' Takes a flextable object (ft) and a filepath (path + filename + extension, e.g., "results/table1.docx")
+#' And saves it. Primarily a utility function used by others in the package. Gives the option not to overwrite a
+#' file by utilizing datscience::serialNext (from this package).
+#' @param ft A flextable object, to be formatted in accordance with APA. Required!
+#' @param filepath Path and filename were the flextable object should be saved, options include the common filetypes
+#' .docx (Word), .pptx (Powerpoint), .html (Webpage)
+#' @param overwrite (Optional) Should the file, if already existing be overwritten
+#' @author Björn Büdenbender
 #'
-#' @return A new path and filename that currently does not exists
-#'
-#' @author spacedman stackoverflow (advanced by Björn Büdenbender)
-#'
-#' @importFrom xfun file_ext
-#' @importFrom stringr str_replace
 #' @export
-serialNext <- function(path,ignore_file_extension=T,n_digits = 3){
-  # Currently only supports ignore file extension case
-  # Check if file exists, if not just return filename
-  if(!file.exists(path)){return(path)}
-  # Extract file extensions
-  if(ignore_file_extension){
-    extension <- xfun::file_ext(path)
-    filename <- stringr::str_replace(path,"\\..*$","")
+#' @importFrom xfun file_ext
+#' @importFrom flextable save_as_docx save_as_pptx save_as_html
+save_flextable <- function(ft, filepath, overwrite = FALSE) {
+  #### Check if directory exists, if not create it
+  if (!file.exists(dirname(filepath))) {
+    dir.create(outdirectory)
   }
-  i=1
-  # Append 3 digit integer number with leading 0
-  repeat {
-    f = paste(filename,stringr::str_pad(i,n_digits,pad="0"),sep="_")
-    if(!file.exists(f)){return(paste0(f,".",extension))}
-    i=i+1
-  }
-}
 
+  ### If Overwrite is FALSE, serialize file path with indices
+  if (!overwrite) filepath <- serialNext(filepath)
+  ### Save flextable
+  # Get file type
+  filetype <- xfun::file_ext(filepath)
+  # Save depending on filetype
+  switch(filetype,
+    docx = {
+      flextable::save_as_docx(ft, path = filepath)
+    },
+    pptx = {
+      flextable::save_as_pptx(ft, path = filepath)
+    },
+    html = {
+      flextable::save_as_html(ft, path = filepath)
+    },
+    {
+      print("The given filetable is not supported by the package")
+      print("Try using .docx, .pptx or .html")
+    }
+  )
+}
 
 #' Rename specific columns of a data.frame
 #'
@@ -110,7 +220,7 @@ cols_rename <- function(df, old, new) {
 }
 
 
-#' Seaches Column Names Starting with an [Reg]Expression
+#' Searches Column Names Starting with an [Reg]Expression
 #'
 #' Prints out all Cols that start with a given string
 #' no need to at .. to the regex. Helpful for very long data.frames
@@ -244,7 +354,7 @@ my_apa <- function(df) {
     )
 }
 
-
+########################## Advanced Functions ############################
 
 #' Corstars - Correaltions in Console
 #' @description  Creates a pretty console correlation table (by Dominik Vogel)
@@ -396,94 +506,111 @@ corstars <- function(x,
 #' R Package Citations
 #' @description
 #' Function to create a package table with the following columns: Packagename | Version | Maintainer | Citation
-#   - Creates the table either as .csv or .docx and a .bib for the citations
+#   - Creates the apa style table .docx (default, or as csv if wanted) and a .bib for the citations
 #   - Requires some manual processing: Importing the .bib in
 #     in the Reference Managementtool, e.g. Mendeley, and adding them to the table
-#' @param outdirectory A character vector for the output directory (for the two files, .bib and .csv). Default is current working dir
-#' @param filename Should end with .docx to save the output directly to a .docx file
-#'
-#' @return Two Files for a Package List and Citations for the Appendix of the Paper
+#' @param outdirectory (Optional) Character vector for the output directory (for the two files, .bib and .csv). Default is "Appendix/" in the current working directory (see with getwd())
+#' @param filename (Optional) Character vector. Custom name for the formatted APA style table, that should end with .docx. A docx file will be provided. If NA, a csv file of the table will be saved.
+#' @param overwrite (Optional) Boolean, default is FALSE. When overwrite is FALSE and the files already exists, a serialized version of the filename will be created (i.e., appending _001, or _002)
+#' @param table_caption (Optional) Takes a character vector, with - the Title and # (e.g., "Table A1"); - and the descriptions; use capital case APA (e.g., "Complete List of All R-Packages Utilized and Dependencies" )
+#' @param ... (Optional), Additional arguments that can be passed to format_flextable (e.g., fontsize), please refer to ?datscience::format_flextable
+#' @return  - Creates the directory Appendix/ (if not otherwise specified)
+#' - In the "Appendix/" dir a .bib file is created for the citation
+#' - Either creates an APA 7th style table in a .docx or a .csv table
+#' - Additionally returns the flextable::flextable object with the APA 7th style table.
 #'
 #' @author Björn Büdenbender
 #'
 #'
-#' @examples
-#' citations_appendix()
 #' @export
 #' @importFrom utils write.csv maintainer packageVersion
+#' @importFrom xfun file_ext
 #' @importFrom dplyr add_row arrange
 #' @importFrom knitr write_bib
 #' @importFrom magrittr "%>%"
 #' @importFrom pacman p_loaded
-#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties save_as_docx
-citations_appendix <- function(outdirectory = "", filename = NA) {
+#' @importFrom flextable flextable
+Rcitation_appendix <- function(outdirectory = "Appendix",
+                               filename = "Appendix - R Packages.docx",
+                               overwrite = FALSE,
+                               table_caption = c("Table A1", "All R-Packages Utilized and Dependencies"),
+                               ...) {
+
+  #### Create a Table with all Important Information
+  # Empty container data.frame
+  appendix_packages <- data.frame(
+    Packagename = character(),
+    Version = character(),
+    Maintainer = character(),
+    Citation = character()
+  )
+  # Iterate over loadead packages, and append information
+  for (pkg in pacman::p_loaded()) {
+    appendix_packages <- appendix_packages %>% dplyr::add_row(
+      Packagename = pkg,
+      Version = as.character(utils::packageVersion(pkg)),
+      Maintainer = utils::maintainer(pkg),
+      Citation = ""
+    )
+  }
+
+  ### Check if the directory exists, if not it will be created.
   substrRight <- function(x, n) {
     substr(x, nchar(x) - n + 1, nchar(x))
   }
-
-  if (outdirectory != "") {
-    if (substrRight(outdirectory, 1) != "/") {
-      outdirectory <- paste0(outdirectory, "/")
-    }
+  # Remove the ending path separator: e.g., /
+  if (substrRight(outdirectory, 1) == "/") {
+    outdirectory <- substr(outdirectory, 1, nchar(outdirectory) - 1)
   }
 
   if (!file.exists(outdirectory)) {
     dir.create(outdirectory)
   }
-
-  # Loading required Packages
-  #### Write the Bibliography with all Citations for the Packages
-  knitr::write_bib(file = paste0(outdirectory, "Bibliography Packages.bib"))
-
-  #### Create a Table with all Important Information
-  appendix_packages <- data.frame(
-    Packagename = character(),
-    Version = character(),
-    Maintainer = character()
-  )
-
-
-  for (pkg in pacman::p_loaded()) {
-    appendix_packages <- appendix_packages %>% dplyr::add_row(
-      Packagename = pkg,
-      Version = as.character(utils::packageVersion(pkg)),
-      Maintainer = utils::maintainer(pkg)
-    )
+  ### PATH PREPARATION
+  # Concate to full filepath
+  bib_file <- paste0(outdirectory, "/Bibliography Packages.bib")
+  if (is.na(filename)) filename <- "Appendix - R Packages.csv"
+  appendix_table <- paste0(outdirectory, "/", filename)
+  # Check if the files already exists
+  if (!overwrite) {
+    bib_file <- serialNext(bib_file)
+    appendix_table <- serialNext(appendix_table)
+  } else {
+    print("Overwrite was set to TRUE.")
+    print("Existing files will be replaced, i.e., overwritten with the new version ...")
   }
 
-  # Generating output table (either .csv or .docx)
-  flextable::flextable(appendix_packages %>% dplyr::arrange(Packagename)) -> out_table
-  # Formatting of the table by Remi Theriault, check his blog https://remi-theriault.com/blog_table.html
-  nice.borders <- list("width" = 1, color = "black", style = "solid")
-  out_table %>%
-    flextable::theme_booktabs(.) %>%
-    flextable::hline_top(part = "head", border = nice.borders) %>%
-    flextable::hline_bottom(part = "head", border = nice.borders) %>%
-    flextable::hline_top(part = "body", border = nice.borders) %>%
-    flextable::hline_bottom(part = "body", border = nice.borders) %>%
-    flextable::fontsize(part = "all", size = 12) %>%
-    flextable::font(part = "all", fontname = "Arial") %>%
-    flextable::align(align = "center", part = "header") %>%
-    # line_spacing(space = 1.5, part = "all") %>%
-    flextable::height(height = 0.55, part = "body") %>%
-    # hrule(rule = "exact", part = "all") %>%
-    flextable::height(height = 0.55, part = "head") %>%
-    flextable::set_table_properties(layout = "autofit") -> out_table
+  # #### Write the Bibliography with all Citations for the Packages
+  knitr::write_bib(file = bib_file)
 
-  # # If filename was supplied save table to path and filetype provided
-  filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
-  if (!is.na(filename) & filetype == ".docx"  ) {
-    flextable::save_as_docx(out_table, path = paste0(outdirectory,filename))
-  }else{
+  ### Create the Table
+  # Check if APA 7th is desired & create it
+  raw_table <- flextable::flextable(appendix_packages %>%
+    dplyr::arrange(Packagename))
+  output_table <- format_flextable(
+    ft = raw_table,
+    table_caption = table_caption,
+    ...
+  )
+
+  ### Table: Write file or return flextable object
+  # Extract filetype
+  filetype <- xfun::file_ext(appendix_table)
+  # Depending on filetype
+  if (filetype == "docx") {
+    save_flextable(
+      ft = output_table, filepath = appendix_table,
+      overwrite = overwrite
+    )
+  } else if (filetype == "csv") {
     utils::write.csv(
       x = appendix_packages,
-      file = paste0(outdirectory, "Appendix Table Packages.csv"),
+      file = appendix_table,
       row.names = FALSE
     )
   }
+  return(output_table)
 }
-
-
 
 
 #' Pretty Scree
@@ -787,15 +914,15 @@ add_ci_2plot <- function(plot,
 #' @param method Type of correlation. Options are currently: "pearson" or "spearman"
 #' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
 #' @param sig.level How many stars per level of significance, options include .05 .01 or .001
-#' @param filename Path and filename were the APA ready table should be saved, options include the common filetypes
+#' @param filepath (Optional) Path and filename were the APA ready table should be saved, options include the common filetypes
 #' .docx (Word), .pptx (Powerpoint), .html (Webpage)
+#' @param overwrite (Optional) Should the file, if already existing be overwritten
 #'
 #' @return A flextable object with APA ready correlation table.
 #'
 #' @author Björn Büdenbender (Inspired by Remi Theriault)
 #'
 #' @export
-#' @importFrom stringr str_to_title str_sub str_to_lower
 #' @importFrom magrittr "%>%"
 #' @importFrom psych describe
 #' @importFrom tibble rownames_to_column
@@ -805,9 +932,10 @@ apa_corrTable <- function(df,
                           method = "pearson",
                           rmDiag = FALSE,
                           sig.level = 0.05,
-                          filename = "") {
+                          filepath = "",
+                          overwrite = FALSE) {
   # Creating Correlation table
-  datscience::corstars(df,
+  corstars(df,
     rmLastCol = FALSE,
     rmDiag = rmDiag,
     method = method,
@@ -835,49 +963,12 @@ apa_corrTable <- function(df,
     # hrule(rule = "exact", part = "all") %>%
     flextable::height(height = 0.55, part = "head") %>%
     flextable::set_table_properties(layout = "autofit") -> corr_table
-  # # If filename was supplied save table to path and filetype provided
-  filetype <- stringr::str_sub(stringr::str_to_lower(filename), start = -5)
-  switch(filetype,
-    .docx = {
-      flextable::save_as_docx(corr_table, path = filename)
-    },
-    .pptx = {
-      flextable::save_as_pptx(corr_table, path = filename)
-    },
-    .html = {
-      flextable::save_as_html(corr_table, path = filename)
-    },
-    {
-      print("Not saving the apa table to file, just returning the flextable")
-      print("   remember just use flextable::save_as_word to save it later")
-    }
-  )
+
+  ### TODO: INCLUDE THE NEW SAVE_FLEXTABLE FUNCTION
+  ### TODO: EXCHANGE THE FORMAT FLEXTABLE FUNCTION
+  ### TODO: INCLUDE ALL PARAMETERS NECESSARY FOR THESE TWO FUNCTIONS
+  ### TODO: CHECK IMPORTS
+
+
   return(corr_table)
 }
-
-
-#' Determine Number of Decimals by a Simple Convention (Based on N)
-#'
-#' @description
-#' A simple convention for the determination of the appropriate number of decimals
-#' https://support.jmir.org/hc/en-us/articles/360019690851-Guidelines-for-Reporting-Statistics
-#' will be applied, e.g.,  n
-#'    - <100: no decimal,
-#'    - < 1000: 1 decimals,
-#'    - > 1001: 2 decimals
-#'
-#' @param n Number of observations (e.g., participants in a study)
-#'
-#' @return int the appropriate number of decimals, based on sample size (n)
-#'
-#' @author Björn Büdenbender
-#'
-#' @export
-get_number_of_decimals <- function(n){
-  if (n < 100) nod <- 0
-  else if (n < 1000) nod <- 1
-  else nod <- 2
-  return(nod)
-}
-
-

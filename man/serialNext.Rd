@@ -4,18 +4,17 @@
 \alias{serialNext}
 \title{Check if file exists, else append a integer number}
 \usage{
-serialNext(path, ignore_file_extension = T, n_digits = 3)
+serialNext(path, n_digits = 3, maxruns = 500)
 }
 \arguments{
 \item{path}{Character containing the path with fileextensions}
 
-\item{ignore_file_extension}{Boolean currently only supports True, thus file extension will be
-ignore in giving new filenames}
+\item{n_digits}{(Optional) Integer, number of leadings 0 before the filename. Default is n_digits = 3}
 
-\item{n_digits}{Integer number of leadings 0 before the filename}
+\item{maxruns}{(Optional) Integer, Default is maxruns = 500.}
 }
 \value{
-A new path and filename that currently does not exists
+Character, a filename that currently does not exists, with indices.
 }
 \description{
 In cases you want to write to a file, however you do not want to override existing

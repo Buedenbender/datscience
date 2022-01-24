@@ -2,7 +2,7 @@
 % Please edit documentation in R/datscience.R
 \name{colstartsw}
 \alias{colstartsw}
-\title{Seaches Column Names Starting with an [Reg]Expression}
+\title{Searches Column Names Starting with an [Reg]Expression}
 \usage{
 colstartsw(regex = "", df)
 }
