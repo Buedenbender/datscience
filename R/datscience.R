@@ -1,6 +1,49 @@
 ########################## Info ############################
 # Code by M. Sc. Bjoern Buedenbender (University of Mannheim)
 
+#' Format a Flextable in Accordance with APA 7th Standards
+#'
+#' @description
+#' Formatting initially written by Remi Theriault, and advanced / wrapped in
+#' a function by me
+#' https://remi-theriault.com/blog_table.html
+#' Reference on what APA style for tables constitutes can be obtained here
+#' https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables
+#' @param ft A flextable object, to be formatted in accordance with APA. Required!
+#' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
+#' @param fontsize Default is 12, bigger font size is not recommended.
+#' @param table_caption Takes a character vector, with - the Title and # (e.g., "Table 1"); - and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample )
+#'
+#' @return An APA style formatted flextable object.
+#'
+#' @author Björn Büdenbender / Remi Theriault
+#'
+#' @export
+#' @importFrom magrittr "%>%"
+#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties add_header_lines bold italic
+format_flextable <- function(ft,font = "Times New Roman", fontsize=12,
+                             table_caption=c("Table x","Some Description of the Table")) {
+  nice.borders <- list("width" = 1, color = "black", style = "solid")
+  formatted_ft <- ft %>%
+    flextable::theme_booktabs(.) %>%
+    flextable::hline_top(part = "head", border = nice.borders) %>%
+    flextable::hline_bottom(part = "head", border = nice.borders) %>%
+    flextable::hline_top(part = "body", border = nice.borders) %>%
+    flextable::hline_bottom(part = "body", border = nice.borders) %>%
+    flextable::fontsize(part = "all", size = fontsize) %>%
+    flextable::font(part = "all", fontname = font) %>%
+    # align(align = "center", part = "all") %>%
+    # line_spacing(space = 1.5, part = "all") %>%
+    flextable::height(height = 0.55, part = "body") %>%
+    # hrule(rule = "exact", part = "all") %>%
+    flextable::height(height = 0.55, part = "head") %>%
+    flextable::set_table_properties(layout = "autofit") %>%
+    flextable::add_header_lines(values=rev(table_caption)) %>%
+    flextable::bold(part="header",i=1) %>%
+    flextable::italic(part="header",i=2)
+  return(formatted_ft)
+}
+
 #' Check if file exists, else append a integer number
 #'
 #' @description
@@ -836,3 +879,5 @@ get_number_of_decimals <- function(n){
   else nod <- 2
   return(nod)
 }
+
+
