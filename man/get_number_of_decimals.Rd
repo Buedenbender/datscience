@@ -10,16 +10,18 @@ get_number_of_decimals(n)
 \item{n}{Number of observations (e.g., participants in a study)}
 }
 \value{
-int the appropriate number of decimals, based on sample size (n)
+Integer the appropriate number of decimals, based on sample size (n)
 }
 \description{
-A simple convention for the determination of the appropriate number of decimals
-https://support.jmir.org/hc/en-us/articles/360019690851-Guidelines-for-Reporting-Statistics
-will be applied, e.g.,  n
-   - <100: no decimal,
-   - < 1000: 1 decimals,
-   - > 1001: 2 decimals
+A simple \href{https://support.jmir.org/hc/en-us/articles/360019690851-Guidelines-for-Reporting-Statistics}{convention}
+for the determination of the appropriate number of decimals
+will be applied, e.g.,  \emph{n}
+\itemize{
+\item < 100: no decimal
+\item < 1000: 1 decimals
+\item > 1001: 2 decimals
+}
 }
 \author{
-Björn Büdenbender
+Bjoern Buedenbender
 }

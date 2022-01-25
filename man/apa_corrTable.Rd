@@ -10,15 +10,17 @@ apa_corrTable(
   method = "pearson",
   rmDiag = FALSE,
   sig.level = 0.05,
-  filepath = "",
-  overwrite = FALSE
+  nod = c(2, -1),
+  filepath = NA,
+  overwrite = FALSE,
+  ...
 )
 }
 \arguments{
 \item{df}{Data.frame, mandatory argument. Consider filtering before passing it e.g. with dplyr::select() and dplyr::filter()}
 
-\item{summarystats}{A vector with the summary stats to be included at the bottom below the correlation.
-Options are one or all of c("mean","sd","median","range","min","max","skew","kurtosis","se")}
+\item{summarystats}{A vector with the summary stats to be included at the bottom below the correlation. Default is c("mean","sd")
+Options are one or all of c("mean","sd","median","range","min","max","skew","kurtosis","se"). If NA is given, no summarystats will be added.}
 
 \item{method}{Type of correlation. Options are currently: "pearson" or "spearman"}
 
@@ -26,22 +28,30 @@ Options are one or all of c("mean","sd","median","range","min","max","skew","kur
 
 \item{sig.level}{How many stars per level of significance, options include .05 .01 or .001}
 
+\item{nod}{(Optional) Integer or Integer Vector. Number of Decimals. In case of -1 a simple convention based
+on sample size is applied for determination of number of decimal points. See ?datscience::get_number_of_decimals.
+You can also provide an Integer vector, if you want different number of decimals for the correlations and the summary stats.
+The first integer determines nod for correlations, the second for summary stats. E.g., c(2,-1) would give 2 decimals
+for correlations and apply the convention for summary stats. Default is nod = c(2,-1).}
+
 \item{filepath}{(Optional) Path and filename were the APA ready table should be saved, options include the common filetypes
-.docx (Word), .pptx (Powerpoint), .html (Webpage)}
+.docx (Word), .pptx (Powerpoint), .html (Webpage). Default is filepath = NA. If NA is given, no file will be saved.}
 
 \item{overwrite}{(Optional) Should the file, if already existing be overwritten}
+
+\item{...}{(Optional), Additional arguments that can be passed to format_flextable (e.g., fontsize), please refer to ?datscience::format_flextable}
 }
 \value{
 A flextable object with APA ready correlation table.
 }
 \description{
 The Idea was inspired by a blog post of my colleague Remi Theriault
-https://remi-theriault.com/blog_table.html
+(see \href{https://remi-theriault.com/blog_table.html}{remi-theriault.com})
 Which utilized the ability of flextable to be able to get a nicely
 according to APA style formatted table directly from R into .docx (word)
 I built on that idea and created a function that creates a correlation table
 together with the summary stats of your choice
 }
 \author{
-Björn Büdenbender (Inspired by Remi Theriault)
+Bjoern Buedenbender (Inspired by Remi Theriault)
 }

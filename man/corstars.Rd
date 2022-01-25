@@ -14,6 +14,7 @@ corstars(
   labels_rows = colnames(x),
   labels_cols = labels_rows[1:length(labels_rows)],
   sig.level = 0.05,
+  nod = 2,
   caption = c("Correlation"),
   filename = ""
 )
@@ -36,6 +37,9 @@ corstars(
 \item{labels_cols}{Labels for columns. Length musst be same as number of variables - 1}
 
 \item{sig.level}{Significance level (.1 or .05)}
+
+\item{nod}{Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
+on sample size is applied for determination of number of decimal points. See ?datscience::get_number_of_decimals}
 
 \item{caption}{Caption for the table}
 
@@ -80,5 +84,5 @@ corstars(mtcars,
 )
 }
 \author{
-Dominik Vogel (Debugged by Björn Büdenbender)
+Dominik Vogel (Adapted by Bjoern Buedenbender)
 }

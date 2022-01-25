@@ -1,7 +1,7 @@
 Package: datscience
 Type: Package
 Title: Data Science Utility Functions
-Version: 0.1.1
+Version: 0.1.2
 Author: Björn Büdenbender
 Maintainer: Björn Büdenbender <b_buedenbender@yahoo.de>
 Description: Contains some utility functions for data science purposes.
@@ -25,7 +25,8 @@ Imports:
     flextable,
     stringr,
     tibble,
-    xfun
+    xfun,
+    rlang
 License: GPL-2 
 Encoding: UTF-8
 LazyData: true

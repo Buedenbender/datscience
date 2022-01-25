@@ -20,5 +20,5 @@ And saves it. Primarily a utility function used by others in the package. Gives 
 file by utilizing datscience::serialNext (from this package).
 }
 \author{
-Björn Büdenbender
+Bjoern Buedenbender
 }

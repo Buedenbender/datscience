@@ -33,5 +33,5 @@ Rcitation_appendix(
 Function to create a package table with the following columns: Packagename | Version | Maintainer | Citation
 }
 \author{
-Björn Büdenbender
+Bjoern Buedenbender
 }

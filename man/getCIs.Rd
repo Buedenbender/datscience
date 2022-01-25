@@ -18,7 +18,7 @@ Determines the CI for a vector of statistics / mutliple stats.
 As boot::boot.ci only returns CI for the first statistic in a boot_object
 getCIs (given a boot::boot object), creates CI for all statistics.
 Code by Ben Bolker, Check the
-original Source: https://stackoverflow.com/a/31818160/7318488
+original Source: \href{https://stackoverflow.com/a/31818160/7318488}{@stackoverflow}
 }
 \author{
 Ben Bolker

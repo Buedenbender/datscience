@@ -20,23 +20,25 @@ format_flextable(
 
 \item{fontsize}{Default is 12, bigger font size is not recommended.}
 
-\item{table_caption}{Takes a character vector, with - the Title and # (e.g., "Table 1"); - and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample )}
+\item{table_caption}{Takes a character vector,  the Title and # (e.g., "Table 1");
+- and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample)}
 
 \item{table_note}{Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
 Please note that you will need to manually set the formatting (i.e., setting italic for p values).}
 
-\item{...}{Additional Parameters, not utiliezd in this function, catches exception from passing of previous functions}
+\item{...}{(Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions}
 }
 \value{
 An APA style formatted flextable object.
 }
 \description{
-Formatting initially written by Remi Theriault, and advanced / wrapped in
-a function by me
-https://remi-theriault.com/blog_table.html
-Reference on what APA style for tables constitutes can be obtained here
-https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables
+This function takes a flextable object, and nicely applies APA 7th
+standard style formatting to it. \cr
+The initial idea for this function stems from
+\url{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
+Reference on what APA style for tables constitutes can be obtained on the
+\url{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
 }
 \author{
-Björn Büdenbender / Remi Theriault
+Bjoern Buedenbender / Remi Theriault
 }

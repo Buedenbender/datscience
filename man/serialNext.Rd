@@ -4,7 +4,7 @@
 \alias{serialNext}
 \title{Check if file exists, else append a integer number}
 \usage{
-serialNext(path, n_digits = 3, maxruns = 500)
+serialNext(path, n_digits = 3, maxruns = 500, ...)
 }
 \arguments{
 \item{path}{Character containing the path with fileextensions}
@@ -12,6 +12,8 @@ serialNext(path, n_digits = 3, maxruns = 500)
 \item{n_digits}{(Optional) Integer, number of leadings 0 before the filename. Default is n_digits = 3}
 
 \item{maxruns}{(Optional) Integer, Default is maxruns = 500.}
+
+\item{...}{(Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions}
 }
 \value{
 Character, a filename that currently does not exists, with indices.
@@ -19,8 +21,8 @@ Character, a filename that currently does not exists, with indices.
 \description{
 In cases you want to write to a file, however you do not want to override existing
 files this helper function checks if a file exists, if it does it just appends an integer to the filename
-Source originally by spacedman https://stackoverflow.com/a/25429755/7318488
+Source originally by user spacedman \url{https://stackoverflow.com/a/25429755/7318488}
 }
 \author{
-spacedman stackoverflow (advanced by Björn Büdenbender)
+spacedman stackoverflow (advanced by Bjoern Buedenbender)
 }

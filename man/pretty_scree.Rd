@@ -17,9 +17,10 @@ pretty_scree(parallel, fa, quant = 0.95)
 APA Ready Plot of Parallel Analyssis
 }
 \description{
-Creates an APA Plot of Parallel Analysis (Horn)
-Check the original Source: https://sakaluk.wordpress.com/2016/05/26/11-make-it-pretty-scree-plots-and-parallel-analysis-using-psych-and-ggplot2/#psych
+Creates an Screeplot Including a Parallel Analysis (Horn), formatted according to APA
+7th style. The original code was developed by John Sakaluk
+Check the original source: \href{https://sakaluk.wordpress.com/2016/05/26/11-make-it-pretty-scree-plots-and-parallel-analysis-using-psych-and-ggplot2/#psych}{at his wordpress blog}.
 }
 \author{
-John Sakaluk (Wrapped in a Function by Björn Büdenbender)
+John Sakaluk (Wrapped in a Function by Bjoern Buedenbender)
 }

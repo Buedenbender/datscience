@@ -44,5 +44,5 @@ This function provided with the plot object and the data.frame with CIs
 adds CI around the observd eigenvalues
 }
 \author{
-Björn Büdenbender
+Bjoern Buedenbender
 }

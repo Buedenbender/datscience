@@ -44,5 +44,5 @@ Allows for extraction of Eigenvalues based on Pearson
 as well as Polychoric Correlation Matrices
 }
 \author{
-Björn Büdenbender
+Bjoern Buedenbender
 }

@@ -1,0 +1,94 @@
+---
+title: "Documentation and Help in Packagebuilding"
+author: "Björn Büdenbender"
+date: "25.01.2022"
+output:
+  prettydoc::html_pretty:
+    theme: architect #architect leonids cayman
+    highlight: github # github vignette
+    math: katex #
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+# pacman::p_load(tidyverse, psych, haven, knitr, caret, conflicted)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  class.source = "foldable",
+	include = FALSE
+)
+knitr::opts_chunk$set(class.source = "foldable")
+# conflict_prefer("filter", "dplyr")
+```
+
+# 1. Long Term Goals
+
+-   Create Packagedown: <https://pkgdown.r-lib.org/>
+
+# 2. Build & Check
+
+Everything concerning Rstudio Build and Check
+
+## 2.1 Handling of Build Errors, Warnings and Notes
+
+### 2.1.1 Notes
+
+1. **Note: Timestamps**  
+    See also [stackoverflow](https://stackoverflow.com/questions/63613301/r-cmd-check-note-unable-to-verify-current-time)
+    
+    ```
+    Unable to verify
+    checking for future file timestamps ... NOTE
+    ```
+    
+    - **Solution**  
+    `Sys.setenv('*R_CHECK_SYSTEM_CLOCK*' = 0)`
+
+### 2.1.2 Warnings
+To be written
+
+### 2.1.3 Errors
+to be written
+
+## 2.2 Ignoring Addtional Files for Package Building
+Adding files or dirs to the .Rbuildignore  
+This is e.g., necessary for pkgdown files  
+```
+usethis::use_build_ignore("filetobe.ignored") 
+```
+See also, [this blog](https://blog.r-hub.io/2020/05/20/rbuildignore/)
+
+## 2.3 Ignoring Vignettes 
+Because rendering vignettes can be extremely ressource (time) intensive
+it sometimes is helpful, to prohibit their rendering during build.  
+
+**Steps**  
+
+1. Go to Rstudio 
+2. Project Options 
+3. Build Tools 
+    + Add `--no-build-vignettes`  to _build options_ 
+    + Add `--ignore-vignettes` to _check options_
+    
+For reference see [stackoverflow](https://stackoverflow.com/a/41945450/7318488)
+
+# 3. Roxygen Docstrings
+
+## 3.1 Formatting of docstrings
+
+A good reference list can be found here: [r-pkgs.org](https://r-pkgs.org/man.html#text-formatting)
+
+## 3.2 Previewing Changes
+
+Instead of Building the complete package you can preview docstrings by following
+these steps.
+
+**Steps**
+
+1. Render them with `ctrl + shift + d` 
+2. Update the loaded package with `devtools::load_all()` 
+3. Inspect the desired function with `?function_name`
+    + e.g. for datscience `?get_number_of_decimals`
