@@ -19,9 +19,9 @@ serialNext(path, n_digits = 3, maxruns = 500, ...)
 Character, a filename that currently does not exists, with indices.
 }
 \description{
-In cases you want to write to a file, however you do not want to override existing
-files this helper function checks if a file exists, if it does it just appends an integer to the filename
-Source originally by user spacedman \url{https://stackoverflow.com/a/25429755/7318488}
+In cases you want to write to a file which you do not want to override if existing.
+This helper function checks if a file exists, if it does it just appends an integer to the filename
+Source originally by user spacedman \href{https://stackoverflow.com/a/25429755/7318488}{on stackoverflow}.
 }
 \author{
 spacedman stackoverflow (advanced by Bjoern Buedenbender)

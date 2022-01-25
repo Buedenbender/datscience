@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^corr\.html$
 ^Appendix$
 ^Appendix/*$
 ^help_packagebuilding\.Rmd$
 ^help_packagebuilding\.html$
+^Excluded Functions\.R$

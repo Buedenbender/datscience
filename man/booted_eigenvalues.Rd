@@ -3,9 +3,9 @@
 \name{booted_eigenvalues}
 \alias{booted_eigenvalues}
 \title{Booted Eigenvalues
-Uses boot::boot to create x resampled Eigenvalues
+Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
 Eigenvalues can be extracted for PCA as well as EFA
-Different Factor Methods are available for more details, see ?psych::fa()
+Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
 Allows for extraction of Eigenvalues based on Pearson
 as well as Polychoric Correlation Matrices}
 \usage{
@@ -32,16 +32,19 @@ defaults to "pearson"}
 For available factor methods check psych::fa for more details, defaults to minres}
 }
 \value{
-A boot object (boot::boot()),
-that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls
+A boot object (\code{boot::boot()}),
+that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervalls
 }
 \description{
 Booted Eigenvalues
-Uses boot::boot to create x resampled Eigenvalues
+Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
 Eigenvalues can be extracted for PCA as well as EFA
-Different Factor Methods are available for more details, see ?psych::fa()
+Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
 Allows for extraction of Eigenvalues based on Pearson
 as well as Polychoric Correlation Matrices
+}
+\seealso{
+\code{\link[boot]{boot}}, \code{\link[psych]{fa}}
 }
 \author{
 Bjoern Buedenbender

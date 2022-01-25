@@ -7,9 +7,9 @@
 pretty_scree(parallel, fa, quant = 0.95)
 }
 \arguments{
-\item{parallel}{an parallel object returned by psych::fa.parallel}
+\item{parallel}{an parallel object returned by \code{psych::fa.parallel}}
 
-\item{fa}{either "pc" or "fa" the factor methods used for the parallel analysis}
+\item{fa}{either "pc" or "fa" factor methods are allowed for the parallel analysis}
 
 \item{quant}{default = .95 the quantile of the simulated values used to plot}
 }
@@ -20,6 +20,9 @@ APA Ready Plot of Parallel Analyssis
 Creates an Screeplot Including a Parallel Analysis (Horn), formatted according to APA
 7th style. The original code was developed by John Sakaluk
 Check the original source: \href{https://sakaluk.wordpress.com/2016/05/26/11-make-it-pretty-scree-plots-and-parallel-analysis-using-psych-and-ggplot2/#psych}{at his wordpress blog}.
+}
+\seealso{
+\code{\link[psych]{fa.parallel}}
 }
 \author{
 John Sakaluk (Wrapped in a Function by Bjoern Buedenbender)

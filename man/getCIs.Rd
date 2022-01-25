@@ -14,11 +14,14 @@ A data.frame with Confidence intervalls for
 all statistics, as well as the observed value
 }
 \description{
-Determines the CI for a vector of statistics / mutliple stats.
-As boot::boot.ci only returns CI for the first statistic in a boot_object
-getCIs (given a boot::boot object), creates CI for all statistics.
+Determines the CI for a vector of statistics / multiple stats.
+As \code{\link[boot]{boot.ci}} only returns CI for the first statistic in a boot_object
+getCIs (given a \code{\link[boot]{boot}} object), creates CI for all statistics.
 Code by Ben Bolker, Check the
 original Source: \href{https://stackoverflow.com/a/31818160/7318488}{@stackoverflow}
+}
+\seealso{
+\code{\link[boot]{boot.ci}}, \code{\link[boot]{boot}}
 }
 \author{
 Ben Bolker

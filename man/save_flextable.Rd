@@ -12,12 +12,17 @@ save_flextable(ft, filepath, overwrite = FALSE)
 \item{filepath}{Path and filename were the flextable object should be saved, options include the common filetypes
 .docx (Word), .pptx (Powerpoint), .html (Webpage)}
 
-\item{overwrite}{(Optional) Should the file, if already existing be overwritten}
+\item{overwrite}{(Optional) Boolean, default is FALSE. When overwrite is
+FALSE and the files already exists, a serialized version of the filename
+will be created (i.e., appending _001, or _002). Utilizes \code{\link{serialNext}}}
 }
 \description{
 Takes a flextable object (ft) and a filepath (path + filename + extension, e.g., "results/table1.docx")
 And saves it. Primarily a utility function used by others in the package. Gives the option not to overwrite a
-file by utilizing datscience::serialNext (from this package).
+file by utilizing \code{\link{serialNext}} see \code{?datscience::serialNext} for more deatils
+}
+\seealso{
+\code{\link{serialNext}}
 }
 \author{
 Bjoern Buedenbender

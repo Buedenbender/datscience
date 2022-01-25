@@ -45,7 +45,7 @@ Everything concerning Rstudio Build and Check
     ```
     
     - **Solution**  
-    `Sys.setenv('*R_CHECK_SYSTEM_CLOCK*' = 0)`
+    `Sys.setenv('_R_CHECK_SYSTEM_CLOCK_' = 0)`
 
 ### 2.1.2 Warnings
 To be written

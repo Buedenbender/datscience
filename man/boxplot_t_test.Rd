@@ -21,8 +21,7 @@ boxplot_t_test(df, dependentvars, group, adjust_p = "BH", ylimits = c(0, 150))
 List(Plot and stats)
 }
 \description{
-Based on the following: Guide
-https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/
+Based on the following: \href{https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/}{Guide}
 Given a vector of dependent variables (DV), creates boxplots
 with facetwrap for all DVs and calculates an independent sample T-Test
 to include significance bars

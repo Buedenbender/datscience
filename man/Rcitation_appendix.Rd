@@ -13,24 +13,59 @@ Rcitation_appendix(
 )
 }
 \arguments{
-\item{outdirectory}{(Optional) Character vector for the output directory (for the two files, .bib and .csv). Default is "Appendix/" in the current working directory (see with getwd())}
+\item{outdirectory}{(Optional) Character vector for the output directory
+(for the two files, .bib and .csv). Default is "Appendix/" in the current
+working directory (see with getwd())}
 
-\item{filename}{(Optional) Character vector. Custom name for the formatted APA style table, that should end with .docx. A docx file will be provided. If NA, a csv file of the table will be saved.}
+\item{filename}{(Optional) Character vector. Custom name for the formatted
+APA-style table, that should end with .docx. A docx file will be provided.
+If NA, a csv file of the table will be saved.}
 
-\item{overwrite}{(Optional) Boolean, default is FALSE. When overwrite is FALSE and the files already exists, a serialized version of the filename will be created (i.e., appending _001, or _002)}
+\item{overwrite}{(Optional) Boolean, default is FALSE. When overwrite is
+FALSE and the files already exists, a serialized version of the filename
+will be created (i.e., appending _001, or _002). Utilizes \code{\link{serialNext}}}
 
-\item{table_caption}{(Optional) Takes a character vector, with - the Title and # (e.g., "Table A1"); - and the descriptions; use capital case APA (e.g., "Complete List of All R-Packages Utilized and Dependencies" )}
+\item{table_caption}{Takes a character vector. For reference see see \code{\link{format_flextable}}.\cr
+Recommend are the following elements
+\itemize{
+\item Table + number (e.g., "\strong{Table 1}")
+\item The description, use APA capital case
+(e.g., "\emph{Sociodemographic Characteristics of the Total Sample}")
+}}
 
-\item{...}{(Optional), Additional arguments that can be passed to format_flextable (e.g., fontsize), please refer to ?datscience::format_flextable}
+\item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
+(e.g., fontsize, font ...)}
 }
 \value{
-- Creates the directory Appendix/ (if not otherwise specified)
-- In the "Appendix/" dir a .bib file is created for the citation
-- Either creates an APA 7th style table in a .docx or a .csv table
-- Additionally returns the flextable::flextable object with the APA 7th style table.
+Creates (respective returns, depending on the arguments specified) the following: \cr
+\itemize{
+\item Creates the directory Appendix/ (if no other outcomedirectory is specified)
+\item In the "Appendix/" dir a \emph{.bib} file is created for the citation
+\item Either creates an APA 7th style table in a \emph{.docx} or a plain \emph{.csv} table
+\item Additionally returns the \code{flextable::flextable} object with the APA 7th style table.
+}
 }
 \description{
-Function to create a package table with the following columns: Packagename | Version | Maintainer | Citation
+Function that allows the creation of a full APA-style table with all citations and informations
+on the R-packages utilized. \cr
+The table will contain the following columns (Packagename | Version | Maintainer | Citation) \cr
+The function writes two files (in a given directory)
+\itemize{
+\item The APA style table as \emph{.docx} (default, or as \emph{.csv} if desired)
+\item A \emph{.bib} file for the correct citations.
+}
+The citation column needs to be filled manually by importing the \emph{.bib}
+file in the reference manager
+of your choice (e.g., mendeley, endnote, ...) and pasting the citation in the
+respective column \cr
+\strong{Note} I highly recommend to cite the main packages used for your
+analysis in the methods / analyses section of your manuscript. However to
+give full credit to all packages / package authors, you can created this table
+and reference it in the appendix. This also increases reproduciblity, as every
+dependency to run your script becomes transparent.
+}
+\seealso{
+\code{\link[flextable]{flextable}}, \code{\link{serialNext}}, \code{\link{format_flextable}}
 }
 \author{
 Bjoern Buedenbender

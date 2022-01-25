@@ -4,8 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-
-This is a small statistics / datascience utility package.
+`datscience` is an R-package, 
 Some functions were not written directly by myself. E.g. the pretty_scree function
 was developed in a blogg post by John Sakaluk and just wrapped into a function 
 and briefly expanded by me. Functions that are not developed by me are always 

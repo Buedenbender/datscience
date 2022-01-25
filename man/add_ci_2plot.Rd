@@ -39,9 +39,13 @@ A new pretty_plot with the Parallel Analysis,
 including CIs around the observed Eigenvalues.
 }
 \description{
-After CIs are determined by a combination of booted_eigenvalues() & getCIs()
+After CIs are determined by a combination of
+\code{\link{booted_eigenvalues}} & \code{\link{getCIs}}
 This function provided with the plot object and the data.frame with CIs
 adds CI around the observd eigenvalues
+}
+\seealso{
+\code{\link{booted_eigenvalues}}, \code{\link{getCIs}}
 }
 \author{
 Bjoern Buedenbender

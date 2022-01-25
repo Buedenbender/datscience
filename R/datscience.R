@@ -39,14 +39,13 @@ get_number_of_decimals <- function(n) {
 #' Check if file exists, else append a integer number
 #'
 #' @description
-#' In cases you want to write to a file, however you do not want to override existing
-#' files this helper function checks if a file exists, if it does it just appends an integer to the filename
-#' Source originally by user spacedman \url{https://stackoverflow.com/a/25429755/7318488}
+#' In cases you want to write to a file which you do not want to override if existing.
+#' This helper function checks if a file exists, if it does it just appends an integer to the filename
+#' Source originally by user spacedman \href{https://stackoverflow.com/a/25429755/7318488}{on stackoverflow}.
 #' @param path Character containing the path with fileextensions
 #' @param n_digits  (Optional) Integer, number of leadings 0 before the filename. Default is n_digits = 3
 #' @param maxruns (Optional) Integer, Default is maxruns = 500.
 #' @param ... (Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions
-#'
 #' @return Character, a filename that currently does not exists, with indices.
 #'
 #' @author spacedman stackoverflow (advanced by Bjoern Buedenbender)
@@ -94,17 +93,21 @@ serialNext <- function(path,
 
 #' Format a Flextable in Accordance with APA 7th Standards
 #'
-#' @description This function takes a flextable object, and nicely applies APA 7th
+#' @description This function takes a flextable object, and applies APA 7th
 #' standard style formatting to it. \cr
 #' The initial idea for this function stems from
-#' \url{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
+#' \href{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
 #' Reference on what APA style for tables constitutes can be obtained on the
-#' \url{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
+#' \href{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
 #' @param ft A flextable object, to be formatted in accordance with APA. Required!
 #' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
 #' @param fontsize Default is 12, bigger font size is not recommended.
-#' @param table_caption Takes a character vector,  the Title and # (e.g., "Table 1");
-#' - and the descriptions; use capital case APA (e.g., Sociodemographic Characteristics of the Total Sample)
+#' @param table_caption Takes a character vector. Recommend are the following elements
+#' \itemize{
+#' \item Table + number (e.g., "\strong{Table 1}")
+#' \item The description, use APA capital case
+#' (e.g., "\emph{Sociodemographic Characteristics of the Total Sample}")
+#' }
 #' @param table_note Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
 #' Please note that you will need to manually set the formatting (i.e., setting italic for p values).
 #' @param ... (Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions
@@ -159,16 +162,20 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
 #' @description
 #' Takes a flextable object (ft) and a filepath (path + filename + extension, e.g., "results/table1.docx")
 #' And saves it. Primarily a utility function used by others in the package. Gives the option not to overwrite a
-#' file by utilizing datscience::serialNext (from this package).
+#' file by utilizing \code{\link{serialNext}} see \code{?datscience::serialNext} for more deatils
 #' @param ft A flextable object, to be formatted in accordance with APA. Required!
 #' @param filepath Path and filename were the flextable object should be saved, options include the common filetypes
 #' .docx (Word), .pptx (Powerpoint), .html (Webpage)
-#' @param overwrite (Optional) Should the file, if already existing be overwritten
+#' @param overwrite (Optional) Boolean, default is FALSE. When overwrite is
+#' FALSE and the files already exists, a serialized version of the filename
+#' will be created (i.e., appending _001, or _002). Utilizes \code{\link{serialNext}}
 #' @author Bjoern Buedenbender
 #'
 #' @export
 #' @importFrom xfun file_ext
 #' @importFrom flextable save_as_docx save_as_pptx save_as_html
+#'
+#' @seealso \code{\link{serialNext}}
 save_flextable <- function(ft, filepath, overwrite = FALSE) {
   #### Check if directory exists, if not create it
   if (!file.exists(dirname(filepath))) {
@@ -198,56 +205,9 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
   )
 }
 
-#' Rename specific columns of a data.frame
-#'
-#' Replace the column names of a data.frame entrywise for each element
-#' a given vector (old) with the element of another vector (new)
-#'
-#' @param df data.frame.
-#' @param old Character vector.
-#' @param new Character vector.
-#'
-#' @return df data.frame
-#'
-#' @examples
-#' iris.renamed <- cols_rename(iris, "Sepal.Length", "Sepal Length")
-#' iris.renamed2 <- cols_rename(
-#'   iris,
-#'   c("Sepal.Length", "Sepal.Width"),
-#'   c("SLength", "SWidth")
-#' )
-#' @export
-cols_rename <- function(df, old, new) {
-  if (!is.null(new)) {
-    for (i in seq_along(old)) {
-      names(df)[names(df) == old[i]] <- new[i]
-    }
-  }
-  return(df)
-}
-
-
-#' Searches Column Names Starting with an [Reg]Expression
-#'
-#' Prints out all Cols that start with a given string
-#' no need to at .. to the regex. Helpful for very long data.frames
-#'
-#' @param df data.frame.
-#' @param regex Character vector.
-#'
-#'
-#' @examples
-#' colstartsw(iris, "Sepal")
-#' @export
-colstartsw <- function(regex = "", df) {
-  s_phrase <- paste0("^", regex, "..")
-  print(names(df)[grepl(s_phrase, names(df))])
-}
-
 #'  Creates Boxplots with Significance Makers
 #' @description
-#' Based on the following: Guide
-#' https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/
+#' Based on the following: \href{https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/}{Guide}
 #' Given a vector of dependent variables (DV), creates boxplots
 #' with facetwrap for all DVs and calculates an independent sample T-Test
 #' to include significance bars
@@ -366,8 +326,9 @@ my_apa <- function(df) {
 #' Corstars - Correaltions in Console
 #' @description  Creates a pretty console correlation table (by Dominik Vogel)
 #' method : correlation method. "pearson"" or "spearman"" is supported
-#' the results will be displayed in html or latex format# labels_rows and labels_cols are character vectors for labeling rows and columns
-#' https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R
+#' the results will be displayed in html or latex format.
+#' labels_rows and labels_cols are character vectors for labeling rows and columns.
+#' \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 #'
 #' @param x a matrix containing the data
 #' @param method correlation method. "pearson"" or "spearman"" is supported
@@ -379,9 +340,12 @@ my_apa <- function(df) {
 #' @param labels_cols Labels for columns. Length musst be same as number of variables - 1
 #' @param sig.level Significance level (.1 or .05)
 #' @param nod Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
-#' on sample size is applied for determination of number of decimal points. See ?datscience::get_number_of_decimals
+#' on sample size is applied for determination of number of decimal points.
+#' See \code{\link{get_number_of_decimals}} or \code{?datscience::get_number_of_decimals}
 #' @param caption Caption for the table
 #' @param filename File name to save output to
+#'
+#' @seealso \code{\link{get_number_of_decimals}}
 #'
 #' @return Correlation table in console or file
 #'
@@ -389,6 +353,7 @@ my_apa <- function(df) {
 #'
 #'
 #' @examples
+#' \dontrun{
 #' # Console output
 #' corstars(mtcars,
 #'   method = "pearson", removeTriangle = "upper", result = "none",
@@ -416,6 +381,7 @@ my_apa <- function(df) {
 #'   ),
 #'   labels_cols = 1:10
 #' )
+#' }
 #' @export
 #' @import xtable
 #' @importFrom Hmisc rcorr
@@ -431,6 +397,8 @@ corstars <- function(x,
                      nod = 2,
                      caption = c("Correlation"),
                      filename = "") {
+  ### TODO: Add overwrite parameters
+
   # Requesting Namespace
   requireNamespace("Hmisc", quietly = TRUE)
   requireNamespace("xtable", quietly = TRUE)
@@ -521,20 +489,48 @@ corstars <- function(x,
 
 #' R Package Citations
 #' @description
-#' Function to create a package table with the following columns: Packagename | Version | Maintainer | Citation
-#   - Creates the apa style table .docx (default, or as csv if wanted) and a .bib for the citations
-#   - Requires some manual processing: Importing the .bib in
-#     in the Reference Managementtool, e.g. Mendeley, and adding them to the table
-#' @param outdirectory (Optional) Character vector for the output directory (for the two files, .bib and .csv). Default is "Appendix/" in the current working directory (see with getwd())
-#' @param filename (Optional) Character vector. Custom name for the formatted APA style table, that should end with .docx. A docx file will be provided. If NA, a csv file of the table will be saved.
-#' @param overwrite (Optional) Boolean, default is FALSE. When overwrite is FALSE and the files already exists, a serialized version of the filename will be created (i.e., appending _001, or _002)
-#' @param table_caption (Optional) Takes a character vector, with - the Title and # (e.g., "Table A1"); - and the descriptions; use capital case APA (e.g., "Complete List of All R-Packages Utilized and Dependencies" )
-#' @param ... (Optional), Additional arguments that can be passed to format_flextable (e.g., fontsize), please refer to ?datscience::format_flextable
-#' @return  - Creates the directory Appendix/ (if not otherwise specified)
-#' - In the "Appendix/" dir a .bib file is created for the citation
-#' - Either creates an APA 7th style table in a .docx or a .csv table
-#' - Additionally returns the flextable::flextable object with the APA 7th style table.
-#'
+#' Function that allows the creation of a full APA-style table with all citations and informations
+#' on the R-packages utilized. \cr
+#' The table will contain the following columns (Packagename | Version | Maintainer | Citation) \cr
+#' The function writes two files (in a given directory)
+#' \itemize{
+#' \item The APA style table as \emph{.docx} (default, or as \emph{.csv} if desired)
+#' \item A \emph{.bib} file for the correct citations.
+#' }
+#' The citation column needs to be filled manually by importing the \emph{.bib}
+#' file in the reference manager
+#' of your choice (e.g., mendeley, endnote, ...) and pasting the citation in the
+#' respective column \cr
+#' \strong{Note} I highly recommend to cite the main packages used for your
+#' analysis in the methods / analyses section of your manuscript. However to
+#' give full credit to all packages / package authors, you can created this table
+#' and reference it in the appendix. This also increases reproduciblity, as every
+#' dependency to run your script becomes transparent.
+#' @param outdirectory (Optional) Character vector for the output directory
+#' (for the two files, .bib and .csv). Default is "Appendix/" in the current
+#' working directory (see with getwd())
+#' @param filename (Optional) Character vector. Custom name for the formatted
+#' APA-style table, that should end with .docx. A docx file will be provided.
+#' If NA, a csv file of the table will be saved.
+#' @param overwrite (Optional) Boolean, default is FALSE. When overwrite is
+#' FALSE and the files already exists, a serialized version of the filename
+#' will be created (i.e., appending _001, or _002). Utilizes \code{\link{serialNext}}
+#' @param table_caption Takes a character vector. For reference see see \code{\link{format_flextable}}.\cr
+#' Recommend are the following elements
+#' \itemize{
+#' \item Table + number (e.g., "\strong{Table 1}")
+#' \item The description, use APA capital case
+#' (e.g., "\emph{Sociodemographic Characteristics of the Total Sample}")
+#' }
+#' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
+#' (e.g., fontsize, font ...)
+#' @return  Creates (respective returns, depending on the arguments specified) the following: \cr
+#' \itemize{
+#' \item Creates the directory Appendix/ (if no other outcomedirectory is specified)
+#' \item In the "Appendix/" dir a \emph{.bib} file is created for the citation
+#' \item Either creates an APA 7th style table in a \emph{.docx} or a plain \emph{.csv} table
+#' \item Additionally returns the \code{flextable::flextable} object with the APA 7th style table.
+#' }
 #' @author Bjoern Buedenbender
 #'
 #'
@@ -547,6 +543,8 @@ corstars <- function(x,
 #' @importFrom pacman p_loaded
 #' @importFrom flextable flextable
 #' @importFrom rlang .data
+#'
+#' @seealso \code{\link[flextable]{flextable}}, \code{\link{serialNext}}, \code{\link{format_flextable}}
 Rcitation_appendix <- function(outdirectory = "Appendix",
                                filename = "Appendix - R Packages.docx",
                                overwrite = FALSE,
@@ -635,8 +633,8 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 #' Creates an Screeplot Including a Parallel Analysis (Horn), formatted according to APA
 #' 7th style. The original code was developed by John Sakaluk
 #' Check the original source: \href{https://sakaluk.wordpress.com/2016/05/26/11-make-it-pretty-scree-plots-and-parallel-analysis-using-psych-and-ggplot2/#psych}{at his wordpress blog}.
-#' @param parallel an parallel object returned by psych::fa.parallel
-#' @param fa either "pc" or "fa" the factor methods used for the parallel analysis
+#' @param parallel an parallel object returned by \code{psych::fa.parallel}
+#' @param fa either "pc" or "fa" factor methods are allowed for the parallel analysis
 #' @param quant default = .95 the quantile of the simulated values used to plot
 #'
 #' @return APA Ready Plot of Parallel Analyssis
@@ -646,6 +644,7 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 #'
 #' @export
 #' @import ggplot2
+#' @seealso \code{\link[psych]{fa.parallel}}
 
 pretty_scree <- function(parallel, fa, quant = .95) {
   num <- eigenvalue <- type <- NULL
@@ -735,9 +734,9 @@ pretty_scree <- function(parallel, fa, quant = .95) {
 
 
 #' Booted Eigenvalues
-#' Uses boot::boot to create x resampled Eigenvalues
+#' Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
 #' Eigenvalues can be extracted for PCA as well as EFA
-#' Different Factor Methods are available for more details, see ?psych::fa()
+#' Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
 #' Allows for extraction of Eigenvalues based on Pearson
 #' as well as Polychoric Correlation Matrices
 #'
@@ -750,15 +749,15 @@ pretty_scree <- function(parallel, fa, quant = .95) {
 #' @param fm = factor method to use, irrelevant for pca.
 #' For available factor methods check psych::fa for more details, defaults to minres
 #'
-#' @return A boot object (boot::boot()),
-#' that contains SE for all Eigenvalues in DF, can be passed to getCIs() to creacte Confidence Intervalls
+#' @return A boot object (\code{boot::boot()}),
+#' that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervalls
 #'
 #' @author Bjoern Buedenbender
 #'
 #' @export
 #' @importFrom boot boot
 #' @importFrom psych fa polychoric
-
+#' @seealso \code{\link[boot]{boot}}, \code{\link[psych]{fa}}
 booted_eigenvalues <-
   function(df,
            iterations = 1000,
@@ -810,9 +809,9 @@ booted_eigenvalues <-
 #' Get Boot Strapped CIs
 #'
 #' @description
-#' Determines the CI for a vector of statistics / mutliple stats.
-#' As boot::boot.ci only returns CI for the first statistic in a boot_object
-#' getCIs (given a boot::boot object), creates CI for all statistics.
+#' Determines the CI for a vector of statistics / multiple stats.
+#' As \code{\link[boot]{boot.ci}} only returns CI for the first statistic in a boot_object
+#' getCIs (given a \code{\link[boot]{boot}} object), creates CI for all statistics.
 #' Code by Ben Bolker, Check the
 #' original Source: \href{https://stackoverflow.com/a/31818160/7318488}{@@stackoverflow}
 #'
@@ -826,6 +825,8 @@ booted_eigenvalues <-
 #' @export
 #' @importFrom boot boot.ci
 #' @importFrom utils tail
+#'
+#' @seealso \code{\link[boot]{boot.ci}}, \code{\link[boot]{boot}}
 
 getCIs <- function(boot_obj) {
   getCI <- function(x, w) {
@@ -844,9 +845,8 @@ getCIs <- function(boot_obj) {
 
 
 #' Add CI to Pretty Screeplot
-#'
-#' @description
-#' After CIs are determined by a combination of booted_eigenvalues() & getCIs()
+#' @description After CIs are determined by a combination of
+#' \code{\link{booted_eigenvalues}} & \code{\link{getCIs}}
 #' This function provided with the plot object and the data.frame with CIs
 #' adds CI around the observd eigenvalues
 #'
@@ -870,7 +870,7 @@ getCIs <- function(boot_obj) {
 #' @importFrom dplyr rename select mutate
 #' @importFrom ggplot2 geom_ribbon geom_errorbar aes
 #' @importFrom magrittr "%>%"
-
+#' @seealso \code{\link{booted_eigenvalues}}, \code{\link{getCIs}}
 add_ci_2plot <- function(plot,
                          CIs,
                          met = "normal",
@@ -921,28 +921,39 @@ add_ci_2plot <- function(plot,
 #' @description
 #' The Idea was inspired by a blog post of my colleague Remi Theriault
 #' (see \href{https://remi-theriault.com/blog_table.html}{remi-theriault.com})
-#' Which utilized the ability of flextable to be able to get a nicely
-#' according to APA style formatted table directly from R into .docx (word)
+#' Which utilized the ability of \code{\link[flextable]{flextable}} to be able to get an
+#' APA-style formatted table directly from R into .docx (word)
 #' I built on that idea and created a function that creates a correlation table
 #' together with the summary stats of your choice
-
-#' @param df Data.frame, mandatory argument. Consider filtering before passing it e.g. with dplyr::select() and dplyr::filter()
-#' @param summarystats A vector with the summary stats to be included at the bottom below the correlation. Default is c("mean","sd")
-#' Options are one or all of c("mean","sd","median","range","min","max","skew","kurtosis","se"). If NA is given, no summarystats will be added.
+#'
+#' @param df Data.frame, mandatory argument. Consider filtering before passing it
+#' e.g. with dplyr::select() and dplyr::filter()
+#' @param summarystats A vector with the summary stats to be included at the bottom
+#' below the correlation. Default is c("mean","sd")
+#' Options are one or all of c("mean","sd","median","range","min","max","skew",
+#' "kurtosis","se"). If NA is given, no summarystats will be added.
 #' @param method Type of correlation. Options are currently: "pearson" or "spearman"
 #' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
-#' @param sig.level How many stars per level of significance, options include .05 .01 or .001
-#' @param nod (Optional) Integer or Integer Vector. Number of Decimals. In case of -1 a simple convention based
-#' on sample size is applied for determination of number of decimal points. See ?datscience::get_number_of_decimals.
-#' You can also provide an Integer vector, if you want different number of decimals for the correlations and the summary stats.
-#' The first integer determines nod for correlations, the second for summary stats. E.g., c(2,-1) would give 2 decimals
-#' for correlations and apply the convention for summary stats. Default is nod = c(2,-1).
-#' @param filepath (Optional) Path and filename were the APA ready table should be saved, options include the common filetypes
-#' .docx (Word), .pptx (Powerpoint), .html (Webpage). Default is filepath = NA. If NA is given, no file will be saved.
-#' @param overwrite (Optional) Should the file, if already existing be overwritten
-#' @param ... (Optional), Additional arguments that can be passed to format_flextable (e.g., fontsize), please refer to ?datscience::format_flextable
+#' @param sig.level How many stars per level of significance, options include
+#' .05 .01 or .001
+#' @param nod (Optional) Integer or Integer Vector. Number of Decimals.
+#' In case of -1 a simple convention based on sample size is applied for determination
+#' of number of decimal points. See ?datscience::get_number_of_decimals.
+#' You can also provide an Integer vector, if you want different number of decimals
+#' for the correlations and the summary stats. The first integer determines nod for
+#' correlations, the second for summary stats. E.g., c(2,-1) would give 2 decimals
+#' for correlations and apply the convention for summary stats. Default is nod = c(2,-1). \cr
+#' See \code{\link{get_number_of_decimals}} or\code{?datscience::get_number_of_decimals}
+#' @param filepath (Optional) Path and filename were the APA ready table should
+#' be saved, options include the common filetypes .docx (Word), .pptx (Powerpoint),
+#' .html (Webpage). Default is filepath = NA. If NA is given, no file will be saved.
+#' @param overwrite (Optional) Boolean, default is FALSE. When overwrite is
+#' FALSE and the files already exists, a serialized version of the filename
+#' will be created (i.e., appending _001, or _002). Utilizes \code{\link{serialNext}}
+#' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
+#' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
-#' @return A flextable object with APA ready correlation table.
+#' @return A \code{\link[flextable]{flextable}} object with APA ready correlation table.
 #'
 #' @author Bjoern Buedenbender (Inspired by Remi Theriault)
 #'
@@ -952,12 +963,15 @@ add_ci_2plot <- function(plot,
 #' @importFrom psych describe
 #' @importFrom tibble rownames_to_column
 #' @importFrom flextable flextable
+#'
+#' @seealso \code{\link{get_number_of_decimals}}, \code{\link{format_flextable}},
+#' \code{\link{serialNext}}
 apa_corrTable <- function(df,
                           summarystats = c("mean", "sd"),
                           method = "pearson",
                           rmDiag = FALSE,
                           sig.level = 0.05,
-                          nod = c(2,-1),
+                          nod = c(2, -1),
                           filepath = NA,
                           overwrite = FALSE,
                           ...) {
@@ -967,11 +981,11 @@ apa_corrTable <- function(df,
   if (length(nod) == 1) {
     # Apply convention for number of decimals (nod) if -1
     if (nod == -1) nod <- get_number_of_decimals(nrow(df))
-    nod_cor = nod
-    nod_sum = nod
-  } else if (length(nod) == 2){
-    if (nod[1] == -1) nod_cor <- get_number_of_decimals(nrow(df)) else nod_cor = nod[1]
-    if (nod[2] == -1) nod_sum <- get_number_of_decimals(nrow(df)) else nod_sum = nod[2]
+    nod_cor <- nod
+    nod_sum <- nod
+  } else if (length(nod) == 2) {
+    if (nod[1] == -1) nod_cor <- get_number_of_decimals(nrow(df)) else nod_cor <- nod[1]
+    if (nod[2] == -1) nod_sum <- get_number_of_decimals(nrow(df)) else nod_sum <- nod[2]
   }
 
 
@@ -987,7 +1001,7 @@ apa_corrTable <- function(df,
 
   ### Getting Descriptives
   # Determine which summarystats are requested
-  indices <-  match(c("mean","sd","median","range","min","max","skew","kurtosis","se"),summarystats)
+  indices <- match(c("mean", "sd", "median", "range", "min", "max", "skew", "kurtosis", "se"), summarystats)
   for (stat in stats::na.omit(summarystats[indices])) {
     correlations[stringr::str_to_title(stat), ] <- round(psych::describe(df)[[stat]], nod_sum)
   }

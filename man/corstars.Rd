@@ -39,7 +39,8 @@ corstars(
 \item{sig.level}{Significance level (.1 or .05)}
 
 \item{nod}{Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
-on sample size is applied for determination of number of decimal points. See ?datscience::get_number_of_decimals}
+on sample size is applied for determination of number of decimal points.
+See \code{\link{get_number_of_decimals}} or \code{?datscience::get_number_of_decimals}}
 
 \item{caption}{Caption for the table}
 
@@ -51,10 +52,12 @@ Correlation table in console or file
 \description{
 Creates a pretty console correlation table (by Dominik Vogel)
 method : correlation method. "pearson"" or "spearman"" is supported
-the results will be displayed in html or latex format# labels_rows and labels_cols are character vectors for labeling rows and columns
-https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R
+the results will be displayed in html or latex format.
+labels_rows and labels_cols are character vectors for labeling rows and columns.
+\href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 }
 \examples{
+\dontrun{
 # Console output
 corstars(mtcars,
   method = "pearson", removeTriangle = "upper", result = "none",
@@ -82,6 +85,10 @@ corstars(mtcars,
   ),
   labels_cols = 1:10
 )
+}
+}
+\seealso{
+\code{\link{get_number_of_decimals}}
 }
 \author{
 Dominik Vogel (Adapted by Bjoern Buedenbender)
