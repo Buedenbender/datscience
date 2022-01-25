@@ -137,7 +137,8 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
     flextable::height(height = 0.55, part = "head") %>%
     flextable::set_table_properties(layout = "autofit")
   # If provided, add table caption
-  if (!is.na(table_caption)) {
+  if ((length(table_caption) == 1 && !is.na(table_caption)) ||
+    length(table_caption) > 1) {
     formatted_ft <- formatted_ft %>%
       flextable::add_header_lines(values = rev(table_caption)) %>%
       flextable::bold(part = "header", i = 1) %>%

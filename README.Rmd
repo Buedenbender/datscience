@@ -1,9 +1,25 @@
+---
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # datscience R-Packaage
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains
@@ -30,7 +46,7 @@ publication manual) correlation table directly into a Word file
 
 datscience provides an easy solution for this task.
 
-``` r
+```{r eval=FALSE}
 datscience::apa_corrTable(df = iris[1:4], summarystats = c("median","range"),
                           filepath = "man/figures/CorrelationTable_iris.docx",
                           table_caption = c("Table 1","Correlation and Descriptive Statistics")
@@ -40,13 +56,13 @@ datscience::apa_corrTable(df = iris[1:4], summarystats = c("median","range"),
 This creates the path (i.e., directories) `man/figures/` in the current
 working directory of R and also the desired word file (see below).
 
-**Screenshot of “CorrelationTable\_iris.docx”** ![Screenshot of
-apa\_corrTable() example](man/figures/README-apa_corrTableExample.png)
+**Screenshot of "CorrelationTable_iris.docx"** ![Screenshot of
+apa_corrTable() example](man/figures/README-apa_corrTableExample.png)
 
 **Please Note:** The code for the formatting was inspired and adapted
 from the blog post of [Rémi
 Thériault](https://remi-theriault.com/blog_table.html), the correlations
-with marked significance from [Dominik Vogel’s
+with marked significance from [Dominik Vogel's
 package](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)
 
 ### 
@@ -62,7 +78,7 @@ devtools::install_github("Buedenbender/datscience")
 ```
 
 Plesae note, that datscience depends on many useful packages, which will
-be installed (e.g. dplyr, ggplot2, …).
+be installed (e.g. dplyr, ggplot2, ...).
 
 #### Installation Troubleshoot
 
@@ -96,33 +112,25 @@ This function resolves around three other useful functions from this
 package.
 
 1.  Creates the correlation table by calling
-    `datscience::corstars()`[<sup>\[1\]</sup>](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)).
+    `datscience::corstars()`[<sup>[1]</sup>](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)).
 
-    ``` r
+    ```{r}
     datscience::corstars(iris[1:4])
-    #>              Sepal.Length Sepal.Width Petal.Length
-    #> Sepal.Length                                      
-    #> Sepal.Width     -0.12                             
-    #> Petal.Length     0.87****   -0.43****             
-    #> Petal.Width      0.82****   -0.37****     0.96****
     ```
 
 2.  Appends desired summary stats to, these are generated with
     `psych::describe()`
 
 3.  Formatting of the `flextable::flextable()` object to APA 7th style,
-    by utilizing the `format_flextable()` function. To illustrate the
-    `format_flextable()` function, we just plot the first 5 rows
-    (`head()`) of the iris dataset
+    by utilizing the `format_flextable()` function. To illustrate the 
+    `format_flextable()` function, we just plot the first
+    5 rows (`head()`) of the iris dataset
 
-    ``` r
+    ```{r}
     datscience::format_flextable(flextable::flextable(head(iris,5)), 
                                  table_caption = c("Table 2", "Illustrating Functionality of format_flextable()"))
     ```
-
     ![imagefailedtoload](man/figures/README-unnamed-chunk-4-1.png)
-
-4.  Utilizing the `datscience::save_flextable()` function, which savely
-    (i.e., prohibiting overwrite of files by serializing the naming)
-    write the flextable object to a Word .docx file \#TODO: INCLUDE
-    Reference to Vignettes OR Include Factor Analysis complete Example
+4. Utilizing the `datscience::save_flextable()` function, which savely (i.e., prohibiting overwrite of files by serializing the naming) write the flextable object to a Word .docx file
+\#TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis
+complete Example

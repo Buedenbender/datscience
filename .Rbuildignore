@@ -5,3 +5,8 @@
 ^help_packagebuilding\.Rmd$
 ^help_packagebuilding\.html$
 ^Excluded Functions\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^README\.Rmd$
