@@ -107,13 +107,12 @@ package.
     #> Petal.Width      0.82****   -0.37****     0.96****
     ```
 
-2.  Appends desired summary stats to, these are generated with
-    `psych::describe()`
+2.  Appends desired summary stats to the flextable.
 
 3.  Formatting of the `flextable::flextable()` object to APA 7th style,
-    by utilizing the `format_flextable()` function. To illustrate the
-    `format_flextable()` function, we just plot the first 5 rows
-    (`head()`) of the iris dataset
+    by utilizing the `format_flextable()` function.  
+    To illustrate the function, we plot here the first 5 rows of the
+    iris data set.
 
     ``` r
     datscience::format_flextable(flextable::flextable(head(iris,5)), 
@@ -122,7 +121,9 @@ package.
 
     ![imagefailedtoload](man/figures/README-unnamed-chunk-4-1.png)
 
-4.  Utilizing the `datscience::save_flextable()` function, which savely
-    (i.e., prohibiting overwrite of files by serializing the naming)
-    write the flextable object to a Word .docx file \#TODO: INCLUDE
-    Reference to Vignettes OR Include Factor Analysis complete Example
+4.  Utilizing the `datscience::save_flextable()` function. This will
+    savely (i.e., prohibiting overwrite of files by serializing the
+    naming) write the flextable object to a Word (.docx) file
+
+<!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
+<!-- complete Example -->
