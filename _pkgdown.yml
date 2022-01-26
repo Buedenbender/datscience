@@ -2,5 +2,4 @@ url: https://buedenbender.github.io/datscience/
 template:
   bootstrap: 5
   bootswatch: lumen
-# Possible options to consider: yeti, lumen, flatly, sandstone,
-# All optpions + preview here https://bootswatch.com/
+

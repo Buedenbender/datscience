@@ -104,4 +104,4 @@ everything up again. Follow these steps in order to update only the main page of
 1. Change the `README.rmd` according to your wishes
 2. Knit this markdown file (`ctrl + umsch + k`)
 3. Run `pkgdown::build_home()`
-4. Commit and push to github
+4. Run `usethis::use_pkgdown_github_pages()`

@@ -87,7 +87,7 @@ Sys.setenv(R_REMOTES_STANDALONE="true")
 remotes::install_github("Buedenbender/datscience")
 ```
 
-## Example
+## Examples
 
 The functions I appreciated the most, and frequently use are
 `datscience::format_flextable()` and `datscience::apa_corrTable()`
@@ -123,7 +123,7 @@ package.
     )
     ```
 
-    ![imagefailedtoload](man/figures/README-format_flextableIris.png)
+    ![test](man/figures/README-format_flextableIris.png)
 
 4.  Utilizing the `datscience::save_flextable()` function. This will
     savely (i.e., prohibiting overwrite of files by serializing the
@@ -143,7 +143,9 @@ loadings from a prinicipal component analysis (PCA, `psych::prinicial`)
 
 **Let’s first create an exemplary
 PCA**<sup>\[[1](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor),
-[2](https://personality-project.org/r/psych/help/principal.html)\]</sup>:
+[2](https://personality-project.org/r/psych/help/principal.html)\]</sup>
+**and extract the factor loadings**: (Which is also more conveniently
+packaged in the function `apa_factorLoadings()` function)
 
 ``` r
 # Creation of an Example Prinicipal Component Analysis
