@@ -144,8 +144,9 @@ loadings from a prinicipal component analysis (PCA, `psych::prinicial`)
 **Let’s first create an exemplary
 PCA**<sup>\[[1](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor),
 [2](https://personality-project.org/r/psych/help/principal.html)\]</sup>
-**and extract the factor loadings**: (Which is also more conveniently
-packaged in the function `apa_factorLoadings()` function)
+**and extract the factor loadings**:  
+(Which is also more conveniently packaged in the function
+`apa_factorLoadings()` function)
 
 ``` r
 # Creation of an Example Prinicipal Component Analysis
