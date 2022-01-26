@@ -82,10 +82,11 @@ The overall goal was to improve the workflow of data analysis and formatting cha
 <p><strong>Example:</strong> Get a <em>nicely</em> formatted (in accordance with APA 7th publication manual) correlation table directly into a Word file (*.docx).</p>
 <p>datscience provides an easy solution for this task.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/apa_corrTable.html">apa_corrTable</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, summarystats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>,<span class="st">"range"</span><span class="op">)</span>,
-                          filepath <span class="op">=</span> <span class="st">"man/figures/CorrelationTable_iris.docx"</span>,
-                          table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>,<span class="st">"Correlation and Descriptive Statistics"</span><span class="op">)</span>
-                          <span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/apa_corrTable.html">apa_corrTable</a></span><span class="op">(</span>
+  df <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, summarystats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"range"</span><span class="op">)</span>,
+  filepath <span class="op">=</span> <span class="st">"man/figures/CorrelationTable_iris.docx"</span>,
+  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"Correlation and Descriptive Statistics"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p>This creates the path (i.e., directories) <code>man/figures/</code> in the current working directory of R and also the desired word file (see below).</p>
 <p><strong>Screenshot of “CorrelationTable_iris.docx”</strong> <img src="reference/figures/README-apa_corrTableExample.png" alt="Screenshot of apa_corrTable() example"></p>
 <p><strong>Please Note:</strong> The code for the formatting was inspired and adapted from the blog post of <a href="https://remi-theriault.com/blog_table.html" class="external-link">Rémi Thériault</a>, the correlations with marked significance from <a href="https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R" class="external-link">Dominik Vogel’s package</a></p>
@@ -116,6 +117,9 @@ with the remotes package in standalone mode in a fresh R-sessions (no packages l
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>The functions I appreciated the most, and frequently use are <code><a href="reference/format_flextable.html">datscience::format_flextable()</a></code> and <code><a href="reference/apa_corrTable.html">datscience::apa_corrTable()</a></code></p>
+<div class="section level3">
+<h3 id="apa_corrtable-function">apa_corrTable() Function<a class="anchor" aria-label="anchor" href="#apa_corrtable-function"></a>
+</h3>
 <p>The <code><a href="reference/apa_corrTable.html">datscience::apa_corrTable()</a></code> function was already showcased aboved. This function resolves around three other useful functions from this package.</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -133,15 +137,53 @@ with the remotes package in standalone mode in a fresh R-sessions (no packages l
 <p>Formatting of the <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable::flextable()</a></code> object to APA 7th style, by utilizing the <code><a href="reference/format_flextable.html">format_flextable()</a></code> function.<br>
 To illustrate the function, we plot here the first 5 rows of the iris data set.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span>, 
-                             table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Illustrating Functionality of format_flextable()"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
+  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Illustrating Functionality of format_flextable()"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="reference/figures/README-unnamed-chunk-4-1.png" alt=""><p class="caption">imagefailedtoload</p>
+<img src="reference/figures/README-format_flextableIris.png" alt=""><p class="caption">imagefailedtoload</p>
 </div>
 </li>
 <li><p>Utilizing the <code><a href="reference/save_flextable.html">datscience::save_flextable()</a></code> function. This will savely (i.e., prohibiting overwrite of files by serializing the naming) write the flextable object to a Word (.docx) file</p></li>
 </ol>
-<!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis --><!-- complete Example -->
+</div>
+<div class="section level3">
+<h3 id="format_flextable-function">format_flextable() Function<a class="anchor" aria-label="anchor" href="#format_flextable-function"></a>
+</h3>
+<p>The flextable package is so versatile and it was exactly what I was looking for to get nicely formatted tables directly from R(studio) into Word. The same holds true for the <code><a href="reference/format_flextable.html">datscience::format_flextable()</a></code> function from the datscience package. It just applies some repetitive formatting necessary to convert a flextable to a “publication ready” APA formatted table.</p>
+<p>One example of the flexibility would be to just try to print the factor loadings from a prinicipal component analysis (PCA, <code>psych::prinicial</code>)</p>
+<p><strong>Let’s first create an exemplary PCA</strong><sup>[<a href="https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor" class="external-link">1</a>, <a href="https://personality-project.org/r/psych/help/principal.html" class="external-link">2</a>]</sup>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Creation of an Example Prinicipal Component Analysis</span>
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">psych</span>, <span class="va">dplyr</span><span class="op">)</span>
+<span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu">principal</span><span class="op">(</span><span class="va">Harman74.cor</span><span class="op">$</span><span class="va">cov</span>, <span class="fl">4</span>, rotate <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span>
+<span class="va">pc_loadings</span> <span class="op">&lt;-</span> <span class="va">pc</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">fa.sort</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="va">.</span><span class="op">[[</span><span class="st">"loadings"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span>
+    <span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,
+    <span class="op">~</span> <span class="fu">if_else</span><span class="op">(</span><span class="op">(</span><span class="va">.</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">bind_cols</span><span class="op">(</span>Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,
+            Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,
+            Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,<span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><strong>Formatting these loadings to APA with just one function:</strong></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">formatted_loadings</span> <span class="op">&lt;-</span> <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">pc_loadings</span><span class="op">)</span>,
+                                                   table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>,<span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">formatted_loadings</span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-format_flextableExample.png" alt=""><p class="caption">imagefailedtoload</p>
+</div>
+<!-- ### Additional Remarks -->
+<!-- To Be Added Vignette on "Normal" Factor Analysis -->
+<!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
+<!-- complete Example -->
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
