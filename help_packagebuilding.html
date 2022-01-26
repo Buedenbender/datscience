@@ -82,7 +82,7 @@ See also <a href="https://stackoverflow.com/questions/63613301/r-cmd-check-note-
 checking for future file timestamps ... NOTE</code></pre>
 <ul>
 <li><strong>Solution</strong><br />
-<code>Sys.setenv(&#39;*R_CHECK_SYSTEM_CLOCK*&#39; = 0)</code></li>
+<code>Sys.setenv(&#39;_R_CHECK_SYSTEM_CLOCK_&#39; = 0)</code></li>
 </ul></li>
 </ol>
 </div>
@@ -135,6 +135,19 @@ This is e.g., necessary for pkgdown files</p>
 <ul>
 <li>e.g. for datscience <code>?get_number_of_decimals</code></li>
 </ul></li>
+</ol>
+</div>
+</div>
+<div id="pkgdown-creation" class="section level1">
+<h1>4. pkgdown Creation</h1>
+<div id="update-the-index-main-page" class="section level2">
+<h2>4.1 Update the Index / Main Page</h2>
+<p>The advantage of just updating the index / main is that is way faster than building everything up again. Follow these steps in order to update only the main page of the <a href="https://buedenbender.github.io/datscience/">github pages</a></p>
+<ol style="list-style-type: decimal">
+<li>Change the <code>README.rmd</code> according to your wishes</li>
+<li>Knit this markdown file (<code>ctrl + umsch + k</code>)</li>
+<li>Run <code>pkgdown::build_home()</code></li>
+<li>Commit and push to github</li>
 </ol>
 </div>
 </div>

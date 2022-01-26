@@ -92,3 +92,16 @@ these steps.
 2. Update the loaded package with `devtools::load_all()` 
 3. Inspect the desired function with `?function_name`
     + e.g. for datscience `?get_number_of_decimals`
+    
+    
+# 4. pkgdown Creation
+
+## 4.1 Update the Index / Main Page
+
+The advantage of just updating the index / main is that is way faster than building
+everything up again. Follow these steps in order to update only the main page of the [github pages](https://buedenbender.github.io/datscience/)
+
+1. Change the `README.rmd` according to your wishes
+2. Knit this markdown file (`ctrl + umsch + k`)
+3. Run `pkgdown::build_home()`
+4. Commit and push to github

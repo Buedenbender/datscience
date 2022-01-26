@@ -47,10 +47,11 @@ publication manual) correlation table directly into a Word file
 datscience provides an easy solution for this task.
 
 ```{r eval=FALSE}
-datscience::apa_corrTable(df = iris[1:4], summarystats = c("median","range"),
-                          filepath = "man/figures/CorrelationTable_iris.docx",
-                          table_caption = c("Table 1","Correlation and Descriptive Statistics")
-                          ) 
+datscience::apa_corrTable(
+  df = iris[1:4], summarystats = c("median", "range"),
+  filepath = "man/figures/CorrelationTable_iris.docx",
+  table_caption = c("Table 1", "Correlation and Descriptive Statistics")
+)
 ```
 
 This creates the path (i.e., directories) `man/figures/` in the current
@@ -107,6 +108,8 @@ remotes::install_github("Buedenbender/datscience")
 The functions I appreciated the most, and frequently use are
 `datscience::format_flextable()` and `datscience::apa_corrTable()`
 
+### apa_corrTable() Function
+
 The `datscience::apa_corrTable()` function was already showcased aboved.
 This function resolves around three other useful functions from this
 package.
@@ -115,7 +118,7 @@ package.
     `datscience::corstars()`[<sup>[1]</sup>](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)).
 
     ```{r}
-    datscience::corstars(iris[1:4])
+datscience::corstars(iris[1:4])
     ```
 
 2.  Appends desired summary stats to the flextable.
@@ -125,11 +128,58 @@ package.
     To illustrate the function, we plot here the first 5 rows of the iris data set.
 
     ```{r}
-    datscience::format_flextable(flextable::flextable(head(iris,5)), 
-                                 table_caption = c("Table 2", "Illustrating Functionality of format_flextable()"))
+datscience::format_flextable(flextable::flextable(head(iris, 5)),
+  table_caption = c("Table 2", "Illustrating Functionality of format_flextable()")
+)
     ```
-    ![imagefailedtoload](man/figures/README-unnamed-chunk-4-1.png)
+    ![imagefailedtoload](man/figures/README-format_flextableIris.png)
 4. Utilizing the `datscience::save_flextable()` function. This will savely (i.e., prohibiting overwrite of files by serializing the naming) write the flextable object to a Word (.docx) file
+
+### format_flextable() Function
+
+The flextable package is so versatile and it was exactly what I was looking for
+to get nicely formatted tables directly from R(studio) into Word. 
+The same holds true for the `datscience::format_flextable()` function
+from the datscience package. It just applies some repetitive formatting necessary
+to convert a flextable to a "publication ready" APA formatted table.
+
+One example of the flexibility would be to just try to print the factor loadings
+from a prinicipal component analysis (PCA, `psych::prinicial`)
+
+**Let's first create an exemplary PCA**<sup>[[1](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor),
+[2](https://personality-project.org/r/psych/help/principal.html)]</sup>:
+
+```{r}
+# Creation of an Example Prinicipal Component Analysis
+pacman::p_load(psych, dplyr)
+pc <- principal(Harman74.cor$cov, 4, rotate = "varimax")
+pc_loadings <- pc %>%
+  fa.sort() %>%
+  .[["loadings"]] %>%
+  round(3) %>%
+  unclass() %>%
+  as.data.frame() %>%
+  mutate(across(
+    everything(),
+    ~ if_else((. < 0.3), "", as.character(.))
+  )) %>% 
+  bind_cols(Communality = pc$communality,
+            Uniqueness = pc$uniquenesses,
+            Complexity = pc$complexity) %>% 
+  mutate(across(where(is.numeric),round, 2))
+```
+
+**Formatting these loadings to APA with just one function:**
+
+```{r}
+formatted_loadings <- datscience::format_flextable(flextable::flextable(pc_loadings),
+                                                   table_caption = c("Table 3","Factor Loadings in Exemplary PCA"))
+formatted_loadings
+```
+![imagefailedtoload](man/figures/README-format_flextableExample.png)
+
+<!-- ### Additional Remarks -->
+<!-- To Be Added Vignette on "Normal" Factor Analysis -->
 
 <!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
 <!-- complete Example -->
