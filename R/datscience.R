@@ -1011,6 +1011,8 @@ apa_corrTable <- function(df,
                           overwrite = FALSE,
                           ...) {
 
+  # TODO: Add problematic correlations
+
   ### Determine number of decimals (nod)
   # Separate nod for correlations and summary stats?
   if (length(nod) == 1) {
@@ -1106,6 +1108,7 @@ apa_corrTable <- function(df,
 #' @importFrom magrittr "%>%"
 #' @importFrom psych fa.sort
 #' @importFrom dplyr mutate across everything if_else bind_cols
+#' @importFrom tibble rownames_to_column
 #' @importFrom flextable flextable
 #' @seealso \code{\link{get_number_of_decimals}}, \code{\link{format_flextable}},
 #' \code{\link{serialNext}}
@@ -1159,7 +1162,8 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
       Uniqueness = fa_object$uniquenesses,
       Complexity = fa_object$complexity
     ) %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), round, nod_additional))
+    dplyr::mutate(dplyr::across(where(is.numeric), round, nod_additional)) %>%
+    tibble::rownames_to_column("item")
 
   # Create APA Flextable
   ft <- format_flextable(flextable::flextable(pc_loadings),
