@@ -105,6 +105,8 @@ package.
 
     ``` r
     datscience::corstars(iris[1:4])
+    #> Warning in datscience::corstars(iris[1:4]): You provided more than one method to determine correlation, the first one will
+    #> be chosen:  pearson
     #>              Sepal.Length Sepal.Width Petal.Length
     #> Sepal.Length                                      
     #> Sepal.Width     -0.12                             
@@ -167,7 +169,8 @@ pc_loadings <- pc %>%
   bind_cols(Communality = pc$communality,
             Uniqueness = pc$uniquenesses,
             Complexity = pc$complexity) %>% 
-  mutate(across(where(is.numeric),round, 2))
+  mutate(across(where(is.numeric),round, 2)) %>% 
+  tibble::rownames_to_column("items")
 ```
 
 **Formatting these loadings to APA with just one function:**

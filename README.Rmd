@@ -169,7 +169,8 @@ pc_loadings <- pc %>%
   bind_cols(Communality = pc$communality,
             Uniqueness = pc$uniquenesses,
             Complexity = pc$complexity) %>% 
-  mutate(across(where(is.numeric),round, 2))
+  mutate(across(where(is.numeric),round, 2)) %>% 
+  tibble::rownames_to_column("items")
 ```
 
 **Formatting these loadings to APA with just one function:**
