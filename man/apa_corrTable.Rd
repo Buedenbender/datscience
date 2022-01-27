@@ -7,7 +7,7 @@
 apa_corrTable(
   df,
   summarystats = c("mean", "sd"),
-  method = "pearson",
+  method = c("pearson", "spearman", "polychoric"),
   rmDiag = FALSE,
   sig.level = 0.05,
   nod = c(2, -1),
@@ -25,7 +25,7 @@ below the correlation. Default is c("mean","sd")
 Options are one or all of c("mean","sd","median","range","min","max","skew",
 "kurtosis","se"). If NA is given, no summarystats will be added.}
 
-\item{method}{Type of correlation. Options are currently: "pearson" or "spearman"}
+\item{method}{Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"}
 
 \item{rmDiag}{Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)}
 

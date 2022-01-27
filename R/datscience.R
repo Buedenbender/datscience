@@ -337,9 +337,9 @@ my_apa <- function(df) {
 #' the results will be displayed in html or latex format.
 #' labels_rows and labels_cols are character vectors for labeling rows and columns.
 #' \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
-#'
+#' Additionally added the option to investigate polychoric correlation
 #' @param x a matrix containing the data
-#' @param method correlation method. "pearson"" or "spearman"" is supported
+#' @param method correlation method. "pearson", "spearman" or "polychoric" are supported
 #' @param removeTriangle remove upper or lower triangle, or FALSE for not removing any triangle
 #' @param rmDiag if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE
 #' @param rmLastCol chose if the last column can be removed, to shorten the table if necessary, default = TRUE
@@ -394,7 +394,7 @@ my_apa <- function(df) {
 #' @import xtable
 #' @importFrom Hmisc rcorr
 corstars <- function(x,
-                     method = c("pearson", "spearman"),
+                     method = c("pearson", "spearman", "polychoric"),
                      removeTriangle = c("upper", "lower", FALSE),
                      rmDiag = c(TRUE, FALSE),
                      rmLastCol = c(TRUE, FALSE),
@@ -416,43 +416,60 @@ corstars <- function(x,
   # stopifnot(length(labels_rows) == ncol(x))
   # stopifnot(length(labels_cols) == ncol(x))
 
+  # Prepare data.frame
+  x <- as.matrix(x)
 
   # Compute correlation matrix
-  x <- as.matrix(x)
-  correlation_matrix <- Hmisc::rcorr(x, type = method[1])
-  R <- correlation_matrix$r # Matrix of correlation coeficients
-  p <- correlation_matrix$P # Matrix of p-value
-
-  ## Define notions for significance levels; spacing is important.
-  # ifelse(sig.level == 0.1,
-  #        mystars <- ifelse(p < .01,"**", ifelse(p < .05, "* ", "  ")),
-  #        ifelse(sig.level == 0.05,
-  #               mystars <- ifelse(p < .05, "*", " "),""))
-  if (sig.level == .001) {
-    mystars <-
-      ifelse(p < .001, "*", " ")
-  } else if (sig.level == .01) {
-    mystars <-
-      ifelse(p < .001, "**",
-        ifelse(p < .01, "* ", "  ")
-      )
-  } else {
-    mystars <-
-        ifelse(p < .001, "*** ",
-          ifelse(p < .01, "**  ",
-            ifelse(p < .05, "*   ", "    ")
-          )
-        )
+  if (length(method) != 1) {
+    warning(paste("You provided more than one method to determine correlation, the first one will
+be chosen: ", method[1]))
+    method <- method[1]
   }
+  if (method != "polychoric") {
+    correlation_matrix <- Hmisc::rcorr(x, type = method[1])
+    R <- correlation_matrix$r # Matrix of correlation coeficients
+    p <- correlation_matrix$P # Matrix of p-value
 
+    ## Define notions for significance levels; spacing is important.
+    # ifelse(sig.level == 0.1,
+    #        mystars <- ifelse(p < .01,"**", ifelse(p < .05, "* ", "  ")),
+    #        ifelse(sig.level == 0.05,
+    #               mystars <- ifelse(p < .05, "*", " "),""))
+    if (sig.level == .001) {
+      mystars <-
+        ifelse(p < .001, "*", " ")
+    } else if (sig.level == .01) {
+      mystars <-
+        ifelse(p < .001, "**",
+               ifelse(p < .01, "* ", "  ")
+        )
+    } else {
+      mystars <-
+        ifelse(p < .001, "*** ",
+               ifelse(p < .01, "**  ",
+                      ifelse(p < .05, "*   ", "    ")
+               )
+        )
+    }
+  } else if (method == "polychoric"){
+    correlation_matrix <- psych::polychoric(x,global = FALSE,correct = 0)
+    R <- correlation_matrix$rho
+  } else{
+    stop("Please provide a correct method for correlation analysis, chose between either:
+        - method = \"pearson\",
+        - method = \"spearman\",
+        - method = \"polychoric\"")
+  }
 
   ## trunctuate the correlation matrix to two decimal
   R <- format(round(cbind(rep(-1.11, ncol(
     x
   )), R), nod))[, -1]
   ## build a new matrix that includes the correlations with their apropriate stars
-  Rnew <- matrix(paste(R, mystars, sep = ""), ncol = ncol(x))
-  diag(Rnew) <- paste(diag(R), " ", sep = "")
+  if(method != "polychoric"){
+    Rnew <- matrix(paste(R, mystars, sep = ""), ncol = ncol(x))
+    diag(Rnew) <- paste(diag(R), " ", sep = "")
+  } else Rnew <- R
   rownames(Rnew) <- colnames(x)
   colnames(Rnew) <- paste(colnames(x), "", sep = "")
   ## remove upper triangle of correlation matrix
@@ -481,17 +498,16 @@ corstars <- function(x,
   } else {
     if (result[1] == "html") {
       print(xtable::xtable(Rnew, caption = caption),
-        type = "html",
-        file = filename
+            type = "html",
+            file = filename
       )
     } else {
       print(xtable::xtable(Rnew, caption = caption),
-        type = "latex"
+            type = "latex"
       )
     }
   }
 }
-
 
 #' R Package Citations
 #' @description
@@ -948,7 +964,7 @@ add_ci_2plot <- function(plot,
 #' below the correlation. Default is c("mean","sd")
 #' Options are one or all of c("mean","sd","median","range","min","max","skew",
 #' "kurtosis","se"). If NA is given, no summarystats will be added.
-#' @param method Type of correlation. Options are currently: "pearson" or "spearman"
+#' @param method Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"
 #' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
 #' @param sig.level How many stars per level of significance, options include
 #' .05 .01 or .001
@@ -987,7 +1003,7 @@ add_ci_2plot <- function(plot,
 #' \code{\link{serialNext}}
 apa_corrTable <- function(df,
                           summarystats = c("mean", "sd"),
-                          method = "pearson",
+                          method = c("pearson","spearman","polychoric"),
                           rmDiag = FALSE,
                           sig.level = 0.05,
                           nod = c(2, -1),
@@ -1013,7 +1029,7 @@ apa_corrTable <- function(df,
   corstars(df,
     rmLastCol = FALSE,
     rmDiag = rmDiag,
-    method = method,
+    method = method[1],
     sig.level = sig.level,
     nod = nod_cor
   ) -> correlations

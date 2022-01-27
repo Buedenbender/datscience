@@ -6,7 +6,7 @@
 \usage{
 corstars(
   x,
-  method = c("pearson", "spearman"),
+  method = c("pearson", "spearman", "polychoric"),
   removeTriangle = c("upper", "lower", FALSE),
   rmDiag = c(TRUE, FALSE),
   rmLastCol = c(TRUE, FALSE),
@@ -22,7 +22,7 @@ corstars(
 \arguments{
 \item{x}{a matrix containing the data}
 
-\item{method}{correlation method. "pearson"" or "spearman"" is supported}
+\item{method}{correlation method. "pearson", "spearman" or "polychoric" are supported}
 
 \item{removeTriangle}{remove upper or lower triangle, or FALSE for not removing any triangle}
 
@@ -55,6 +55,7 @@ method : correlation method. "pearson"" or "spearman"" is supported
 the results will be displayed in html or latex format.
 labels_rows and labels_cols are character vectors for labeling rows and columns.
 \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
+Additionally added the option to investigate polychoric correlation
 }
 \examples{
 \dontrun{
