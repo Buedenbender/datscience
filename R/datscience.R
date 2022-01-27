@@ -214,8 +214,8 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
 
 #'  Creates Boxplots with Significance Makers
 #' @description
-#' Based on the following: \href{https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/}{Guide}
-#' Given a vector of dependent variables (DV), creates boxplots
+#' Code for this function is based on the \href{https://www.datanovia.com/en/blog/how-to-perform-multiple-t-test-in-r-for-different-variables/}{Guide of A. Kassambra on datanovia}
+#' The functions creates given a vector of dependent variables (DV), nicely formatted boxplots
 #' with facetwrap for all DVs and calculates an independent sample T-Test
 #' to include significance bars
 #'
@@ -227,9 +227,7 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
 #'
 #'
 #' @examples
-#' \dontrun{
 #' boxplot_t_test(mtcars, c("mpg", "hp"), group = "am")
-#' }
 #'
 #' @return List(Plot and stats)
 #'
@@ -741,30 +739,34 @@ pretty_scree <- function(parallel, fa, quant = .95) {
 
 
 #' Booted Eigenvalues
-#' Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
-#' Eigenvalues can be extracted for PCA as well as EFA
+#' @description
+#' Uses \code{\link[boot]{boot}}  to bootstrap Eigenvalues in factor analyses. \cr
+#' Eigenvalues can be extracted for PCA as well as EFA \cr
 #' Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
 #' Allows for extraction of Eigenvalues based on Pearson
-#' as well as Polychoric Correlation Matrices
+#' as well as polychoric correlation matrices. These bootstrapped Eigenvalues can
+#' serve as a foundation to construct a scree plot with confidence intervals around
+#' the observed eigenvalues.
 #'
-#' @param df = the complete data.frame
-#' @param iterations = number of resamples for the bootstrap
-#' @param cor =  either "pearson" or "poly" for polychoric correlations,
+#' @param df A data.frame
+#' @param iterations number of resamples for the bootstrap
+#' @param cor either "pearson" or "poly" for polychoric correlations,
 #'  defaults to "pearson"
-#' @param fa = either "pc" for prinicipal component or
+#' @param fa either "pc" for prinicipal component or
 #' "fa" for [common] factor analysis, defaults to "pc"
-#' @param fm = factor method to use, irrelevant for pca.
+#' @param fm factor method to use, irrelevant for pca.
 #' For available factor methods check psych::fa for more details, defaults to minres
 #'
 #' @return A boot object (\code{boot::boot()}),
-#' that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervalls
+#' that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervals
 #'
 #' @author Bjoern Buedenbender
 #'
 #' @export
 #' @importFrom boot boot
 #' @importFrom psych fa polychoric
-#' @seealso \code{\link[boot]{boot}}, \code{\link[psych]{fa}}
+#' @seealso \code{\link[boot]{boot}}, \code{\link[psych]{fa}}, \cr
+#' \code{\link{getCIs}} \code{\link{add_ci_2plot}}
 booted_eigenvalues <-
   function(df,
            iterations = 1000,

@@ -2,12 +2,7 @@
 % Please edit documentation in R/datscience.R
 \name{booted_eigenvalues}
 \alias{booted_eigenvalues}
-\title{Booted Eigenvalues
-Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
-Eigenvalues can be extracted for PCA as well as EFA
-Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
-Allows for extraction of Eigenvalues based on Pearson
-as well as Polychoric Correlation Matrices}
+\title{Booted Eigenvalues}
 \usage{
 booted_eigenvalues(
   df,
@@ -18,33 +13,35 @@ booted_eigenvalues(
 )
 }
 \arguments{
-\item{df}{= the complete data.frame}
+\item{df}{A data.frame}
 
-\item{iterations}{= number of resamples for the bootstrap}
+\item{iterations}{number of resamples for the bootstrap}
 
-\item{cor}{=  either "pearson" or "poly" for polychoric correlations,
+\item{cor}{either "pearson" or "poly" for polychoric correlations,
 defaults to "pearson"}
 
-\item{fa}{= either "pc" for prinicipal component or
+\item{fa}{either "pc" for prinicipal component or
 "fa" for [common] factor analysis, defaults to "pc"}
 
-\item{fm}{= factor method to use, irrelevant for pca.
+\item{fm}{factor method to use, irrelevant for pca.
 For available factor methods check psych::fa for more details, defaults to minres}
 }
 \value{
 A boot object (\code{boot::boot()}),
-that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervalls
+that contains SE for all Eigenvalues in DF, can be passed to \code{\link{getCIs}}  to create Confidence Intervals
 }
 \description{
-Booted Eigenvalues
-Uses \code{\link[boot]{boot}}  to create x resampled Eigenvalues
-Eigenvalues can be extracted for PCA as well as EFA
+Uses \code{\link[boot]{boot}}  to bootstrap Eigenvalues in factor analyses. \cr
+Eigenvalues can be extracted for PCA as well as EFA \cr
 Different Factor Methods are available for more details, see \code{\link[psych]{fa}}
 Allows for extraction of Eigenvalues based on Pearson
-as well as Polychoric Correlation Matrices
+as well as polychoric correlation matrices. These bootstrapped Eigenvalues can
+serve as a foundation to construct a scree plot with confidence intervals around
+the observed eigenvalues.
 }
 \seealso{
-\code{\link[boot]{boot}}, \code{\link[psych]{fa}}
+\code{\link[boot]{boot}}, \code{\link[psych]{fa}}, \cr
+\code{\link{getCIs}} \code{\link{add_ci_2plot}}
 }
 \author{
 Bjoern Buedenbender

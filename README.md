@@ -178,8 +178,14 @@ formatted_loadings
 
 ![imagefailedtoload](man/figures/README-format_flextableExample.png)
 
-# Testing Packagedown
+## Next Steps for `datscience` R-Package
 
+-   Add a complete vignette for a factor analysis (utilizing `psych` and
+    `datscience` package)
+-   Beautify / clarify the vignette for bootstrapping confidence
+    intervals for observed Eigenvalues in parallel analysis
+
+<!-- # Testing Packagedown -->
 <!-- ### Additional Remarks -->
 <!-- To Be Added Vignette on "Normal" Factor Analysis -->
 <!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
