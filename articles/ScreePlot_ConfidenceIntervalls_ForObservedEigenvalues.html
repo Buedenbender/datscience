@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">datscience</a>
 
@@ -121,71 +121,72 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bootstrap Statistics :</span>
 <span class="co">#&gt;        original       bias    std. error</span>
-<span class="co">#&gt; t1*  6.60840025  0.112526782 0.528337219</span>
-<span class="co">#&gt; t2*  2.65046789 -0.003098565 0.492230718</span>
-<span class="co">#&gt; t3*  0.62719727  0.018866142 0.146311508</span>
-<span class="co">#&gt; t4*  0.26959744  0.044323326 0.054163147</span>
-<span class="co">#&gt; t5*  0.22345110  0.000795572 0.034451480</span>
-<span class="co">#&gt; t6*  0.21159612 -0.046075295 0.026113027</span>
-<span class="co">#&gt; t7*  0.13526199 -0.017561790 0.023680795</span>
-<span class="co">#&gt; t8*  0.12290143 -0.043276350 0.019626483</span>
-<span class="co">#&gt; t9*  0.07704665 -0.029231552 0.015972510</span>
-<span class="co">#&gt; t10* 0.05203544 -0.026781235 0.010178497</span>
-<span class="co">#&gt; t11* 0.02204441 -0.010487034 0.005176429</span>
+<span class="co">#&gt; t1*  6.60840025  0.110046298 0.523329738</span>
+<span class="co">#&gt; t2*  2.65046789 -0.026638874 0.482364427</span>
+<span class="co">#&gt; t3*  0.62719727  0.041244547 0.162925504</span>
+<span class="co">#&gt; t4*  0.26959744  0.046056734 0.055506532</span>
+<span class="co">#&gt; t5*  0.22345110  0.004363413 0.034499311</span>
+<span class="co">#&gt; t6*  0.21159612 -0.044851668 0.028269761</span>
+<span class="co">#&gt; t7*  0.13526199 -0.018533714 0.022403457</span>
+<span class="co">#&gt; t8*  0.12290143 -0.044402944 0.019952701</span>
+<span class="co">#&gt; t9*  0.07704665 -0.028822429 0.016684310</span>
+<span class="co">#&gt; t10* 0.05203544 -0.027550367 0.010303141</span>
+<span class="co">#&gt; t11* 0.02204441 -0.010910994 0.005453846</span>
 
 <span class="va">PCA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">PCA_bootObj</span><span class="op">)</span>
 <span class="va">PCA_CIs</span>
 <span class="co">#&gt;           index  method         lwr        upr   observed</span>
-<span class="co">#&gt; normal        1  normal 5.460351550 7.53139539 6.60840025</span>
-<span class="co">#&gt; basic         1   basic 5.350905705 7.48132039 6.60840025</span>
-<span class="co">#&gt; percent       1 percent 5.735480116 7.86589480 6.60840025</span>
-<span class="co">#&gt; bca           1     bca 5.490850963 7.58023387 6.60840025</span>
-<span class="co">#&gt; normal1       2  normal 1.688811978 3.61832094 2.65046789</span>
-<span class="co">#&gt; basic1        2   basic 1.720284827 3.72383269 2.65046789</span>
-<span class="co">#&gt; percent1      2 percent 1.577103098 3.58065096 2.65046789</span>
-<span class="co">#&gt; bca1          2     bca 1.601408497 3.59851236 2.65046789</span>
-<span class="co">#&gt; normal2       3  normal 0.321565843 0.89509641 0.62719727</span>
-<span class="co">#&gt; basic2        3   basic 0.277475993 0.85084193 0.62719727</span>
-<span class="co">#&gt; percent2      3 percent 0.403552617 0.97691855 0.62719727</span>
-<span class="co">#&gt; bca2          3     bca 0.407711650 0.97932894 0.62719727</span>
-<span class="co">#&gt; normal3       4  normal 0.119116293 0.33143193 0.26959744</span>
-<span class="co">#&gt; basic3        4   basic 0.097149848 0.31546555 0.26959744</span>
-<span class="co">#&gt; percent3      4 percent 0.223729320 0.44204502 0.26959744</span>
-<span class="co">#&gt; bca3          4     bca 0.192975526 0.32247340 0.26959744</span>
-<span class="co">#&gt; normal4       5  normal 0.155131872 0.29017919 0.22345110</span>
-<span class="co">#&gt; basic4        5   basic 0.149545753 0.28093961 0.22345110</span>
-<span class="co">#&gt; percent4      5 percent 0.165962600 0.29735645 0.22345110</span>
-<span class="co">#&gt; bca4          5     bca 0.172016940 0.30862360 0.22345110</span>
-<span class="co">#&gt; normal5       6  normal 0.206490824 0.30885201 0.21159612</span>
-<span class="co">#&gt; basic5        6   basic 0.203458536 0.30466703 0.21159612</span>
-<span class="co">#&gt; percent5      6 percent 0.118525211 0.21973371 0.21159612</span>
-<span class="co">#&gt; bca5          6     bca 0.205618703 0.26787193 0.21159612</span>
-<span class="co">#&gt; normal6       7  normal 0.106410272 0.19923728 0.13526199</span>
-<span class="co">#&gt; basic6        7   basic 0.104656568 0.19870835 0.13526199</span>
-<span class="co">#&gt; percent6      7 percent 0.071815625 0.16586741 0.13526199</span>
-<span class="co">#&gt; bca6          7     bca 0.108338835 0.22021126 0.13526199</span>
-<span class="co">#&gt; normal7       8  normal 0.127710584 0.20464498 0.12290143</span>
-<span class="co">#&gt; basic7        8   basic 0.127848525 0.20777100 0.12290143</span>
-<span class="co">#&gt; percent7      8 percent 0.038031862 0.11795434 0.12290143</span>
-<span class="co">#&gt; bca7          8     bca 0.136387930 0.13711797 0.12290143</span>
-<span class="co">#&gt; normal8       9  normal 0.074972662 0.13758375 0.07704665</span>
-<span class="co">#&gt; basic8        9   basic 0.073641673 0.13412523 0.07704665</span>
-<span class="co">#&gt; percent8      9 percent 0.019968076 0.08045164 0.07704665</span>
-<span class="co">#&gt; bca8          9     bca 0.073938984 0.09821741 0.07704665</span>
-<span class="co">#&gt; normal9      10  normal 0.058867189 0.09876616 0.05203544</span>
-<span class="co">#&gt; basic9       10   basic 0.055369356 0.09607688 0.05203544</span>
-<span class="co">#&gt; percent9     10 percent 0.007993998 0.04870153 0.05203544</span>
-<span class="co">#&gt; bca9         10     bca 0.056465851 0.05648292 0.05203544</span>
-<span class="co">#&gt; normal10     11  normal 0.022385825 0.04267706 0.02204441</span>
-<span class="co">#&gt; basic10      11   basic 0.022592025 0.04184317 0.02204441</span>
-<span class="co">#&gt; percent10    11 percent 0.002245641 0.02149679 0.02204441</span>
-<span class="co">#&gt; bca10        11     bca 0.022272482 0.02569150 0.02204441</span></code></pre></div>
+<span class="co">#&gt; normal        1  normal 5.472646516 7.52406139 6.60840025</span>
+<span class="co">#&gt; basic         1   basic 5.494746944 7.50636397 6.60840025</span>
+<span class="co">#&gt; percent       1 percent 5.710436538 7.72205356 6.60840025</span>
+<span class="co">#&gt; bca           1     bca 5.628827436 7.63848247 6.60840025</span>
+<span class="co">#&gt; normal1       2  normal 1.731689863 3.62252367 2.65046789</span>
+<span class="co">#&gt; basic1        2   basic 1.784012289 3.57733582 2.65046789</span>
+<span class="co">#&gt; percent1      2 percent 1.723599961 3.51692350 2.65046789</span>
+<span class="co">#&gt; bca1          2     bca 1.771946639 3.58508697 2.65046789</span>
+<span class="co">#&gt; normal2       3  normal 0.266624605 0.90528084 0.62719727</span>
+<span class="co">#&gt; basic2        3   basic 0.215029449 0.85355850 0.62719727</span>
+<span class="co">#&gt; percent2      3 percent 0.400836040 1.03936509 0.62719727</span>
+<span class="co">#&gt; bca2          3     bca 0.395317537 1.00819056 0.62719727</span>
+<span class="co">#&gt; normal3       4  normal 0.114749900 0.33233151 0.26959744</span>
+<span class="co">#&gt; basic3        4   basic 0.096934361 0.31363479 0.26959744</span>
+<span class="co">#&gt; percent3      4 percent 0.225560081 0.44226051 0.26959744</span>
+<span class="co">#&gt; bca3          4     bca 0.190352044 0.32560620 0.26959744</span>
+<span class="co">#&gt; normal4       5  normal 0.151470284 0.28670510 0.22345110</span>
+<span class="co">#&gt; basic4        5   basic 0.143018210 0.27895393 0.22345110</span>
+<span class="co">#&gt; percent4      5 percent 0.167948272 0.30388400 0.22345110</span>
+<span class="co">#&gt; bca4          5     bca 0.167612036 0.29982690 0.22345110</span>
+<span class="co">#&gt; normal5       6  normal 0.201040075 0.31185550 0.21159612</span>
+<span class="co">#&gt; basic5        6   basic 0.198455978 0.30580325 0.21159612</span>
+<span class="co">#&gt; percent5      6 percent 0.117388994 0.22473626 0.21159612</span>
+<span class="co">#&gt; bca5          6     bca 0.196853781 0.27610507 0.21159612</span>
+<span class="co">#&gt; normal6       7  normal 0.109885734 0.19770567 0.13526199</span>
+<span class="co">#&gt; basic6        7   basic 0.110791794 0.19749930 0.13526199</span>
+<span class="co">#&gt; percent6      7 percent 0.073024677 0.15973218 0.13526199</span>
+<span class="co">#&gt; bca6          7     bca 0.111311919 0.18949727 0.13526199</span>
+<span class="co">#&gt; normal7       8  normal 0.128197801 0.20641095 0.12290143</span>
+<span class="co">#&gt; basic7        8   basic 0.128004963 0.20758121 0.12290143</span>
+<span class="co">#&gt; percent7      8 percent 0.038221657 0.11779790 0.12290143</span>
+<span class="co">#&gt; bca7          8     bca 0.129038623 0.13777625 0.12290143</span>
+<span class="co">#&gt; normal8       9  normal 0.073168437 0.13856973 0.07704665</span>
+<span class="co">#&gt; basic8        9   basic 0.071171587 0.13637925 0.07704665</span>
+<span class="co">#&gt; percent8      9 percent 0.017714056 0.08292172 0.07704665</span>
+<span class="co">#&gt; bca8          9     bca 0.072322158 0.10146959 0.07704665</span>
+<span class="co">#&gt; normal9      10  normal 0.059392023 0.09977959 0.05203544</span>
+<span class="co">#&gt; basic9       10   basic 0.057162262 0.09594387 0.05203544</span>
+<span class="co">#&gt; percent9     10 percent 0.008127016 0.04690862 0.05203544</span>
+<span class="co">#&gt; bca9         10     bca 0.053884462 0.06351586 0.05203544</span>
+<span class="co">#&gt; normal10     11  normal 0.022266058 0.04364474 0.02204441</span>
+<span class="co">#&gt; basic10      11   basic 0.021869801 0.04195416 0.02204441</span>
+<span class="co">#&gt; percent10    11 percent 0.002134657 0.02221901 0.02204441</span>
+<span class="co">#&gt; bca10        11     bca 0.021210647 0.03638257 0.02204441</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="efa-eigenvalues-cis">EFA Eigenvalues CIs<a class="anchor" aria-label="anchor" href="#efa-eigenvalues-cis"></a>
 </h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">EFA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">mtcars</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"fa"</span><span class="op">)</span>
+<span class="co">#&gt; In factor.scores, the correlation matrix is singular, an approximation is used</span>
 <span class="va">EFA_bootObj</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ORDINARY NONPARAMETRIC BOOTSTRAP</span>
@@ -198,17 +199,17 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bootstrap Statistics :</span>
 <span class="co">#&gt;         original       bias    std. error</span>
-<span class="co">#&gt; t1*   6.30271788  0.113262872  0.56320450</span>
-<span class="co">#&gt; t2*   1.99094869 -0.014720855  0.43744127</span>
-<span class="co">#&gt; t3*   0.19953591  0.040859207  0.09691037</span>
-<span class="co">#&gt; t4*   0.04283995  0.002255121  0.02438945</span>
-<span class="co">#&gt; t5*  -0.06366855  0.018741637  0.02830671</span>
-<span class="co">#&gt; t6*  -0.11356808  0.012083871  0.03669134</span>
-<span class="co">#&gt; t7*  -0.14973394 -0.020867520  0.05202948</span>
-<span class="co">#&gt; t8*  -0.31108851  0.001550490  0.07872494</span>
-<span class="co">#&gt; t9*  -0.43061117  0.010236784  0.09092307</span>
-<span class="co">#&gt; t10* -0.55344934  0.007777138  0.09209040</span>
-<span class="co">#&gt; t11* -0.61120381 -0.057933775  0.09420473</span>
+<span class="co">#&gt; t1*   6.30271788  0.140357159  0.52524768</span>
+<span class="co">#&gt; t2*   1.99094869 -0.023184133  0.43195488</span>
+<span class="co">#&gt; t3*   0.19953591  0.039602058  0.10175849</span>
+<span class="co">#&gt; t4*   0.04283995  0.001098673  0.02541433</span>
+<span class="co">#&gt; t5*  -0.06366855  0.018809268  0.02737088</span>
+<span class="co">#&gt; t6*  -0.11356808  0.013886871  0.03400790</span>
+<span class="co">#&gt; t7*  -0.14973394 -0.018932785  0.04723580</span>
+<span class="co">#&gt; t8*  -0.31108851  0.003200693  0.07532175</span>
+<span class="co">#&gt; t9*  -0.43061117  0.011143367  0.08802756</span>
+<span class="co">#&gt; t10* -0.55344934  0.010162700  0.08839809</span>
+<span class="co">#&gt; t11* -0.61120381 -0.055806526  0.09127171</span>
 
 <span class="va">EFA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">EFA_bootObj</span><span class="op">)</span>
 <span class="va">EFA_bootObj</span>
@@ -223,17 +224,17 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bootstrap Statistics :</span>
 <span class="co">#&gt;         original       bias    std. error</span>
-<span class="co">#&gt; t1*   6.30271788  0.113262872  0.56320450</span>
-<span class="co">#&gt; t2*   1.99094869 -0.014720855  0.43744127</span>
-<span class="co">#&gt; t3*   0.19953591  0.040859207  0.09691037</span>
-<span class="co">#&gt; t4*   0.04283995  0.002255121  0.02438945</span>
-<span class="co">#&gt; t5*  -0.06366855  0.018741637  0.02830671</span>
-<span class="co">#&gt; t6*  -0.11356808  0.012083871  0.03669134</span>
-<span class="co">#&gt; t7*  -0.14973394 -0.020867520  0.05202948</span>
-<span class="co">#&gt; t8*  -0.31108851  0.001550490  0.07872494</span>
-<span class="co">#&gt; t9*  -0.43061117  0.010236784  0.09092307</span>
-<span class="co">#&gt; t10* -0.55344934  0.007777138  0.09209040</span>
-<span class="co">#&gt; t11* -0.61120381 -0.057933775  0.09420473</span></code></pre></div>
+<span class="co">#&gt; t1*   6.30271788  0.140357159  0.52524768</span>
+<span class="co">#&gt; t2*   1.99094869 -0.023184133  0.43195488</span>
+<span class="co">#&gt; t3*   0.19953591  0.039602058  0.10175849</span>
+<span class="co">#&gt; t4*   0.04283995  0.001098673  0.02541433</span>
+<span class="co">#&gt; t5*  -0.06366855  0.018809268  0.02737088</span>
+<span class="co">#&gt; t6*  -0.11356808  0.013886871  0.03400790</span>
+<span class="co">#&gt; t7*  -0.14973394 -0.018932785  0.04723580</span>
+<span class="co">#&gt; t8*  -0.31108851  0.003200693  0.07532175</span>
+<span class="co">#&gt; t9*  -0.43061117  0.011143367  0.08802756</span>
+<span class="co">#&gt; t10* -0.55344934  0.010162700  0.08839809</span>
+<span class="co">#&gt; t11* -0.61120381 -0.055806526  0.09127171</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="create-pretty-scree">Create Pretty Scree<a class="anchor" aria-label="anchor" href="#create-pretty-scree"></a>
