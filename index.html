@@ -126,6 +126,8 @@ with the remotes package in standalone mode in a fresh R-sessions (no packages l
 <p>Creates the correlation table by calling <code><a href="reference/corstars.html">datscience::corstars()</a></code><a href="https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R" class="external-link"><sup>[1]</sup></a>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/corstars.html">corstars</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
+<span class="co">#&gt; Warning in datscience::corstars(iris[1:4]): You provided more than one method to determine correlation, the first one will</span>
+<span class="co">#&gt; be chosen:  pearson</span>
 <span class="co">#&gt;              Sepal.Length Sepal.Width Petal.Length</span>
 <span class="co">#&gt; Sepal.Length                                      </span>
 <span class="co">#&gt; Sepal.Width     -0.12                             </span>
@@ -171,7 +173,8 @@ To illustrate the function, we plot here the first 5 rows of the iris data set.<
   <span class="fu">bind_cols</span><span class="op">(</span>Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,
             Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,
             Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,<span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,<span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"items"</span><span class="op">)</span></code></pre></div>
 <p><strong>Formatting these loadings to APA with just one function:</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">formatted_loadings</span> <span class="op">&lt;-</span> <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">pc_loadings</span><span class="op">)</span>,
