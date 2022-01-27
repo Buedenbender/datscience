@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://buedenbender.github.io/datscience/404.html</loc>
   </url>
   <url>
-    <loc>/articles/ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues.html</loc>
+    <loc>https://buedenbender.github.io/datscience/articles/ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://buedenbender.github.io/datscience/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://buedenbender.github.io/datscience/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://buedenbender.github.io/datscience/index.html</loc>
   </url>
   <url>
-    <loc>/reference/Rcitation_appendix.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/Rcitation_appendix.html</loc>
   </url>
   <url>
-    <loc>/reference/add_ci_2plot.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/add_ci_2plot.html</loc>
   </url>
   <url>
-    <loc>/reference/apa_corrTable.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/apa_corrTable.html</loc>
   </url>
   <url>
-    <loc>/reference/apa_factorLoadings.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/apa_factorLoadings.html</loc>
   </url>
   <url>
-    <loc>/reference/booted_eigenvalues.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/booted_eigenvalues.html</loc>
   </url>
   <url>
-    <loc>/reference/boxplot_t_test.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/boxplot_t_test.html</loc>
   </url>
   <url>
-    <loc>/reference/corstars.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/corstars.html</loc>
   </url>
   <url>
-    <loc>/reference/format_flextable.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/format_flextable.html</loc>
   </url>
   <url>
-    <loc>/reference/getCIs.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/getCIs.html</loc>
   </url>
   <url>
-    <loc>/reference/get_number_of_decimals.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/get_number_of_decimals.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/my_apa.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/my_apa.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_scree.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/pretty_scree.html</loc>
   </url>
   <url>
-    <loc>/reference/save_flextable.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/save_flextable.html</loc>
   </url>
   <url>
-    <loc>/reference/serialNext.html</loc>
+    <loc>https://buedenbender.github.io/datscience/reference/serialNext.html</loc>
   </url>
 </urlset>
