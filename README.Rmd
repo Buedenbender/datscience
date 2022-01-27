@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Buedenbender/datscience/workflows/R-CMD-check/badge.svg)](https://github.com/Buedenbender/datscience/actions)
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains

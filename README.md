@@ -4,6 +4,8 @@
 # datscience R-Packaage
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Buedenbender/datscience/workflows/R-CMD-check/badge.svg)](https://github.com/Buedenbender/datscience/actions)
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains
@@ -106,8 +108,8 @@ package.
     #>              Sepal.Length Sepal.Width Petal.Length
     #> Sepal.Length                                      
     #> Sepal.Width     -0.12                             
-    #> Petal.Length     0.87****   -0.43****             
-    #> Petal.Width      0.82****   -0.37****     0.96****
+    #> Petal.Length     0.87***    -0.43***              
+    #> Petal.Width      0.82***    -0.37***      0.96***
     ```
 
 2.  Appends desired summary stats to the flextable.
