@@ -72,7 +72,7 @@ together with the summary stats of your choice</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">apa_corrTable</span><span class="op">(</span>
   <span class="va">df</span>,
   summarystats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span>,
-  method <span class="op">=</span> <span class="st">"pearson"</span>,
+  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"spearman"</span>, <span class="st">"polychoric"</span><span class="op">)</span>,
   rmDiag <span class="op">=</span> <span class="cn">FALSE</span>,
   sig.level <span class="op">=</span> <span class="fl">0.05</span>,
   nod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,
@@ -93,7 +93,7 @@ below the correlation. Default is c("mean","sd")
 Options are one or all of c("mean","sd","median","range","min","max","skew",
 "kurtosis","se"). If NA is given, no summarystats will be added.</p></dd>
 <dt>method</dt>
-<dd><p>Type of correlation. Options are currently: "pearson" or "spearman"</p></dd>
+<dd><p>Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"</p></dd>
 <dt>rmDiag</dt>
 <dd><p>Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)</p></dd>
 <dt>sig.level</dt>
