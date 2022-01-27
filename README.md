@@ -123,7 +123,7 @@ package.
     )
     ```
 
-    ![test](man/figures/README-format_flextableIris.png)
+    ![FFIE.png](man/figures/README-format_flextableIris.png)
 
 4.  Utilizing the `datscience::save_flextable()` function. This will
     savely (i.e., prohibiting overwrite of files by serializing the
@@ -176,7 +176,7 @@ formatted_loadings <- datscience::format_flextable(flextable::flextable(pc_loadi
 formatted_loadings
 ```
 
-![imagefailedtoload](man/figures/README-format_flextableExample.png)
+![FLFF.png](man/figures/README-format_flextableExample.png)
 
 ## Next Steps for `datscience` R-Package
 
