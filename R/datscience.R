@@ -29,6 +29,9 @@ utils::globalVariables(".")
 #'
 #' @author Bjoern Buedenbender
 #'
+#' @examples
+#' get_number_of_decimals(n = 153)
+#'
 #' @export
 get_number_of_decimals <- function(n) {
   if (n < 100) {
@@ -435,13 +438,11 @@ corstars <- function(x,
       )
   } else {
     mystars <-
-      ifelse(p < .001, "****",
         ifelse(p < .001, "*** ",
           ifelse(p < .01, "**  ",
             ifelse(p < .05, "*   ", "    ")
           )
         )
-      )
   }
 
 
@@ -548,6 +549,12 @@ corstars <- function(x,
 #' @importFrom pacman p_loaded
 #' @importFrom flextable flextable
 #' @importFrom rlang .data
+#'
+#' @examples
+#' \dontrun{
+#' # Not executed example, as it creates unnecessary files in the package
+#' Rcitation_appendix()
+#' }
 #'
 #' @seealso \code{\link[flextable]{flextable}}, \code{\link{serialNext}}, \code{\link{format_flextable}}
 Rcitation_appendix <- function(outdirectory = "Appendix",
@@ -966,6 +973,9 @@ add_ci_2plot <- function(plot,
 #'
 #' @author Bjoern Buedenbender (Inspired by Remi Theriault)
 #'
+#' @examples
+#' apa_corrTable(mtcars, table_caption=c("Table 2","Correlations in the mtcars Data Set"))
+#'
 #' @export
 #' @importFrom stats na.omit
 #' @importFrom magrittr "%>%"
@@ -1072,6 +1082,9 @@ apa_corrTable <- function(df,
 #' it also creates the respective file (e.g., a word .docx file)
 #'
 #' @author Bjoern Buedenbender
+#' @examples
+#' datscience::apa_factorLoadings(psych::fa(mtcars,nfactors = 2))
+#'
 #' @export
 #'
 #' @importFrom magrittr "%>%"

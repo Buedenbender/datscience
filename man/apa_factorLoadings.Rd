@@ -64,6 +64,10 @@ with the \href{https://cran.r-project.org/web/packages/psychTools/vignettes/fact
 and returns a APA 7th formatted table with the factor loadings and additional metrics (Communality, Uniqueness, Complexity).
 If desired this table can directly be exported to a Word file (.docx).
 }
+\examples{
+datscience::apa_factorLoadings(psych::fa(mtcars,nfactors = 2))
+
+}
 \seealso{
 \code{\link{get_number_of_decimals}}, \code{\link{format_flextable}},
 \code{\link{serialNext}}

@@ -22,6 +22,10 @@ will be applied, e.g.,  \emph{n}
 \item > 1001: 2 decimals
 }
 }
+\examples{
+get_number_of_decimals(n = 153)
+
+}
 \author{
 Bjoern Buedenbender
 }

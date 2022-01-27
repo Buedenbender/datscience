@@ -64,6 +64,13 @@ give full credit to all packages / package authors, you can created this table
 and reference it in the appendix. This also increases reproduciblity, as every
 dependency to run your script becomes transparent.
 }
+\examples{
+\dontrun{
+# Not executed example, as it creates unnecessary files in the package
+Rcitation_appendix()
+}
+
+}
 \seealso{
 \code{\link[flextable]{flextable}}, \code{\link{serialNext}}, \code{\link{format_flextable}}
 }

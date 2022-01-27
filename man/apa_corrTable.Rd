@@ -63,6 +63,10 @@ APA-style formatted table directly from R into .docx (word)
 I built on that idea and created a function that creates a correlation table
 together with the summary stats of your choice
 }
+\examples{
+apa_corrTable(mtcars, table_caption=c("Table 2","Correlations in the mtcars Data Set"))
+
+}
 \seealso{
 \code{\link{get_number_of_decimals}}, \code{\link{format_flextable}},
 \code{\link{serialNext}}

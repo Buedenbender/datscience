@@ -1,5 +1,5 @@
 url: https://buedenbender.github.io/datscience/
 template:
   bootstrap: 5
-  bootswatch: lumen
+  bootswatch: flatly
 
