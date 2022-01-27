@@ -71,7 +71,7 @@
 <div class="page-header"><h1 id="datscience-r-packaage">datscience R-Packaage<a class="anchor" aria-label="anchor" href="#datscience-r-packaage"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- badges: end -->
+
 <p>The datscience (<strong>dat</strong>aanalysis and <strong>science</strong>) R-package contains some useful<br>
 functions frequently required in preparing data for publication. Most of the current functions provide additional utility for conducting factor analyses or principal component analyses.<br>
 The overall goal was to improve the workflow of data analysis and formatting challenges I frequently encounter. To illustrate this, I will present and briefly elaborate one problem I frequently encountered (getting the stats from R with the right format into MS Word), and what this package provides to solve this.</p>
@@ -129,8 +129,8 @@ with the remotes package in standalone mode in a fresh R-sessions (no packages l
 <span class="co">#&gt;              Sepal.Length Sepal.Width Petal.Length</span>
 <span class="co">#&gt; Sepal.Length                                      </span>
 <span class="co">#&gt; Sepal.Width     -0.12                             </span>
-<span class="co">#&gt; Petal.Length     0.87****   -0.43****             </span>
-<span class="co">#&gt; Petal.Width      0.82****   -0.37****     0.96****</span></code></pre></div>
+<span class="co">#&gt; Petal.Length     0.87***    -0.43***              </span>
+<span class="co">#&gt; Petal.Width      0.82***    -0.37***      0.96***</span></code></pre></div>
 </li>
 <li><p>Appends desired summary stats to the flextable.</p></li>
 <li>
@@ -223,7 +223,12 @@ To illustrate the function, we plot here the first 5 rows of the iris data set.<
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/Buedenbender/datscience/actions" class="external-link"><img src="https://github.com/Buedenbender/datscience/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
