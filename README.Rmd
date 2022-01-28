@@ -192,4 +192,4 @@ formatted_loadings
 <!-- To Be Added Vignette on "Normal" Factor Analysis -->
 
 <!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
-<!-- Minor Changes to Test Github Workflow -->
+<!-- Minor Changes to Test Github Workflow: Removed Oldrel -->
