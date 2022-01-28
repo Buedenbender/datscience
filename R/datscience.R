@@ -2,6 +2,8 @@
 # Code by M. Sc. Bjoern Buedenbender (University of Mannheim)
 # General todos
 # TODO: - Sort, e.g., all functions required for factoranalyses
+# TODO: - INclude a Vignette for all Factor analysis function
+# TODO:
 #################### Basic Functions / Stand Alone ######################
 # Setting up global exports to fix RMD Check problems for unexportet namespaces (e.g. where())
 # Work around due to package building trouble
