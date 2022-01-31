@@ -120,7 +120,8 @@ If NA is given, no summarystats will be added.</p></dd>
 <dd><p>Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)</p></dd>
 <dt>sig.level</dt>
 <dd><p>How many stars per level of significance, options include
-.05 .01 or .001</p></dd>
+.05 .01 or .001. If NA no stars indicating significance will be output. This improves
+formatting of decimals in the table. Note the default for polychoric is NA</p></dd>
 <dt>nod</dt>
 <dd><p>(Optional) Integer or Integer Vector. Number of Decimals.
 In case of -1 a simple convention based on sample size is applied for determination
@@ -158,7 +159,7 @@ will be created (i.e., appending _001, or _002). Utilizes <code><a href="serialN
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">apa_corrTable</span><span class="op">(</span><span class="va">mtcars</span>, table_caption<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>,<span class="st">"Correlations in the mtcars Data Set"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">apa_corrTable</span><span class="op">(</span><span class="va">mtcars</span>, table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Correlations in the mtcars Data Set"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a flextable object.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> col_keys: ` `, `mpg`, `cyl`, `disp`, `hp`, `drat`, `wt`, `qsec`, `vs`, `am`, `gear`, `carb` </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> header has 3 row(s) </span>
@@ -170,7 +171,6 @@ will be created (i.e., appending _001, or _002). Utilizes <code><a href="serialN
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 disp -0.85***   0.90***      1.00                                          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   hp -0.78***   0.83***   0.79***      1.00                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 drat  0.68***  -0.70***  -0.71***  -0.45**    1.00                         </span>
-<span class="r-in"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
