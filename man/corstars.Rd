@@ -51,8 +51,10 @@ Correlation table in console or file
 }
 \description{
 Creates a pretty console correlation table (by Dominik Vogel)
-method : correlation method. "pearson"" or "spearman"" is supported
-the results will be displayed in html or latex format.
+method : correlation method. "pearson", "spearman" and "polychoric" are currently
+supported the results will be displayed directly in console. There is the option
+to save them in html or latex format or (recommended), to transform them to a
+\code{\link[flextable]{flextable}} and export it directly to word.
 labels_rows and labels_cols are character vectors for labeling rows and columns.
 \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 Additionally added the option to investigate polychoric correlation

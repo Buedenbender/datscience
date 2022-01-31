@@ -335,8 +335,10 @@ my_apa <- function(df) {
 
 #' Corstars - Correaltions in Console
 #' @description  Creates a pretty console correlation table (by Dominik Vogel)
-#' method : correlation method. "pearson"" or "spearman"" is supported
-#' the results will be displayed in html or latex format.
+#' method : correlation method. "pearson", "spearman" and "polychoric" are currently
+#' supported the results will be displayed directly in console. There is the option
+#' to save them in html or latex format or (recommended), to transform them to a
+#' \code{\link[flextable]{flextable}} and export it directly to word.
 #' labels_rows and labels_cols are character vectors for labeling rows and columns.
 #' \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 #' Additionally added the option to investigate polychoric correlation
@@ -467,7 +469,7 @@ be chosen: ", method[1]))
   R <- format(round(cbind(rep(-1.11, ncol(
     x
   )), R), nod))[, -1]
-  ## build a new matrix that includes the correlations with their apropriate stars
+  ## build a new matrix that includes the correlations with their appropriate stars
   if(method != "polychoric"){
     Rnew <- matrix(paste(R, mystars, sep = ""), ncol = ncol(x))
     diag(Rnew) <- paste(diag(R), " ", sep = "")
@@ -956,16 +958,25 @@ add_ci_2plot <- function(plot,
 #' The Idea was inspired by a blog post of my colleague Remi Theriault
 #' (see \href{https://remi-theriault.com/blog_table.html}{remi-theriault.com})
 #' Which utilized the ability of \code{\link[flextable]{flextable}} to be able to get an
-#' APA-style formatted table directly from R into .docx (word)
-#' I built on that idea and created a function that creates a correlation table
-#' together with the summary stats of your choice
+#' APA-style formatted table directly from R into .docx (word). One frequent use case
+#' is to get a correlation table into word. For the creation of the correlation table
+#' this function uses the \code{\link{corstars}} function from this package, which
+#' resolves around the code by
+#' \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Dominik Vogel}.\cr
+#' I built on those idea and created a function that creates a pretty correlation table
+#' together with the summary stats of your choice, and returns a flextable, which
+#' can be easily exported to word (see also  \code{\link{save_flextable}})\cr
+#' \strong{Please note:} This function only considers numeric variables (cols). Other
+#' datatypes will be dropped from the data.frame df.
 #'
 #' @param df Data.frame, mandatory argument. Consider filtering before passing it
 #' e.g. with dplyr::select() and dplyr::filter()
 #' @param summarystats A vector with the summary stats to be included at the bottom
 #' below the correlation. Default is c("mean","sd")
 #' Options are one or all of c("mean","sd","median","range","min","max","skew",
-#' "kurtosis","se"). If NA is given, no summarystats will be added.
+#' "kurtosis","se","missing"). The option missing, adds missings per item as additional row
+#' (accecpts both "missing" and "missings", spelling in table accordingly).
+#' If NA is given, no summarystats will be added.
 #' @param method Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"
 #' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
 #' @param sig.level How many stars per level of significance, options include
@@ -997,6 +1008,8 @@ add_ci_2plot <- function(plot,
 #' @export
 #' @importFrom stats na.omit
 #' @importFrom magrittr "%>%"
+#' @importFrom dplyr select summarise across everything
+#' @importFrom stringr str_to_title
 #' @importFrom psych describe
 #' @importFrom tibble rownames_to_column
 #' @importFrom flextable flextable
@@ -1012,6 +1025,8 @@ apa_corrTable <- function(df,
                           filepath = NA,
                           overwrite = FALSE,
                           ...) {
+  # Exclude non-numeric cols
+  df <- df %>% dplyr::select(where(is.numeric))
 
   # TODO: Add problematic correlations
 
@@ -1027,8 +1042,6 @@ apa_corrTable <- function(df,
     if (nod[2] == -1) nod_sum <- get_number_of_decimals(nrow(df)) else nod_sum <- nod[2]
   }
 
-
-
   # Creating Correlation table
   corstars(df,
     rmLastCol = FALSE,
@@ -1040,9 +1053,17 @@ apa_corrTable <- function(df,
 
   ### Getting Descriptives
   # Determine which summarystats are requested
-  indices <- match(c("mean", "sd", "median", "range", "min", "max", "skew", "kurtosis", "se"), summarystats)
-  for (stat in stats::na.omit(summarystats[indices])) {
-    correlations[stringr::str_to_title(stat), ] <- round(psych::describe(df)[[stat]], nod_sum)
+  psych_sumstats <- c("mean", "sd", "median", "range", "min", "max", "skew",
+                      "kurtosis", "se")
+  for (stat in summarystats) {
+    if (any(stat %in% psych_sumstats)) {
+      correlations[stringr::str_to_title(stat), ] <- round(psych::describe(df)[[stat]], nod_sum)
+    } else if (stat == "missing" || stat == "missings") {
+      correlations[stringr::str_to_title(stat), ] <- df %>%
+        dplyr::summarise(dplyr::across(dplyr::everything(),
+                                       ~ sum(is.na(.))))
+
+    }
   }
 
   ### Flextable

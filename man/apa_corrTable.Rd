@@ -23,7 +23,9 @@ e.g. with dplyr::select() and dplyr::filter()}
 \item{summarystats}{A vector with the summary stats to be included at the bottom
 below the correlation. Default is c("mean","sd")
 Options are one or all of c("mean","sd","median","range","min","max","skew",
-"kurtosis","se"). If NA is given, no summarystats will be added.}
+"kurtosis","se","missing"). The option missing, adds missings per item as additional row
+(accecpts both "missing" and "missings", spelling in table accordingly).
+If NA is given, no summarystats will be added.}
 
 \item{method}{Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"}
 
@@ -59,9 +61,16 @@ A \code{\link[flextable]{flextable}} object with APA ready correlation table.
 The Idea was inspired by a blog post of my colleague Remi Theriault
 (see \href{https://remi-theriault.com/blog_table.html}{remi-theriault.com})
 Which utilized the ability of \code{\link[flextable]{flextable}} to be able to get an
-APA-style formatted table directly from R into .docx (word)
-I built on that idea and created a function that creates a correlation table
-together with the summary stats of your choice
+APA-style formatted table directly from R into .docx (word). One frequent use case
+is to get a correlation table into word. For the creation of the correlation table
+this function uses the \code{\link{corstars}} function from this package, which
+resolves around the code by
+\href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Dominik Vogel}.\cr
+I built on those idea and created a function that creates a pretty correlation table
+together with the summary stats of your choice, and returns a flextable, which
+can be easily exported to word (see also  \code{\link{save_flextable}})\cr
+\strong{Please note:} This function only considers numeric variables (cols). Other
+datatypes will be dropped from the data.frame df.
 }
 \examples{
 apa_corrTable(mtcars, table_caption=c("Table 2","Correlations in the mtcars Data Set"))
