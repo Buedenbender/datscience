@@ -65,7 +65,8 @@
 
 
 
-<script src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+<script src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<div class="row">
   <main id="main"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Pretty Scree Plot with CIs for Eigenvalues </h1>
             
@@ -79,184 +80,281 @@
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
-<p>One of the most pressing and important question in factor analysis (fa) or principale component analysis (pca) is the number of factors to retain</p>
+<p>Conducting a factor analysis (fa) or principale component analysis (pca) can be challenging. It starts with the choice between either <code>fa</code> or <code>pca</code>. And continues with the question on how many factors or components to retain. In this vignette we will look especially into the second question. How to determine the number of factors/components to retain with parallel analysis (HORN citation), and what this package provides to help with the process.Especially we will look into the possibility to add bootstrapped confidence intervals around the observed Eigenvalues.</p>
+<div class="section level4">
+<h4 id="recommended-reads">Recommended Reads<a class="anchor" aria-label="anchor" href="#recommended-reads"></a>
+</h4>
+<p>The following are helpful sources (e.g., on the question on how to determine the number of Factors / Components) <em>to be advanced, article citations</em></p>
+<ul>
+<li>
+<a href="http://personality-project.org/r/psych/HowTo/factor.pdf" class="external-link">Tutorial</a> by William Revelle et al. on how to conduct a factor analysis with the psych package.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="example-output-a-pretty-scree-plot-added-cis">Example Output: A “Pretty” Scree-Plot + added CIs<a class="anchor" aria-label="anchor" href="#example-output-a-pretty-scree-plot-added-cis"></a>
+</h4>
+<p><em>to be inserted picture of the result</em></p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="example-results-pretty---scree-plot-ci">Example Results Pretty - Scree-Plot + CI<a class="anchor" aria-label="anchor" href="#example-results-pretty---scree-plot-ci"></a>
+<h2 id="pretty-scree-with-cis-a-tutorial">“Pretty” Scree with CIs a Tutorial<a class="anchor" aria-label="anchor" href="#pretty-scree-with-cis-a-tutorial"></a>
 </h2>
-<p>For PCA &amp; EFA</p>
-<p>PICTURE 2B Inserted</p>
-</div>
-<div class="section level2">
-<h2 id="producing-the-example-plots">Producing the Example Plots<a class="anchor" aria-label="anchor" href="#producing-the-example-plots"></a>
-</h2>
-<p>For the popular mtcars dataset</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Buedenbender/datscience/" class="external-link">datscience</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span>
-<span class="co"># Run a Parallel Analysis (Horn, 1965), save the parallel object</span>
-<span class="va">parallel_analysis</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">fa.parallel</a></span><span class="op">(</span><span class="va">mtcars</span>, fa<span class="op">=</span><span class="st">"both"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, :</span>
-<span class="co">#&gt; The estimated weights for the factor scores are probably incorrect. Try a</span>
-<span class="co">#&gt; different factor score estimation method.</span></code></pre></div>
-<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/setup-1.png" width="700"></p>
-<pre><code><span class="co">#&gt; Parallel analysis suggests that the number of factors =  2  and the number of components =  2</span></code></pre>
+<p>Below you find a step-by-step tutorial in just 4 easy steps on how to create bootstrapped confidence intervals (CIs) around the observed Eigenvalues in parallel analysis.</p>
 <div class="section level3">
-<h3 id="create-bootstrapped-confidence-intervals-for-observed-eigenvalues">Create Bootstrapped Confidence Intervals for observed Eigenvalues<a class="anchor" aria-label="anchor" href="#create-bootstrapped-confidence-intervals-for-observed-eigenvalues"></a>
+<h3 id="preparation-and-example-data">1. Preparation and Example Data<a class="anchor" aria-label="anchor" href="#preparation-and-example-data"></a>
 </h3>
-<div class="section level4">
-<h4 id="pca-eigenvalues-cis">PCA Eigenvalues CIs<a class="anchor" aria-label="anchor" href="#pca-eigenvalues-cis"></a>
-</h4>
+<p>This first section will setup the necessary packages and provide a first glance at the example survey data (on personality) we will need for the tutorial.</p>
+<div class="section level5">
+<h5 id="loading-packages">Loading Packages<a class="anchor" aria-label="anchor" href="#loading-packages"></a>
+</h5>
+<p>We start by loading all required packages. For this vignette we will use the following packages:</p>
+<ul>
+<li>
+<a href="https://buedenbender.github.io/datscience/index.html"><code>datscience</code></a>,</li>
+<li><a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a></li>
+<li><a href="https://davidgohel.github.io/flextable/" class="external-link"><code>flextable</code></a></li>
+<li><a href="https://cran.r-project.org/web/packages/psych/psych.pdf" class="external-link"><code>psych</code></a></li>
+</ul>
+<p>I personally like <a href="https://www.rdocumentation.org/packages/pacman/versions/0.5.1" class="external-link"><code>pacman</code></a> package manager for loading libraries in R. But that’s up to your preference, you might as well just you <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> instead</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">datscience</span>, <span class="va">psych</span>, <span class="va">dplyr</span>, <span class="va">flextable</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+</h5>
+<p>We will use the <code>bfi</code> data, that comes with the <code>psych</code> package as an example here. The data set contains information on <span class="math inline">\(k = 25\)</span> items from a Big Five personality questionnaire and additional <span class="math inline">\(k = 3\)</span> items on sociodemograhpic data from <span class="math inline">\(n = 2800\)</span> participants. More details can be obtained with <code>?bfi</code>.</p>
+<p>For this vignette we will just use the 10 items on agreeableness and extraversion, and sample randomly 300 participants in order to improve the run time. Below you can get first insights into the data.frame. For the overview we used the <a href="https://buedenbender.github.io/datscience/reference/format_flextable.html"><code>datscience::format_flextable</code></a> function for the apperance of the table.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span> <span class="co"># necessary for reproducible results</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bfi</span><span class="op">)</span>
+<span class="co"># Select only agreeableness and extraversion and sample participants</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">bfi</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  
+    <span class="fu">select</span><span class="op">(</span><span class="fu">matches</span><span class="op">(</span><span class="st">"^(E\\d|A\\d)"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="co"># Regex run down </span>
+  <span class="co">#   ^ : starts with</span>
+  <span class="co">#   (|) : Logical or</span>
+  <span class="co">#   E\\d: E followed by any digit, e.g. E3 matches E\\d</span>
+  <span class="co">#   A\\d: A followed by any digit, e.g. A5 matches E\\d</span>
+  <span class="fu">sample_n</span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>
+  
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; [1] 300  10</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    300 obs. of  10 variables:</span>
+<span class="co">#&gt;  $ A1: int  6 1 4 1 2 3 1 1 2 3 ...</span>
+<span class="co">#&gt;  $ A2: int  4 5 5 5 4 6 6 6 5 4 ...</span>
+<span class="co">#&gt;  $ A3: int  4 5 5 3 4 4 6 5 5 3 ...</span>
+<span class="co">#&gt;  $ A4: int  1 4 3 6 4 6 6 6 6 6 ...</span>
+<span class="co">#&gt;  $ A5: int  6 4 5 6 3 5 6 5 5 3 ...</span>
+<span class="co">#&gt;  $ E1: int  2 1 1 4 5 5 1 3 4 5 ...</span>
+<span class="co">#&gt;  $ E2: int  4 2 1 2 5 2 1 2 2 4 ...</span>
+<span class="co">#&gt;  $ E3: int  3 4 5 2 3 4 5 1 5 2 ...</span>
+<span class="co">#&gt;  $ E4: int  3 5 6 5 3 5 6 4 6 3 ...</span>
+<span class="co">#&gt;  $ E5: int  1 4 5 2 3 5 5 1 5 3 ...</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; [1] "data.frame"</span>
+<span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">flextable</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="../reference/format_flextable.html">format_flextable</a></span><span class="op">(</span>table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, 
+                                                 <span class="st">"Glimpse at the First 5 Rows of Shortened bfi Data"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<template id="9acf8c8e-eafd-4dfd-857c-915e511aba87"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-5d0e5bea{table-layout:auto;width:0%;}.cl-5d056bd4{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5d056bde{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5d056bdf{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5d0586b4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5d05f89c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d05f8b0{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5d05f8b1{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-5d0e5bea">
+<thead>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bd4">Table 1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bde">Glimpse at the First 5 Rows of Shortened bfi Data</span></p></td></tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">A1</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">A2</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">A3</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">A4</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">A5</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">E1</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">E2</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">E3</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">E4</span></p></td>
+<td class="cl-5d05f8b1"><p class="cl-5d0586b4"><span class="cl-5d056bdf">E5</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">6</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">6</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">6</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">1</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">6</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">6</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f89c"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">2</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">4</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">5</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+<td class="cl-5d05f8b0"><p class="cl-5d0586b4"><span class="cl-5d056bdf">3</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></template><div class="flextable-shadow-host" id="e6616fb8-b851-4058-b091-4b5018a0aaf6"></div>
+<script>
+var dest = document.getElementById("e6616fb8-b851-4058-b091-4b5018a0aaf6");
+var template = document.getElementById("9acf8c8e-eafd-4dfd-857c-915e511aba87");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+</div>
+</div>
+<div class="section level3">
+<h3 id="running-a-parallel-analysis">2. Running a Parallel Analysis<a class="anchor" aria-label="anchor" href="#running-a-parallel-analysis"></a>
+</h3>
+<p>The psych package makes it pretty convenient to conduct a parallel analysis. The <code>fa</code> parameter allows you to specify if you want to run a principal component analysis (<code>fa = "pca"</code>), or a factor analysis (<code>fa = "fa"</code>) or both (<code>fa = "both"</code>). As we want to showcase CI for the observed Eigenvalues for both method we chose “both” here.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PCA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">mtcars</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"pc"</span><span class="op">)</span>
-<span class="va">PCA_bootObj</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ORDINARY NONPARAMETRIC BOOTSTRAP</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; boot::boot(data = df, statistic = eigenvalues_extractor, R = iterations, </span>
-<span class="co">#&gt;     fa = fa, fm = fm, cor = cor)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Bootstrap Statistics :</span>
-<span class="co">#&gt;        original       bias    std. error</span>
-<span class="co">#&gt; t1*  6.60840025  0.147884960  0.52261108</span>
-<span class="co">#&gt; t2*  2.65046789 -0.061430903  0.49958098</span>
-<span class="co">#&gt; t3*  0.62719727  0.038145240  0.16131462</span>
-<span class="co">#&gt; t4*  0.26959744  0.043056774  0.05435261</span>
-<span class="co">#&gt; t5*  0.22345110  0.003487907  0.03183430</span>
-<span class="co">#&gt; t6*  0.21159612 -0.044603393  0.02718407</span>
-<span class="co">#&gt; t7*  0.13526199 -0.018402046  0.02270645</span>
-<span class="co">#&gt; t8*  0.12290143 -0.043236880  0.01875023</span>
-<span class="co">#&gt; t9*  0.07704665 -0.027758774  0.01587867</span>
-<span class="co">#&gt; t10* 0.05203544 -0.026436392  0.01009639</span>
-<span class="co">#&gt; t11* 0.02204441 -0.010706492  0.00530610</span>
-
-<span class="va">PCA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">PCA_bootObj</span><span class="op">)</span>
-<span class="va">PCA_CIs</span>
-<span class="co">#&gt;           index  method         lwr        upr   observed</span>
-<span class="co">#&gt; normal        1  normal 5.436216402 7.48481418 6.60840025</span>
-<span class="co">#&gt; basic         1   basic 5.413823182 7.42145824 6.60840025</span>
-<span class="co">#&gt; percent       1 percent 5.795342261 7.80297732 6.60840025</span>
-<span class="co">#&gt; bca           1     bca 5.430049660 7.50144351 6.60840025</span>
-<span class="co">#&gt; normal1       2  normal 1.732738060 3.69105953 2.65046789</span>
-<span class="co">#&gt; basic1        2   basic 1.798346031 3.66034542 2.65046789</span>
-<span class="co">#&gt; percent1      2 percent 1.640590361 3.50258976 2.65046789</span>
-<span class="co">#&gt; bca1          2     bca 1.763204649 3.72212001 2.65046789</span>
-<span class="co">#&gt; normal2       3  normal 0.272881192 0.90522287 0.62719727</span>
-<span class="co">#&gt; basic2        3   basic 0.226627674 0.84388455 0.62719727</span>
-<span class="co">#&gt; percent2      3 percent 0.410509989 1.02776687 0.62719727</span>
-<span class="co">#&gt; bca2          3     bca 0.409248216 1.02662183 0.62719727</span>
-<span class="co">#&gt; normal3       4  normal 0.120011499 0.33306983 0.26959744</span>
-<span class="co">#&gt; basic3        4   basic 0.097107871 0.31260165 0.26959744</span>
-<span class="co">#&gt; percent3      4 percent 0.226593223 0.44208700 0.26959744</span>
-<span class="co">#&gt; bca3          4     bca 0.167929084 0.32600712 0.26959744</span>
-<span class="co">#&gt; normal4       5  normal 0.157569116 0.28235728 0.22345110</span>
-<span class="co">#&gt; basic4        5   basic 0.153124845 0.27794892 0.22345110</span>
-<span class="co">#&gt; percent4      5 percent 0.168953284 0.29377736 0.22345110</span>
-<span class="co">#&gt; bca4          5     bca 0.160701018 0.28986839 0.22345110</span>
-<span class="co">#&gt; normal5       6  normal 0.202919720 0.30947931 0.21159612</span>
-<span class="co">#&gt; basic5        6   basic 0.199300307 0.31348450 0.21159612</span>
-<span class="co">#&gt; percent5      6 percent 0.109707739 0.22389193 0.21159612</span>
-<span class="co">#&gt; bca5          6     bca 0.199865737 0.23811977 0.21159612</span>
-<span class="co">#&gt; normal6       7  normal 0.109160216 0.19816785 0.13526199</span>
-<span class="co">#&gt; basic6        7   basic 0.109259630 0.20001588 0.13526199</span>
-<span class="co">#&gt; percent6      7 percent 0.070508094 0.16126435 0.13526199</span>
-<span class="co">#&gt; bca6          7     bca 0.107468949 0.17722609 0.13526199</span>
-<span class="co">#&gt; normal7       8  normal 0.129388544 0.20288808 0.12290143</span>
-<span class="co">#&gt; basic7        8   basic 0.129799281 0.20405893 0.12290143</span>
-<span class="co">#&gt; percent7      8 percent 0.041743937 0.11600358 0.12290143</span>
-<span class="co">#&gt; bca7          8     bca 0.137653077 0.13765308 0.12290143</span>
-<span class="co">#&gt; normal8       9  normal 0.073683798 0.13592706 0.07704665</span>
-<span class="co">#&gt; basic8        9   basic 0.073919500 0.13456172 0.07704665</span>
-<span class="co">#&gt; percent8      9 percent 0.019531588 0.08017381 0.07704665</span>
-<span class="co">#&gt; bca8          9     bca 0.074617397 0.10429852 0.07704665</span>
-<span class="co">#&gt; normal9      10  normal 0.058683277 0.09826039 0.05203544</span>
-<span class="co">#&gt; basic9       10   basic 0.056070951 0.09504142 0.05203544</span>
-<span class="co">#&gt; percent9     10 percent 0.009029458 0.04799993 0.05203544</span>
-<span class="co">#&gt; bca9         10     bca 0.054457653 0.05536868 0.05203544</span>
-<span class="co">#&gt; normal10     11  normal 0.022351134 0.04315066 0.02204441</span>
-<span class="co">#&gt; basic10      11   basic 0.020535467 0.04192745 0.02204441</span>
-<span class="co">#&gt; percent10    11 percent 0.002161365 0.02355335 0.02204441</span>
-<span class="co">#&gt; bca10        11     bca 0.020488263 0.02940276 0.02204441</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Run a Parallel Analysis (Horn, 1965) with psych pacakge and save the parallel object</span>
+<span class="va">parallel_analysis</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">fa.parallel</a></span><span class="op">(</span><span class="va">df</span>, fa<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></code></pre></div>
+<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/setup-1.png" width="700"></p>
+<pre><code><span class="co">#&gt; Parallel analysis suggests that the number of factors =  3  and the number of components =  2</span></code></pre>
 </div>
+<div class="section level3">
+<h3 id="create-bootstrapped-confidence-intervals-for-observed-eigenvalues">3. Create Bootstrapped Confidence Intervals for observed Eigenvalues<a class="anchor" aria-label="anchor" href="#create-bootstrapped-confidence-intervals-for-observed-eigenvalues"></a>
+</h3>
+<p>To get bootstrapped Eigenvalues we just use two functions from the <code>datscience</code> package. First we need to create a <code>boot</code> object with <code><a href="../reference/booted_eigenvalues.html">booted_eigenvalues()</a></code>, additionally supplying the method (either <code>pc</code> or <code>fa</code>) and the data.frame. Afterwards we will extract the confidence interval (CI) with the function <code>getCIs</code> by passing the boot object.</p>
 <div class="section level4">
-<h4 id="efa-eigenvalues-cis">EFA Eigenvalues CIs<a class="anchor" aria-label="anchor" href="#efa-eigenvalues-cis"></a>
-</h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">EFA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">mtcars</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"fa"</span><span class="op">)</span>
-<span class="co">#&gt; In factor.scores, the correlation matrix is singular, an approximation is used</span>
-<span class="va">EFA_bootObj</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ORDINARY NONPARAMETRIC BOOTSTRAP</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; boot::boot(data = df, statistic = eigenvalues_extractor, R = iterations, </span>
-<span class="co">#&gt;     fa = fa, fm = fm, cor = cor)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Bootstrap Statistics :</span>
-<span class="co">#&gt;         original       bias    std. error</span>
-<span class="co">#&gt; t1*   6.30271788  0.104553796  0.52324892</span>
-<span class="co">#&gt; t2*   1.99094869 -0.009938827  0.41794576</span>
-<span class="co">#&gt; t3*   0.19953591  0.046946656  0.10482571</span>
-<span class="co">#&gt; t4*   0.04283995  0.001395135  0.02557347</span>
-<span class="co">#&gt; t5*  -0.06366855  0.015048053  0.02728956</span>
-<span class="co">#&gt; t6*  -0.11356808  0.009810312  0.03522721</span>
-<span class="co">#&gt; t7*  -0.14973394 -0.022633924  0.05020391</span>
-<span class="co">#&gt; t8*  -0.31108851  0.002005222  0.07490414</span>
-<span class="co">#&gt; t9*  -0.43061117  0.008308447  0.08748138</span>
-<span class="co">#&gt; t10* -0.55344934  0.006995083  0.08556695</span>
-<span class="co">#&gt; t11* -0.61120381 -0.057955453  0.08693590</span>
-
-<span class="va">EFA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">EFA_bootObj</span><span class="op">)</span>
-<span class="va">EFA_bootObj</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ORDINARY NONPARAMETRIC BOOTSTRAP</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; boot::boot(data = df, statistic = eigenvalues_extractor, R = iterations, </span>
-<span class="co">#&gt;     fa = fa, fm = fm, cor = cor)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Bootstrap Statistics :</span>
-<span class="co">#&gt;         original       bias    std. error</span>
-<span class="co">#&gt; t1*   6.30271788  0.104553796  0.52324892</span>
-<span class="co">#&gt; t2*   1.99094869 -0.009938827  0.41794576</span>
-<span class="co">#&gt; t3*   0.19953591  0.046946656  0.10482571</span>
-<span class="co">#&gt; t4*   0.04283995  0.001395135  0.02557347</span>
-<span class="co">#&gt; t5*  -0.06366855  0.015048053  0.02728956</span>
-<span class="co">#&gt; t6*  -0.11356808  0.009810312  0.03522721</span>
-<span class="co">#&gt; t7*  -0.14973394 -0.022633924  0.05020391</span>
-<span class="co">#&gt; t8*  -0.31108851  0.002005222  0.07490414</span>
-<span class="co">#&gt; t9*  -0.43061117  0.008308447  0.08748138</span>
-<span class="co">#&gt; t10* -0.55344934  0.006995083  0.08556695</span>
-<span class="co">#&gt; t11* -0.61120381 -0.057955453  0.08693590</span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="create-pretty-scree">Create Pretty Scree<a class="anchor" aria-label="anchor" href="#create-pretty-scree"></a>
+<h4 id="bootstrapped-cis-for-pca">3.1 Bootstrapped CIs for PCA<a class="anchor" aria-label="anchor" href="#bootstrapped-cis-for-pca"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"pc"</span><span class="op">)</span>
-<span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"fa"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">PCA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"pc"</span><span class="op">)</span>
+<span class="va">PCA_bootObj</span>
+
+<span class="va">PCA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">PCA_bootObj</span><span class="op">)</span>
+<span class="va">PCA_CIs</span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="adding-confidence-intervals-for-observed-eigenvalues">Adding Confidence Intervals for Observed Eigenvalues<a class="anchor" aria-label="anchor" href="#adding-confidence-intervals-for-observed-eigenvalues"></a>
-</h4>
+</div>
+<div class="section level3">
+<h3 id="efa-eigenvalues-cis">EFA Eigenvalues CIs<a class="anchor" aria-label="anchor" href="#efa-eigenvalues-cis"></a>
+</h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">PCA_Plot</span>,<span class="va">PCA_CIs</span>,type<span class="op">=</span><span class="st">"errorbars"</span><span class="op">)</span>
-<span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">EFA_Plot</span>,<span class="va">EFA_CIs</span>,type<span class="op">=</span><span class="st">"band"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">EFA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"fa"</span><span class="op">)</span>
+<span class="va">EFA_bootObj</span>
+
+<span class="va">EFA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">EFA_bootObj</span><span class="op">)</span>
+<span class="va">EFA_bootObj</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="plotting">4. Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
+</h3>
+<div class="section level4">
+<h4 id="create-pretty-scree-plot">4.1 Create Pretty Scree Plot<a class="anchor" aria-label="anchor" href="#create-pretty-scree-plot"></a>
+</h4>
+<p>The output of the <code><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">psych::fa.parallel</a></code> can be easily beautified by the <code>pretty_scree</code> function (below we exemplarily showcase the pretty scree for pca).</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"pc"</span><span class="op">)</span>
+<span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"fa"</span><span class="op">)</span>
 
 <span class="va">PCA_Plot</span></code></pre></div>
-<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">EFA_Plot</span></code></pre></div>
-<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-2.png" width="700"></p>
+<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/prettyscree-1.png" width="700"></p>
 </div>
+</div>
+<div class="section level3">
+<h3 id="adding-confidence-intervals-for-observed-eigenvalues">4.2 Adding Confidence Intervals for Observed Eigenvalues<a class="anchor" aria-label="anchor" href="#adding-confidence-intervals-for-observed-eigenvalues"></a>
+</h3>
+<p>Adding the obtained CIs to the plot is also pretty easy with the function <code><a href="../reference/add_ci_2plot.html">add_ci_2plot()</a></code>. You can either chose to display the CIs as bands (with <code>type = "band"</code> or as error bars with <code>type = "errorbars"</code> )</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">EFA_Plot</span>,<span class="va">EFA_CIs</span>,type<span class="op">=</span><span class="st">"band"</span><span class="op">)</span>
+<span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">PCA_Plot</span>,<span class="va">PCA_CIs</span>,type<span class="op">=</span><span class="st">"errorbars"</span><span class="op">)</span>
+
+<span class="va">EFA_Plot</span></code></pre></div>
+<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-1.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">PCA_Plot</span></code></pre></div>
+<p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-2.png" width="700"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

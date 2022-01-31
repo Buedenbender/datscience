@@ -71,6 +71,7 @@ If desired this table can directly be exported to a Word file (.docx).</p>
   nod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>,
   n.obs <span class="op">=</span> <span class="cn">NA</span>,
   cutoff <span class="op">=</span> <span class="fl">0.3</span>,
+  orderbyloading <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -110,6 +111,11 @@ or covariance matrix.</p></dd>
 <dt>cutoff</dt>
 <dd><p>(Optional), Integer, determines the minimum threshold, values below are omitted.
 Default is cutoff = 0.3.</p></dd>
+<dt>orderbyloading</dt>
+<dd><p>(Optional), Boolean, default is <code>orderbyloading = TRUE</code>. If TRUE, items in the
+table will be sorted by loading on the first factor / component (as in the convention). In some use cases, you rather
+want to maintain the ordering you used to conduct the analysis (e.g., alphabetical). You can archieve this
+by providing <code>orderbyloading = FALSE</code></p></dd>
 <dt>...</dt>
 <dd><p>(Optional), Additional arguments that can be passed to <code><a href="format_flextable.html">format_flextable</a></code>
 (e.g., fontsize, font ...) or to <code><a href="serialNext.html">serialNext</a></code></p></dd>
@@ -135,16 +141,16 @@ it also creates the respective file (e.g., a word .docx file)</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: GPArotation</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>I am sorry, to do these rotations requires the GPArotation package to be installed</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a flextable object.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> col_keys: `item`, `MR1`, `MR2`, `Communality`, `Uniqueness`, `Complexity` </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> col_keys: `Item`, `MR1`, `MR2`, `Communality`, `Uniqueness`, `Complexity` </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> header has 3 row(s) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> body has 11 row(s) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> original dataset sample: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   item   MR1   MR2 Communality Uniqueness Complexity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  cyl 0.964              0.85       0.15       1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 disp 0.945              0.94       0.06       1.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  mpg                    0.90       0.10       1.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   wt 0.877              0.88       0.12       1.44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   hp 0.843 0.407        0.71       0.29       1.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Item   MR1   MR2 Communality Uniqueness Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  cyl 0.964              0.94       0.06       1.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 disp 0.945              0.90       0.10       1.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  mpg                    0.85       0.15       1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   wt 0.877              0.82       0.18       1.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   hp 0.843 0.407        0.88       0.12       1.44</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
