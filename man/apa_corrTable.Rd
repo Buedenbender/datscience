@@ -21,9 +21,9 @@ apa_corrTable(
 e.g. with dplyr::select() and dplyr::filter()}
 
 \item{summarystats}{A vector with the summary stats to be included at the bottom
-below the correlation. Default is c("mean","sd")
-Options are one or all of c("mean","sd","median","range","min","max","skew",
-"kurtosis","se","missing"). The option missing, adds missings per item as additional row
+below the correlation. \cr Default is \code{c("mean","sd")}
+Options are one or all of \code{c("mean","sd","median","range","min","max","skew",
+"kurtosis","se","missing")}. The option "missing", adds missings per item as additional row
 (accecpts both "missing" and "missings", spelling in table accordingly).
 If NA is given, no summarystats will be added.}
 
@@ -37,16 +37,16 @@ formatting of decimals in the table. Note the default for polychoric is NA}
 
 \item{nod}{(Optional) Integer or Integer Vector. Number of Decimals.
 In case of -1 a simple convention based on sample size is applied for determination
-of number of decimal points. See ?datscience::get_number_of_decimals.
+of number of decimal points. See \code{\link{get_number_of_decimals}}.
 You can also provide an Integer vector, if you want different number of decimals
 for the correlations and the summary stats. The first integer determines nod for
-correlations, the second for summary stats. E.g., c(2,-1) would give 2 decimals
-for correlations and apply the convention for summary stats. Default is nod = c(2,-1). \cr
+correlations, the second for summary stats. E.g., \code{nod = c(2,-1)} would give 2 decimals
+for correlations and apply the convention for summary stats. Default is \code{nod = c(2,-1)}. \cr
 See \code{\link{get_number_of_decimals}} or\code{?datscience::get_number_of_decimals}}
 
 \item{filepath}{(Optional) Path and filename were the APA ready table should
 be saved, options include the common filetypes .docx (Word), .pptx (Powerpoint),
-.html (Webpage). Default is filepath = NA. If NA is given, no file will be saved.}
+.html (Webpage). Default is \code{filepath = NA}. If NA is given, no file will be saved.}
 
 \item{overwrite}{(Optional) Boolean, default is FALSE. When overwrite is
 FALSE and the files already exists, a serialized version of the filename
@@ -70,8 +70,16 @@ resolves around the code by
 I built on those idea and created a function that creates a pretty correlation table
 together with the summary stats of your choice, and returns a flextable, which
 can be easily exported to word (see also  \code{\link{save_flextable}})\cr
-\strong{Please note:} This function only considers numeric variables (cols). Other
+\strong{Please note:}
+\itemize{
+\item This function only considers numeric variables (cols). Other
 datatypes will be dropped from the data.frame df.
+\item There is an interaction between the arguments \code{sig.level} and \code{nod}.
+When sig.level is set to NA, this improves the formatting of decimals places in the finale table,
+and removes the stars marking significance. However, this also prevents the table from having
+differing number of decimal places. Meaning the number of decimals for the correlation will also determine
+the number of decimals for the summary statistics
+}
 }
 \examples{
 apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
@@ -81,5 +89,6 @@ apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars D
 \code{\link{serialNext}}
 }
 \author{
-Bjoern Buedenbender (Inspired by Remi Theriault)
+Bjoern Buedenbender (Formatting based on Remi Theriault,
+Correlations based on Dominik Vogel)
 }
