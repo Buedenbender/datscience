@@ -11,37 +11,116 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
+
+  # TODO: Add Citations and References. Elaborate or refer to choice between fa and PCA
 )
 ```
-# Purpose
+## Purpose
 
-One of the most pressing and important question
-in factor analysis (fa) or principale component analysis (pca)
-is the number of factors to retain 
+Conducting a factor analysis (fa) or principale component analysis (pca) can be 
+challenging. It starts with the choice between either `fa` or `pca`. And continues
+with the question on how many factors or components to retain.
+In this vignette we will look especially into the second question. How to determine the
+number of factors/components to retain with parallel analysis (HORN citation), 
+and what this package provides to help with the process.Especially we will look into the possibility to add bootstrapped confidence intervals around the observed Eigenvalues.
 
-# Example Results Pretty - Scree-Plot + CI 
-For PCA & EFA
+#### Recommended Reads
 
-PICTURE 2B Inserted
+The following are helpful sources (e.g., on the question on how to determine the number of Factors / Components)
+_to be advanced, article citations_
 
-# Producing the Example Plots
+* [Tutorial](http://personality-project.org/r/psych/HowTo/factor.pdf) by William Revelle et al. on how to conduct a factor analysis with the psych package.
 
-For the popular mtcars dataset 
+#### Example Output: A "Pretty" Scree-Plot + added CIs 
+_to be inserted picture of the result_
 
-```{r setup}
-library(datscience)
-library(boot)
-# Run a Parallel Analysis (Horn, 1965), save the parallel object
-parallel_analysis <- psych::fa.parallel(mtcars, fa="both")
+## "Pretty" Scree with CIs a Tutorial
+
+Below you find a step-by-step tutorial in just 4 easy steps on how to create 
+bootstrapped confidence intervals (CIs) around the observed Eigenvalues in parallel analysis. 
+
+### 1. Preparation and Example Data
+  
+This first section will setup the necessary packages and provide a first glance
+at the example survey data (on personality) we will need for the tutorial.
+
+##### Loading Packages 
+
+We start by loading all required packages. For this vignette we will use the following packages:
+
+* [`datscience`](https://buedenbender.github.io/datscience/index.html), 
+* [`dplyr`](https://dplyr.tidyverse.org/) 
+* [`flextable`](https://davidgohel.github.io/flextable/) 
+* [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf)   
+
+I personally like [`pacman`](https://www.rdocumentation.org/packages/pacman/versions/0.5.1) 
+package manager for loading libraries in R. But that's up to your preference, you might as well just you `library()` instead
+
+```{r}
+pacman::p_load(datscience, psych, dplyr, flextable)
 ```
 
+##### Example Data
 
-## Create Bootstrapped Confidence Intervals for observed Eigenvalues
+We will use the `bfi` data, that comes with the `psych` package as an example here.
+The data set contains information on $k = 25$ items from a Big Five personality questionnaire and
+additional $k = 3$ items on sociodemograhpic data from $n = 2800$ participants.
+More details can be obtained with `?bfi`.  
+  
+For this vignette we will just use the 10 items on agreeableness and extraversion,
+and sample randomly 300 participants in order to improve the run time.
+Below you can get first insights into the data.frame. For the overview we used the [`datscience::format_flextable`](https://buedenbender.github.io/datscience/reference/format_flextable.html) function for the apperance of the table.
 
-### PCA Eigenvalues CIs
+```{r}
+set.seed(42) # necessary for reproducible results
+data(bfi)
+# Select only agreeableness and extraversion and sample participants
+df <- bfi %>%  
+    select(matches("^(E\\d|A\\d)")) %>% 
+  # Regex run down 
+  #   ^ : starts with
+  #   (|) : Logical or
+  #   E\\d: E followed by any digit, e.g. E3 matches E\\d
+  #   A\\d: A followed by any digit, e.g. A5 matches E\\d
+  sample_n(300)
+  
+dim(df)
+str(df)
+class(df)
+df %>%
+  head(5) %>%
+  flextable() %>%
+  datscience::format_flextable(table_caption = c("Table 1", 
+                                                 "Glimpse at the First 5 Rows of Shortened bfi Data"))
+```
 
-```{r pcaeigen, warning=FALSE}
-PCA_bootObj <- booted_eigenvalues(mtcars, iterations = 500, fa = "pc")
+### 2. Running a Parallel Analysis
+
+The psych package makes it pretty convenient to conduct a parallel analysis.
+The `fa` parameter allows you to specify if you want to run a principal component
+analysis (`fa = "pca"`), or a factor analysis (`fa = "fa"`) or both (`fa = "both"`).
+As we want to showcase CI for the observed Eigenvalues for both method we chose
+"both" here.
+
+
+```{r setup}
+# Run a Parallel Analysis (Horn, 1965) with psych pacakge and save the parallel object
+parallel_analysis <- psych::fa.parallel(df, fa="both")
+```
+  
+  
+### 3. Create Bootstrapped Confidence Intervals for observed Eigenvalues
+
+To get bootstrapped Eigenvalues we just use two functions from the `datscience`
+package. First we need to create a `boot` object with `booted_eigenvalues()`,
+additionally supplying the method (either `pc` or `fa`) and the data.frame.
+Afterwards we will extract the confidence interval (CI) with the function 
+`getCIs` by passing the boot object.
+
+#### 3.1 Bootstrapped CIs for PCA
+
+```{r pcaeigen, warning=FALSE, results='hide'}
+PCA_bootObj <- booted_eigenvalues(df, iterations = 500, fa = "pc")
 PCA_bootObj
 
 PCA_CIs <- getCIs(PCA_bootObj)
@@ -50,31 +129,39 @@ PCA_CIs
 
 ### EFA Eigenvalues CIs
 
-```{r faeigen, warning=FALSE}
-EFA_bootObj <- booted_eigenvalues(mtcars, iterations = 500, fa = "fa")
+```{r faeigen, warning=FALSE, results='hide'}
+EFA_bootObj <- booted_eigenvalues(df, iterations = 500, fa = "fa")
 EFA_bootObj
 
 EFA_CIs <- getCIs(EFA_bootObj)
 EFA_bootObj
 ```
 
-### Create Pretty Scree
+### 4. Plotting
 
-```{r prettyscree}
+#### 4.1 Create Pretty Scree Plot
+
+The output of the `psych::fa.parallel` can be easily beautified by the
+`pretty_scree` function (below we exemplarily showcase the pretty scree for pca).
+
+
+```{r prettyscree, warning=FALSE}
 PCA_Plot <- pretty_scree(parallel_analysis,fa="pc")
 EFA_Plot <- pretty_scree(parallel_analysis,fa="fa")
-```
-
-### Adding Confidence Intervals for Observed Eigenvalues
-
-```{r addCIs}
-
-PCA_Plot <- add_ci_2plot(PCA_Plot,PCA_CIs,type="errorbars")
-EFA_Plot <- add_ci_2plot(EFA_Plot,EFA_CIs,type="band")
 
 PCA_Plot
-EFA_Plot
-
 ```
 
+### 4.2 Adding Confidence Intervals for Observed Eigenvalues
 
+Adding the obtained CIs to the plot is also pretty easy with the function
+`add_ci_2plot()`. You can either chose to display the CIs as bands (with 
+`type = "band"` or as error bars with `type = "errorbars"` )
+
+```{r addCIs, warning=FALSE}
+EFA_Plot <- add_ci_2plot(EFA_Plot,EFA_CIs,type="band")
+PCA_Plot <- add_ci_2plot(PCA_Plot,PCA_CIs,type="errorbars")
+
+EFA_Plot
+PCA_Plot
+```

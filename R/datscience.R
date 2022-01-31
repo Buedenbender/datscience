@@ -1057,7 +1057,6 @@ apa_corrTable <- function(df,
   df <- df %>% dplyr::select(where(is.numeric))
 
   # TODO: Add problematic correlations (as summarystat?, ferketisch)
-  # TODO: add NA for sig.level if no stars are supposed to be added
 
   ### Determine number of decimals (nod)
   # Separate nod for correlations and summary stats?
@@ -1153,6 +1152,10 @@ apa_corrTable <- function(df,
 #' or covariance matrix.
 #' @param cutoff (Optional), Integer, determines the minimum threshold, values below are omitted.
 #' Default is cutoff = 0.3.
+#' @param orderbyloading (Optional), Boolean, default is \code{orderbyloading = TRUE}. If TRUE, items in the
+#' table will be sorted by loading on the first factor / component (as in the convention). In some use cases, you rather
+#' want to maintain the ordering you used to conduct the analysis (e.g., alphabetical). You can archieve this
+#' by providing \code{orderbyloading = FALSE}
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 #' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
@@ -1180,6 +1183,7 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
                                nod = c(3, 2),
                                n.obs = NA,
                                cutoff = 0.3,
+                               orderbyloading = TRUE,
                                ...) {
 
   ### Determine number of decimals (nod)
@@ -1206,8 +1210,12 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
   }
 
   # Create Table / Extract Factor Loadings
-  pc_loadings <- fa_object %>%
-    psych::fa.sort() %>%
+  # pc_loadings <-
+  if (orderbyloading) {
+    fa_object <- fa_object %>%
+      psych::fa.sort()
+  }
+  pc_loadings <-   fa_object %>%
     .[["loadings"]] %>%
     round(nod_loadings) %>%
     unclass() %>%
@@ -1222,7 +1230,7 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
       Complexity = fa_object$complexity
     ) %>%
     dplyr::mutate(dplyr::across(where(is.numeric), round, nod_additional)) %>%
-    tibble::rownames_to_column("item")
+    tibble::rownames_to_column("Item")
 
   # Create APA Flextable
   ft <- format_flextable(flextable::flextable(pc_loadings),

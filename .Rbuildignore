@@ -10,3 +10,4 @@
 ^pkgdown$
 ^\.github$
 ^README\.Rmd$
+^tink/*$

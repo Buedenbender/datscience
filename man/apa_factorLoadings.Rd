@@ -12,6 +12,7 @@ apa_factorLoadings(
   nod = c(3, 2),
   n.obs = NA,
   cutoff = 0.3,
+  orderbyloading = TRUE,
   ...
 )
 }
@@ -50,6 +51,11 @@ or covariance matrix.}
 
 \item{cutoff}{(Optional), Integer, determines the minimum threshold, values below are omitted.
 Default is cutoff = 0.3.}
+
+\item{orderbyloading}{(Optional), Boolean, default is \code{orderbyloading = TRUE}. If TRUE, items in the
+table will be sorted by loading on the first factor / component (as in the convention). In some use cases, you rather
+want to maintain the ordering you used to conduct the analysis (e.g., alphabetical). You can archieve this
+by providing \code{orderbyloading = FALSE}}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 (e.g., fontsize, font ...) or to \code{\link{serialNext}}}
