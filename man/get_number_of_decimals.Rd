@@ -24,7 +24,6 @@ will be applied, e.g.,  \emph{n}
 }
 \examples{
 get_number_of_decimals(n = 153)
-
 }
 \author{
 Bjoern Buedenbender

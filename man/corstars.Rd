@@ -36,7 +36,8 @@ corstars(
 
 \item{labels_cols}{Labels for columns. Length musst be same as number of variables - 1}
 
-\item{sig.level}{Significance level (.1 or .05)}
+\item{sig.level}{Significance level (.1 or .05). If NA is provided, no stars marking the significance will be printed.
+This helps formatting the decimal places. NA is especially used by the \code{\link{apa_corrTable}} function}
 
 \item{nod}{Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 on sample size is applied for determination of number of decimal points.

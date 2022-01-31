@@ -32,7 +32,8 @@ If NA is given, no summarystats will be added.}
 \item{rmDiag}{Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)}
 
 \item{sig.level}{How many stars per level of significance, options include
-.05 .01 or .001}
+.05 .01 or .001. If NA no stars indicating significance will be output. This improves
+formatting of decimals in the table. Note the default for polychoric is NA}
 
 \item{nod}{(Optional) Integer or Integer Vector. Number of Decimals.
 In case of -1 a simple convention based on sample size is applied for determination
@@ -73,8 +74,7 @@ can be easily exported to word (see also  \code{\link{save_flextable}})\cr
 datatypes will be dropped from the data.frame df.
 }
 \examples{
-apa_corrTable(mtcars, table_caption=c("Table 2","Correlations in the mtcars Data Set"))
-
+apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
 }
 \seealso{
 \code{\link{get_number_of_decimals}}, \code{\link{format_flextable}},

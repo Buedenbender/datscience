@@ -28,5 +28,4 @@ to include significance bars
 }
 \examples{
 boxplot_t_test(mtcars, c("mpg", "hp"), group = "am")
-
 }

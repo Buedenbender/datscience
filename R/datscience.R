@@ -33,7 +33,6 @@ utils::globalVariables(".")
 #'
 #' @examples
 #' get_number_of_decimals(n = 153)
-#'
 #' @export
 get_number_of_decimals <- function(n) {
   if (n < 100) {
@@ -233,7 +232,6 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
 #'
 #' @examples
 #' boxplot_t_test(mtcars, c("mpg", "hp"), group = "am")
-#'
 #' @return List(Plot and stats)
 #'
 #' @export
@@ -350,7 +348,8 @@ my_apa <- function(df) {
 #' @param result Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")
 #' @param labels_rows Labels for the rows (i.e., variable names). Length musst be same as number of variables
 #' @param labels_cols Labels for columns. Length musst be same as number of variables - 1
-#' @param sig.level Significance level (.1 or .05)
+#' @param sig.level Significance level (.1 or .05). If NA is provided, no stars marking the significance will be printed.
+#' This helps formatting the decimal places. NA is especially used by the \code{\link{apa_corrTable}} function
 #' @param nod Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 #' on sample size is applied for determination of number of decimal points.
 #' See \code{\link{get_number_of_decimals}} or \code{?datscience::get_number_of_decimals}
@@ -423,12 +422,16 @@ corstars <- function(x,
   # Prepare data.frame
   x <- as.matrix(x)
 
-  # Compute correlation matrix
-  if (length(method) != 1) {
-    warning(paste("You provided more than one method to determine correlation, the first one will
-be chosen: ", method[1]))
+  # Prevent warning for no method provided, from vector as input to method
+  if (length(method) > 1) {
     method <- method[1]
+    # Set sig.level to NA in case of polychoric
+    if (method == "polychoric") {
+      sig.level = NA
+    }
   }
+
+  # Compute correlation matrix
   if (method != "polychoric") {
     correlation_matrix <- Hmisc::rcorr(x, type = method[1])
     R <- correlation_matrix$r # Matrix of correlation coeficients
@@ -439,26 +442,28 @@ be chosen: ", method[1]))
     #        mystars <- ifelse(p < .01,"**", ifelse(p < .05, "* ", "  ")),
     #        ifelse(sig.level == 0.05,
     #               mystars <- ifelse(p < .05, "*", " "),""))
-    if (sig.level == .001) {
-      mystars <-
-        ifelse(p < .001, "*", " ")
-    } else if (sig.level == .01) {
-      mystars <-
-        ifelse(p < .001, "**",
-               ifelse(p < .01, "* ", "  ")
-        )
-    } else {
-      mystars <-
-        ifelse(p < .001, "*** ",
-               ifelse(p < .01, "**  ",
-                      ifelse(p < .05, "*   ", "    ")
-               )
-        )
+    if (!is.na(sig.level)) {
+      if (sig.level == .001) {
+        mystars <-
+          ifelse(p < .001, "*", " ")
+      } else if (sig.level == .01) {
+        mystars <-
+          ifelse(p < .001, "**",
+            ifelse(p < .01, "* ", "  ")
+          )
+      } else {
+        mystars <-
+          ifelse(p < .001, "*** ",
+            ifelse(p < .01, "**  ",
+              ifelse(p < .05, "*   ", "    ")
+            )
+          )
+      }
     }
-  } else if (method == "polychoric"){
-    correlation_matrix <- psych::polychoric(x,global = FALSE,correct = 0)
+  } else if (method == "polychoric") {
+    correlation_matrix <- psych::polychoric(x, global = FALSE, correct = 0)
     R <- correlation_matrix$rho
-  } else{
+  } else {
     stop("Please provide a correct method for correlation analysis, chose between either:
         - method = \"pearson\",
         - method = \"spearman\",
@@ -466,25 +471,39 @@ be chosen: ", method[1]))
   }
 
   ## trunctuate the correlation matrix to two decimal
-  R <- format(round(cbind(rep(-1.11, ncol(
-    x
-  )), R), nod))[, -1]
+  if (!is.na(sig.level)) {
+    R <- format(round(cbind(rep(-1.11, ncol(
+      x
+    )), R), nod))[, -1]
+  }
+
+
   ## build a new matrix that includes the correlations with their appropriate stars
-  if(method != "polychoric"){
+  if (method != "polychoric" && !is.na(sig.level)) {
     Rnew <- matrix(paste(R, mystars, sep = ""), ncol = ncol(x))
     diag(Rnew) <- paste(diag(R), " ", sep = "")
-  } else Rnew <- R
+  } else {
+    Rnew <- round(R, nod)
+  }
   rownames(Rnew) <- colnames(x)
   colnames(Rnew) <- paste(colnames(x), "", sep = "")
   ## remove upper triangle of correlation matrix
   if (removeTriangle[1] == "upper") {
     Rnew <- as.matrix(Rnew)
-    Rnew[upper.tri(Rnew, diag = rmDiag[1])] <- ""
+    if (!is.na(sig.level)) {
+      Rnew[upper.tri(Rnew, diag = rmDiag[1])] <- ""
+    } else {
+      Rnew[upper.tri(Rnew, diag = rmDiag[1])] <- NA
+    }
     Rnew <- as.data.frame(Rnew)
     ## remove lower triangle of correlation matrix
   } else if (removeTriangle[1] == "lower") {
     Rnew <- as.matrix(Rnew)
-    Rnew[lower.tri(Rnew, diag = rmDiag[1])] <- ""
+    if (!is.na(sig.level)) {
+      Rnew[lower.tri(Rnew, diag = rmDiag[1])] <- ""
+    } else {
+      Rnew[lower.tri(Rnew, diag = rmDiag[1])] <- NA
+    }
     Rnew <- as.data.frame(Rnew)
   } else {
     Rnew <- as.data.frame(as.matrix(Rnew))
@@ -502,12 +521,12 @@ be chosen: ", method[1]))
   } else {
     if (result[1] == "html") {
       print(xtable::xtable(Rnew, caption = caption),
-            type = "html",
-            file = filename
+        type = "html",
+        file = filename
       )
     } else {
       print(xtable::xtable(Rnew, caption = caption),
-            type = "latex"
+        type = "latex"
       )
     }
   }
@@ -980,7 +999,8 @@ add_ci_2plot <- function(plot,
 #' @param method Type of correlation. Options are currently: "pearson", "spearman" and "polychoric"
 #' @param rmDiag Should the diagonal in the corr matrix kept (FALSE) or removed (TRUE)
 #' @param sig.level How many stars per level of significance, options include
-#' .05 .01 or .001
+#' .05 .01 or .001. If NA no stars indicating significance will be output. This improves
+#' formatting of decimals in the table. Note the default for polychoric is NA
 #' @param nod (Optional) Integer or Integer Vector. Number of Decimals.
 #' In case of -1 a simple convention based on sample size is applied for determination
 #' of number of decimal points. See ?datscience::get_number_of_decimals.
@@ -1003,8 +1023,7 @@ add_ci_2plot <- function(plot,
 #' @author Bjoern Buedenbender (Inspired by Remi Theriault)
 #'
 #' @examples
-#' apa_corrTable(mtcars, table_caption=c("Table 2","Correlations in the mtcars Data Set"))
-#'
+#' apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
 #' @export
 #' @importFrom stats na.omit
 #' @importFrom magrittr "%>%"
@@ -1018,7 +1037,7 @@ add_ci_2plot <- function(plot,
 #' \code{\link{serialNext}}
 apa_corrTable <- function(df,
                           summarystats = c("mean", "sd"),
-                          method = c("pearson","spearman","polychoric"),
+                          method = c("pearson", "spearman", "polychoric"),
                           rmDiag = FALSE,
                           sig.level = 0.05,
                           nod = c(2, -1),
@@ -1028,7 +1047,8 @@ apa_corrTable <- function(df,
   # Exclude non-numeric cols
   df <- df %>% dplyr::select(where(is.numeric))
 
-  # TODO: Add problematic correlations
+  # TODO: Add problematic correlations (as summarystat?, ferketisch)
+  # TODO: add NA for sig.level if no stars are supposed to be added
 
   ### Determine number of decimals (nod)
   # Separate nod for correlations and summary stats?
@@ -1053,16 +1073,19 @@ apa_corrTable <- function(df,
 
   ### Getting Descriptives
   # Determine which summarystats are requested
-  psych_sumstats <- c("mean", "sd", "median", "range", "min", "max", "skew",
-                      "kurtosis", "se")
+  psych_sumstats <- c(
+    "mean", "sd", "median", "range", "min", "max", "skew",
+    "kurtosis", "se"
+  )
   for (stat in summarystats) {
     if (any(stat %in% psych_sumstats)) {
       correlations[stringr::str_to_title(stat), ] <- round(psych::describe(df)[[stat]], nod_sum)
     } else if (stat == "missing" || stat == "missings") {
       correlations[stringr::str_to_title(stat), ] <- df %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(),
-                                       ~ sum(is.na(.))))
-
+        dplyr::summarise(dplyr::across(
+          dplyr::everything(),
+          ~ sum(is.na(.))
+        ))
     }
   }
 
@@ -1124,8 +1147,7 @@ apa_corrTable <- function(df,
 #'
 #' @author Bjoern Buedenbender
 #' @examples
-#' datscience::apa_factorLoadings(psych::fa(mtcars,nfactors = 2))
-#'
+#' datscience::apa_factorLoadings(psych::fa(mtcars, nfactors = 2))
 #' @export
 #'
 #' @importFrom magrittr "%>%"
