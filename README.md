@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# datscience R-Packaage
+# datscience R-Package
 
 <!-- badges: start -->
 
@@ -106,8 +106,6 @@ package.
 
     ``` r
     datscience::corstars(iris[1:4])
-    #> Warning in datscience::corstars(iris[1:4]): You provided more than one method to determine correlation, the first one will
-    #> be chosen:  pearson
     #>              Sepal.Length Sepal.Width Petal.Length
     #> Sepal.Length                                      
     #> Sepal.Width     -0.12                             
@@ -191,8 +189,17 @@ formatted_loadings
 -   Beautify / clarify the vignette for bootstrapping confidence
     intervals for observed Eigenvalues in parallel analysis
 
+## Related Work
+
+-   [rempsyc](https://github.com/RemPsyc) I highly recommend this now
+    available package. It offers great utility for psychologist and
+    social scientist getting into R and provides nicely on-point
+    tutorials on how to implement the provided functions
+    ([one](https://remi-theriault.com/blog_table.html) of which was the
+    origin of `datscience::format_flextable()`)
+
 <!-- # Testing Packagedown -->
 <!-- ### Additional Remarks -->
 <!-- To Be Added Vignette on "Normal" Factor Analysis -->
 <!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
-<!-- Minor Changes to Test Github Workflow -->
+<!-- Minor Changes to Test Github Workflow: Removed Oldrel -->

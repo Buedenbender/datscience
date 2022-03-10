@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# datscience R-Packaage
+# datscience R-Package
 
 <!-- badges: start -->
 
@@ -184,6 +184,10 @@ formatted_loadings
 
 * Add a complete vignette for a factor analysis (utilizing `psych` and `datscience` package)
 * Beautify / clarify the vignette for bootstrapping confidence intervals for observed Eigenvalues in parallel analysis 
+
+## Related Work
+
+* [rempsyc](https://github.com/RemPsyc) I highly recommend this now available package. It offers great utility for psychologist and social scientist getting into R and provides nicely on-point tutorials on how to implement the provided functions ([one](https://remi-theriault.com/blog_table.html) of which was the origin of `datscience::format_flextable()`)
 
 <!-- # Testing Packagedown -->
 
