@@ -60,7 +60,7 @@ Check the original source: <a href="https://sakaluk.wordpress.com/2016/05/26/11-
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pretty_scree</span><span class="op">(</span><span class="va">parallel</span>, <span class="va">fa</span>, quant <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pretty_scree</span><span class="op">(</span><span class="va">parallel</span>, <span class="va">fa</span>, quant <span class="op">=</span> <span class="fl">0.95</span>, custom_optimal <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,6 +71,9 @@ Check the original source: <a href="https://sakaluk.wordpress.com/2016/05/26/11-
 <dd><p>either "pc" or "fa" factor methods are allowed for the parallel analysis</p></dd>
 <dt>quant</dt>
 <dd><p>default = .95 the quantile of the simulated values used to plot</p></dd>
+<dt>custom_optimal</dt>
+<dd><p>default = NA. If provided determines the position for
+the marker of optimal number of factors/components to retain.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
