@@ -68,7 +68,7 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="datscience-r-packaage">datscience R-Packaage<a class="anchor" aria-label="anchor" href="#datscience-r-packaage"></a>
+<div class="page-header"><h1 id="datscience-r-package">datscience R-Package<a class="anchor" aria-label="anchor" href="#datscience-r-package"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -124,8 +124,6 @@
 <p>Creates the correlation table by calling <code><a href="reference/corstars.html">datscience::corstars()</a></code><a href="https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R" class="external-link"><sup>[1]</sup></a>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/corstars.html">corstars</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt; Warning in datscience::corstars(iris[1:4]): You provided more than one method to determine correlation, the first one will</span>
-<span class="co">#&gt; be chosen:  pearson</span>
 <span class="co">#&gt;              Sepal.Length Sepal.Width Petal.Length</span>
 <span class="co">#&gt; Sepal.Length                                      </span>
 <span class="co">#&gt; Sepal.Width     -0.12                             </span>
@@ -189,7 +187,15 @@
 <li>Add a complete vignette for a factor analysis (utilizing <code>psych</code> and <code>datscience</code> package)</li>
 <li>Beautify / clarify the vignette for bootstrapping confidence intervals for observed Eigenvalues in parallel analysis</li>
 </ul>
-<!-- # Testing Packagedown --><!-- ### Additional Remarks --><!-- To Be Added Vignette on "Normal" Factor Analysis --><!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis --><!-- Minor Changes to Test Github Workflow -->
+</div>
+<div class="section level2">
+<h2 id="related-work">Related Work<a class="anchor" aria-label="anchor" href="#related-work"></a>
+</h2>
+<ul>
+<li>
+<a href="https://github.com/RemPsyc" class="external-link">rempsyc</a> I highly recommend this now available package. It offers great utility for psychologist and social scientist getting into R and provides nicely on-point tutorials on how to implement the provided functions (<a href="https://remi-theriault.com/blog_table.html" class="external-link">one</a> of which was the origin of <code><a href="reference/format_flextable.html">datscience::format_flextable()</a></code>)</li>
+</ul>
+<!-- # Testing Packagedown --><!-- ### Additional Remarks --><!-- To Be Added Vignette on "Normal" Factor Analysis --><!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis --><!-- Minor Changes to Test Github Workflow: Removed Oldrel -->
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
