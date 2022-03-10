@@ -687,6 +687,8 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 #' @param parallel an parallel object returned by \code{psych::fa.parallel}
 #' @param fa either "pc" or "fa" factor methods are allowed for the parallel analysis
 #' @param quant default = .95 the quantile of the simulated values used to plot
+#' @param custom_optimal default = NA. If provided determines the position for
+#' the marker of optimal number of factors/components to retain.
 #'
 #' @return APA Ready Plot of Parallel Analyssis
 #'
@@ -697,7 +699,7 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 #' @import ggplot2
 #' @seealso \code{\link[psych]{fa.parallel}}
 
-pretty_scree <- function(parallel, fa, quant = .95) {
+pretty_scree <- function(parallel, fa, quant = .95,custom_optimal = NA) {
   num <- eigenvalue <- type <- NULL
   # Abbreviations
   #   - noi = Number of Interest, Components or Factors determined by Parallel-Analysis after Horn
@@ -732,6 +734,8 @@ pretty_scree <- function(parallel, fa, quant = .95) {
     percentile1 <- percentile[index]
     noi <- parallel$nfact
   }
+  # If custom_optimal, replace noi
+  if (!is.na(custom_optimal) && is.numeric(custom_optimal)) noi <- custom_optimal
   # Create Data Frame for Observed Eigenvalues
   obs$type <- c("Observed Data")
   obs$num <- c(row.names(obs))
