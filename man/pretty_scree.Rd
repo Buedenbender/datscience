@@ -4,7 +4,7 @@
 \alias{pretty_scree}
 \title{Pretty Scree}
 \usage{
-pretty_scree(parallel, fa, quant = 0.95)
+pretty_scree(parallel, fa, quant = 0.95, custom_optimal = NA)
 }
 \arguments{
 \item{parallel}{an parallel object returned by \code{psych::fa.parallel}}
@@ -12,6 +12,9 @@ pretty_scree(parallel, fa, quant = 0.95)
 \item{fa}{either "pc" or "fa" factor methods are allowed for the parallel analysis}
 
 \item{quant}{default = .95 the quantile of the simulated values used to plot}
+
+\item{custom_optimal}{default = NA. If provided determines the position for
+the marker of optimal number of factors/components to retain.}
 }
 \value{
 APA Ready Plot of Parallel Analyssis
