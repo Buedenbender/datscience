@@ -13,8 +13,9 @@ pretty_scree(parallel, fa, quant = 0.95, custom_optimal = NA)
 
 \item{quant}{default = .95 the quantile of the simulated values used to plot}
 
-\item{custom_optimal}{default = NA. If provided determines the position for
-the marker of optimal number of factors/components to retain.}
+\item{custom_optimal}{default = NA, e.g., setting a marked dashed line to the location
+determined by fa.parallel. Given 0 hides the line, all other value > 0 set the dashed
+line to a custom location (e.g., to indicate a prefered number of factors determined by VSS or MAP)}
 }
 \value{
 APA Ready Plot of Parallel Analyssis
@@ -28,5 +29,5 @@ Check the original source: \href{https://sakaluk.wordpress.com/2016/05/26/11-mak
 \code{\link[psych]{fa.parallel}}
 }
 \author{
-John Sakaluk (Wrapped in a Function by Bjoern Buedenbender)
+John Sakaluk (Wrapped in a Function and Advanced by Bjoern Buedenbender)
 }

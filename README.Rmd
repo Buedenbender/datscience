@@ -21,13 +21,22 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Buedenbender/datscience/workflows/R-CMD-check/badge.svg)](https://github.com/Buedenbender/datscience/actions)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+```{r, echo = FALSE}
+description <- read.dcf('DESCRIPTION')
+version <- as.vector(description[, 'Version'])
+```
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--',Sys.Date())`-yellowgreen.svg)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-`r version`-orange.svg?style=flat-square)](commits/master)
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains
 some useful functions frequently required in the process of preparing data for publication.
 Most of the current functions provide additional utility for conducting factor
 analyses or principal component analyses.  
-  
+
 The overall goal was to improve the workflow of data analysis and
 help with formatting challenges I frequently encounter. To illustrate this, I will
 present and briefly elaborate on one typical problem I frequently encounter

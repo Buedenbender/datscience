@@ -6,6 +6,13 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Buedenbender/datscience/workflows/R-CMD-check/badge.svg)](https://github.com/Buedenbender/datscience/actions)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--03--11-yellowgreen.svg)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.1.2-orange.svg?style=flat-square)](commits/master)
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains

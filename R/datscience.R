@@ -427,7 +427,7 @@ corstars <- function(x,
     method <- method[1]
     # Set sig.level to NA in case of polychoric
     if (method == "polychoric") {
-      sig.level = NA
+      sig.level <- NA
     }
   }
 
@@ -687,19 +687,19 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 #' @param parallel an parallel object returned by \code{psych::fa.parallel}
 #' @param fa either "pc" or "fa" factor methods are allowed for the parallel analysis
 #' @param quant default = .95 the quantile of the simulated values used to plot
-#' @param custom_optimal default = NA. If provided determines the position for
-#' the marker of optimal number of factors/components to retain.
+#' @param custom_optimal default = NA, e.g., setting a marked dashed line to the location
+#' determined by fa.parallel. Given 0 hides the line, all other value > 0 set the dashed
+#' line to a custom location (e.g., to indicate a prefered number of factors determined by VSS or MAP)
 #'
 #' @return APA Ready Plot of Parallel Analyssis
 #'
-#' @author John Sakaluk (Wrapped in a Function by Bjoern Buedenbender)
+#' @author John Sakaluk (Wrapped in a Function and Advanced by Bjoern Buedenbender)
 #'
 #'
 #' @export
 #' @import ggplot2
 #' @seealso \code{\link[psych]{fa.parallel}}
-
-pretty_scree <- function(parallel, fa, quant = .95,custom_optimal = NA) {
+pretty_scree <- function(parallel, fa, quant = .95, custom_optimal = NA) {
   num <- eigenvalue <- type <- NULL
   # Abbreviations
   #   - noi = Number of Interest, Components or Factors determined by Parallel-Analysis after Horn
@@ -765,7 +765,7 @@ pretty_scree <- function(parallel, fa, quant = .95,custom_optimal = NA) {
     )
 
   # Use data from eigendat. Map number of factors to x-axis, eigenvalue to y-axis, and give different data point shapes depending on whether eigenvalue is observed or simulated
-  p <- ggplot2::ggplot(eigendat, aes(x = num, y = eigenvalue, shape = type)) +
+  p <- ggplot2::ggplot(eigendat, ggplot2::aes(x = num, y = eigenvalue, shape = type)) +
     # Add lines connecting data points
     ggplot2::geom_line() +
     # Add the data points.
@@ -778,9 +778,19 @@ pretty_scree <- function(parallel, fa, quant = .95,custom_optimal = NA) {
       breaks = min(eigendat$num):max(eigendat$num)
     ) +
     # Manually specify the different shapes to use for actual and simulated data, in this case, white and black circles.
-    ggplot2::scale_shape_manual(values = c(16, 1)) +
-    # Add vertical line indicating parallel analysis suggested max # of factors to retain
-    ggplot2::geom_vline(xintercept = noi, linetype = "dashed") +
+    ggplot2::scale_shape_manual(values = c(16, 1))
+
+  if (is.na(custom_optimal)) {
+    p <- p +
+      # Add vertical line indicating parallel analysis suggested max # of factors to retain
+      ggplot2::geom_vline(xintercept = noi, linetype = "dashed")
+  } else {
+    if (custom_optimal != 0) {
+      print("debug")
+    }
+  }
+
+  p <- p +
     # Apply our apa-formatting theme
     apatheme
   # Call the plot. Looks pretty!
@@ -1088,7 +1098,7 @@ apa_corrTable <- function(df,
   ) -> correlations
 
   ### Getting Descriptives
-  used.stats = c() # empty vector iteratively filled, used to individualize formatting
+  used.stats <- c() # empty vector iteratively filled, used to individualize formatting
   # Determine which summarystats are requested
   psych_sumstats <- c(
     "mean", "sd", "median", "range", "min", "max", "skew",
@@ -1219,7 +1229,7 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
     fa_object <- fa_object %>%
       psych::fa.sort()
   }
-  pc_loadings <-   fa_object %>%
+  pc_loadings <- fa_object %>%
     .[["loadings"]] %>%
     round(nod_loadings) %>%
     unclass() %>%
