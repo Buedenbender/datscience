@@ -82,6 +82,7 @@ the number of decimals for the summary statistics
 }
 }
 \examples{
+library(datscience)
 apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
 }
 \seealso{

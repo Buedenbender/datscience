@@ -1046,6 +1046,7 @@ add_ci_2plot <- function(plot,
 #' Correlations based on Dominik Vogel)
 #'
 #' @examples
+#' library(datscience)
 #' apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
 #' @export
 #' @importFrom stats na.omit
