@@ -28,6 +28,8 @@ serialNext <- function(path,
                        n_digits = 3,
                        maxruns = 500,
                        ...) {
+  # Validate correct inputs
+
   # Currently only supports ignore file extension case
   # Check if file exists, if not just return filename
   if (!file.exists(path)) {

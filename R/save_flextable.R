@@ -18,9 +18,15 @@
 #' @export
 #' @importFrom xfun file_ext
 #' @importFrom flextable save_as_docx save_as_pptx save_as_html
+#' @importFrom methods is
 #'
 #' @seealso \code{\link{serialNext}}
 save_flextable <- function(ft, filepath, overwrite = FALSE) {
+  # Validate user input
+  if(!is(ft,"flextable")) stop("Invalid argument type, ft requires a flextable::flextable() object",call.= FALSE)
+  if(!is.character(filepath)) stop("Invalid argument type, fielpath requires a character",call.= FALSE)
+  if(!is.logical(overwrite)) stop("Invalid argument type, overwrite only takes a logical (TRUE or FALSE)",call.= FALSE)
+
   #### Check if directory exists, if not create it
   if (!file.exists(dirname(filepath))) {
     dir.create(dirname(filepath), recursive = TRUE)
@@ -43,8 +49,9 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
            flextable::save_as_html(ft, path = filepath)
          },
          {
-           print("The given filetable is not supported by the package")
-           print("Try using .docx, .pptx or .html")
+           warning("The given file format is not supported by the package,
+                   try using .docx, .pptx or .html",
+                   call.= FALSE)
          }
   )
 }

@@ -85,6 +85,7 @@ corstars <- function(x,
                      caption = c("Correlation"),
                      filename = "") {
   ### TODO: Add overwrite parameters
+  ### TODO: Remove require Name Space Quitely
 
   # Requesting Namespace
   requireNamespace("Hmisc", quietly = TRUE)
