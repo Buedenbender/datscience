@@ -26,5 +26,5 @@ datscience::spss_swap(df_sav)
 }
 }
 \author{
-Bjoern Buedenbender
+Friedrich-Samuel Taubitz & Bjoern Buedenbender
 }

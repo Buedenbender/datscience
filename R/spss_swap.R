@@ -1,10 +1,9 @@
 ########################## Info ############################
 # Code by M. Sc. Bjoern Buedenbender (University of Mannheim)
 # Setting up global exports to fix RMD Check problems for
-# unexportet namespaces (e.g. where())
+# unexportet namespaces
 # Work around due to package building trouble
 #' @importFrom utils globalVariables
-utils::globalVariables("where") # https://github.com/r-lib/tidyselect/issues/201
 utils::globalVariables(".")
 
 
@@ -19,7 +18,7 @@ utils::globalVariables(".")
 #' @param df tibble read in the \code{\link[haven]{read_sav}} from haven
 #' @return A tibble with more human readable names (old labels as names)
 #'
-#' @author Bjoern Buedenbender
+#' @author Friedrich-Samuel Taubitz & Bjoern Buedenbender
 #' @examples
 #' \dontrun{
 #' datscience::spss_swap(df_sav)
