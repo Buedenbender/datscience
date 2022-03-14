@@ -27,8 +27,8 @@ utils::globalVariables(".")
 #'
 #' @export
 #' @import dplyr
-#' @import rstatix
 #' @import ggplot2
+#' @importFrom rstatix t_test adjust_pvalue add_significance add_xy_position
 #' @importFrom ggpubr ggboxplot
 #' @importFrom tidyr pivot_longer
 #' @importFrom ggpubr theme_pubr
@@ -39,6 +39,10 @@ boxplot_t_test <-
            group,
            adjust_p = "BH",
            ylimits = c(0, 150)) {
+    # TODO Complete validate user input
+    # Validate argument types
+    if (!is.data.frame(df)) stop("Invalid argument type, df is required to be a data.frame or tibble")
+
     variables <- NULL
     df_s <- df %>%
       dplyr::select(dependentvars, group) %>%
