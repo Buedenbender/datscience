@@ -27,7 +27,9 @@ Imports:
     tibble,
     xfun,
     rlang,
-    methods
+    methods,
+    janitor,
+    labelled
 License: GPL-2 
 Encoding: UTF-8
 LazyData: true
