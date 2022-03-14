@@ -6,6 +6,7 @@
 #' @importFrom utils globalVariables
 utils::globalVariables("where") # https://github.com/r-lib/tidyselect/issues/201
 utils::globalVariables(".")
+utils::globalVariables("Hmisc")
 
 #' Corstars - Correaltions in Console
 #' @description  Creates a pretty console correlation table (by Dominik Vogel)
@@ -92,10 +93,6 @@ corstars <- function(x,
 
   if (!pacman::p_isinstalled(Hmisc)) warning("Package Hmisc is not installed, corstars will not work for method = pearson or spearman.", .callr = FALSE)
 
-
-  # Requesting Namespace
-  requireNamespace("xtable", quietly = TRUE)
-  requireNamespace("Hmisc", quietly = TRUE)
   # Determine number of decimals, if convention is desired (-1)
   if (nod == -1) nod <- get_number_of_decimals(nrow(x))
   # stopifnot(length(labels_rows) == ncol(x))
