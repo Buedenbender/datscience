@@ -55,34 +55,41 @@ boxplot_t_test <-
     # Pivot Table
     df_p <- df_s %>%
       tidyr::pivot_longer(-tidyselect::all_of(group),
-        names_to = "variables", values_to =
-          "value"
+        names_to = "variables", values_to = "value"
       )
 
-    # Calc T Test
-    stat.test <- df_p %>%
-      dplyr::group_by(`variables`) %>%
-      rstatix::t_test(stats::as.formula(paste("value ~", group))) %>%
-      rstatix::adjust_pvalue(method = adjust_p) %>%
-      rstatix::add_significance()
-    # stat.test
+    # Iterating over possible groups
+    output = list()
 
-    # Creating the Plot
-    p1 <-
-      ggpubr::ggboxplot(
-        df_p,
-        x = group,
-        y = "value",
-        fill = group,
-        palette = "npg",
-        legend = "none",
-        ggtheme = ggpubr::theme_pubr(border = TRUE)
-      ) +
-      # ylim(ylimits)+
-      ggplot2::facet_wrap(~variables)
+    for (g in group) {
+      # Calc T Test
+      stat.test <- df_p %>%
+        dplyr::group_by(`variables`) %>%
+        rstatix::t_test(stats::as.formula(paste("value ~", g))) %>%
+        rstatix::adjust_pvalue(method = adjust_p) %>%
+        rstatix::add_significance()
+      # stat.test
 
-    stat.test <- stat.test %>% rstatix::add_xy_position(x = group)
-    p1 <-
-      p1 + ggpubr::stat_pvalue_manual(stat.test, label = "p.adj.signif")
-    return(list(plot = p1, stats = stat.test))
+      # Creating the Plot
+      p1 <-
+        ggpubr::ggboxplot(
+          df_p,
+          x = g,
+          y = "value",
+          fill = g,
+          palette = "npg",
+          legend = "none",
+          ggtheme = ggpubr::theme_pubr(border = TRUE)
+        ) +
+        # ylim(ylimits)+
+        ggplot2::facet_wrap(~variables)
+
+      stat.test <- stat.test %>% rstatix::add_xy_position(x = g)
+      p1 <-
+        p1 + ggpubr::stat_pvalue_manual(stat.test, label = "p.adj.signif")
+
+
+      output[[g]] <- list(plot = p1, stats = stat.test)
+    }
+    return(output)
   }
