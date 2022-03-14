@@ -59,6 +59,8 @@ to save them in html or latex format or (recommended), to transform them to a
 labels_rows and labels_cols are character vectors for labeling rows and columns.
 \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 Additionally added the option to investigate polychoric correlation
+For clarity to be able to calculate pearson or spearman correlation an installation
+of the Hmisc package is required. Run install.packages("Hmisc")
 }
 \examples{
 \dontrun{

@@ -16,6 +16,8 @@ utils::globalVariables(".")
 #' labels_rows and labels_cols are character vectors for labeling rows and columns.
 #' \href{https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R}{Reference for the original code}.
 #' Additionally added the option to investigate polychoric correlation
+#' For clarity to be able to calculate pearson or spearman correlation an installation
+#' of the Hmisc package is required. Run install.packages("Hmisc")
 #' @param x a matrix containing the data
 #' @param method correlation method. "pearson", "spearman" or "polychoric" are supported
 #' @param removeTriangle remove upper or lower triangle, or FALSE for not removing any triangle
@@ -71,7 +73,6 @@ utils::globalVariables(".")
 #' }
 #' @export
 #' @import xtable
-#' @importFrom Hmisc rcorr
 corstars <- function(x,
                      method = c("pearson", "spearman", "polychoric"),
                      removeTriangle = c("upper", "lower", FALSE),
@@ -86,9 +87,13 @@ corstars <- function(x,
                      filename = "") {
   ### TODO: Add overwrite parameters
   ### TODO: Remove require Name Space Quitely
+  ### TODO: Add a Check, if a Hmisc is installed else give a warning
+  ### TODO: Add Check of User Input
+
+  if (!pacman::p_isinstalled(Hmisc)) warning("Package Hmisc is not installed, corstars will not work for method = pearson or spearman.", .callr = FALSE)
+
 
   # Requesting Namespace
-  requireNamespace("Hmisc", quietly = TRUE)
   requireNamespace("xtable", quietly = TRUE)
 
   # Determine number of decimals, if convention is desired (-1)

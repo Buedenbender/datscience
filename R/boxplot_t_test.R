@@ -17,7 +17,8 @@ utils::globalVariables(".")
 #' @param df data.frame.
 #' @param dependentvars Character vector.
 #' @param group Character vector.
-#' @param adjust_p Character vector.
+#' @param adjust_p Character vector.  "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none".
+#' See \code{\link[rstatix]{adjust_pvalue}} for more details
 #' @param ylimits Numeric vector.
 #'
 #'
@@ -31,6 +32,7 @@ utils::globalVariables(".")
 #' @importFrom rstatix t_test adjust_pvalue add_significance add_xy_position
 #' @importFrom ggpubr ggboxplot
 #' @importFrom tidyr pivot_longer
+#' @importFrom tidyselect all_of
 #' @importFrom ggpubr theme_pubr
 #' @importFrom magrittr "%>%"
 boxplot_t_test <-
@@ -39,18 +41,20 @@ boxplot_t_test <-
            group,
            adjust_p = "BH",
            ylimits = c(0, 150)) {
-    # TODO Complete validate user input
     # Validate argument types
     if (!is.data.frame(df)) stop("Invalid argument type, df is required to be a data.frame or tibble")
+    if (!is.character(dependentvars)) stop("Invalid argument type, dependentvars is required to be a character or a vector of characters containing the names of the respective columns")
+    if (!is.character(group)) stop("Invalid argument type, group is required to be a character or a vector of characters containing the names of the respective columns")
+    if (!is.character(adjust_p)) stop("Invalid argument type, adjust_p is required to be a character or a vector of characters containing the names of the respective columns")
 
     variables <- NULL
     df_s <- df %>%
-      dplyr::select(dependentvars, group) %>%
+      dplyr::select(tidyselect::all_of(dependentvars), tidyselect::all_of(group)) %>%
       dplyr::as_tibble()
 
     # Pivot Table
     df_p <- df_s %>%
-      tidyr::pivot_longer(-all_of(group),
+      tidyr::pivot_longer(-tidyselect::all_of(group),
         names_to = "variables", values_to =
           "value"
       )

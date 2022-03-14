@@ -1,24 +1,26 @@
 Package: datscience
 Type: Package
-Title: Data Science Utility Functions
+Title: Dataanalysis and Science Utility Functions
 Version: 0.2.1
 Author: Björn Büdenbender
 Maintainer: Björn Büdenbender <b_buedenbender@yahoo.de>
-Description: Contains some utility functions for data science purposes.
-    I.e. boxplot_t_test creates boxplots including sign. levels for a
-    vector of given variables names and a grouping variable.
+Description: The datscience (dataanalysis and science) R-package contains
+    some useful functions frequently required in the process of preparing data for publication.
+    Most of the current functions provide additional utility for conducting factor
+    analyses or principal component analyses.  
+    The overall goal was to improve the workflow of data analysis and
+    help with formatting challenges I frequently encounter.
 Imports:
     pacman,
-    Hmisc,
     xtable,
     dplyr,
     tidyr,
+    tidyselect,
     utils,
     ggplot2,
     ggpubr,
     rstatix,
     knitr,
-    kableExtra,
     boot,
     magrittr,
     psych,
@@ -40,6 +42,7 @@ BugReports: https://github.com/Buedenbender/datscience/issues
 VignetteBuilder: knitr
 Suggests: 
     testthat (>= 3.0.0),
+    Hmisc,
     rmarkdown,
     covr
 Config/testthat/edition: 3

@@ -13,7 +13,8 @@ boxplot_t_test(df, dependentvars, group, adjust_p = "BH", ylimits = c(0, 150))
 
 \item{group}{Character vector.}
 
-\item{adjust_p}{Character vector.}
+\item{adjust_p}{Character vector.  "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none".
+See \code{\link[rstatix]{adjust_pvalue}} for more details}
 
 \item{ylimits}{Numeric vector.}
 }
