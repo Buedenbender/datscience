@@ -95,7 +95,7 @@ corstars <- function(x,
 
   # Requesting Namespace
   requireNamespace("xtable", quietly = TRUE)
-
+  requireNamespace("Hmisc", quietly = TRUE)
   # Determine number of decimals, if convention is desired (-1)
   if (nod == -1) nod <- get_number_of_decimals(nrow(x))
   # stopifnot(length(labels_rows) == ncol(x))
