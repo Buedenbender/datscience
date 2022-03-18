@@ -29,7 +29,6 @@ So what am I actually talking about, see for yourself below!
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
-knitr::opts_chunk$set(ft.shadow = FALSE)
 library(datscience)
 # Additionally load Tidyverse for Data Wrangling
 library(dplyr)
@@ -85,7 +84,7 @@ So how do we get there, just follow these few and easy steps.
 
 ### 1.1) Load Required Packages
 
-We will primarly use the `datscience` package. As well as a bit of `tidyverse` and `labelled` to
+We will primarly use the `datscience` package. As well as a bit of `dplyr` and `labelled` to
 prepare the data. However please note that the function I am showcasing here heavily
 benefits from the two package [`table1`](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html) [`flextable`](https://ardata-fr.github.io/flextable-book/) (as described above).   
 If you want to customize the appearance
@@ -94,15 +93,13 @@ provided here just serve for convenience purposes, to make the creation of a biv
 comparison in table1 a less time consuming task. 
 
 **Loading Packages**
-
-```{r setup}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-# Load the datscience package
+  
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 library(datscience)
-# Additionally load Tidyverse for Data Wrangling
+# Additionally load dplyr and labelled for Data Wrangling
 library(dplyr)
 library(labelled)
-```
+```  
   
   
 The data we are using for this tutorial is publicly [Patricio, 2018] available on the homepage of the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Coimbra).
@@ -157,7 +154,11 @@ with bivariate group comparison. There are only two mandatory arguments:
   
 **Creation of the Table**
 
+
+
+
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+knitr::opts_chunk$set(ft.shadow = FALSE)
 flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
   data = breast_cancer_modified,
