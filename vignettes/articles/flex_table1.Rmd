@@ -32,7 +32,7 @@ So what am I actually talking about, see for yourself below!
 knitr::opts_chunk$set(ft.shadow = FALSE)
 library(datscience)
 # Additionally load Tidyverse for Data Wrangling
-library(tidyverse)
+library(dplyr)
 library(labelled)
 library(flextable)
 
@@ -100,7 +100,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 # Load the datscience package
 library(datscience)
 # Additionally load Tidyverse for Data Wrangling
-library(tidyverse)
+library(dplyr)
 library(labelled)
 ```
   
@@ -127,7 +127,7 @@ breast_cancer_modified <- breast_cancer %>%
   mutate(Diagnosis = factor(Classification,
     labels = c("Healthy Controls", "Breast Cancer Patients")
   )) %>%
-  # Remove the old Label
+  # Remove the old Variable
   select(-Classification) %>%
   # Generate a New Fictional Categorical Variable: random_Smoking
   mutate(random_Smoking = sample(c("Smoker", "Non-Smoker", "Occasionally"),
@@ -136,6 +136,8 @@ breast_cancer_modified <- breast_cancer %>%
   )) %>%
   # Convert the Randomly Generated Variable into a Factor
   mutate(random_Smoking = factor(random_Smoking))
+
+var_label(breast_cancer_modified$random_Smoking) <- "Fictional Smoking Status"
 
 # Giving the new fictional column a name to be shown in the table
 var_label(breast_cancer_modified$random_Smoking) <- "Fictional Smoking Status"
