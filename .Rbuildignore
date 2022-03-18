@@ -12,3 +12,4 @@
 ^README\.Rmd$
 ^tink/*$
 ^codecov\.yml$
+^vignettes/articles$

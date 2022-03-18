@@ -32,8 +32,6 @@ utils::globalVariables("Hmisc")
 #' @param nod Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 #' on sample size is applied for determination of number of decimal points.
 #' See \code{\link{get_number_of_decimals}} or \code{?datscience::get_number_of_decimals}
-#' @param caption Caption for the table
-#' @param filename File name to save output to
 #'
 #' @seealso \code{\link{get_number_of_decimals}}
 #'
@@ -73,7 +71,6 @@ utils::globalVariables("Hmisc")
 #' )
 #' }
 #' @export
-#' @import xtable
 corstars <- function(x,
                      method = c("pearson", "spearman", "polychoric"),
                      removeTriangle = c("upper", "lower", FALSE),
@@ -83,9 +80,8 @@ corstars <- function(x,
                      labels_rows = colnames(x),
                      labels_cols = labels_rows[1:length(labels_rows)],
                      sig.level = 0.05,
-                     nod = 2,
-                     caption = c("Correlation"),
-                     filename = "") {
+                     nod = 2
+                     ) {
   ### TODO: Add overwrite parameters
   ### TODO: Remove require Name Space Quitely
   ### TODO: Add a Check, if a Hmisc is installed else give a warning
@@ -195,18 +191,5 @@ corstars <- function(x,
   }
   rownames(Rnew) <- labels_rows
 
-  if (result[1] == "none") {
-    return(Rnew)
-  } else {
-    if (result[1] == "html") {
-      print(xtable::xtable(Rnew, caption = caption),
-            type = "html",
-            file = filename
-      )
-    } else {
-      print(xtable::xtable(Rnew, caption = caption),
-            type = "latex"
-      )
-    }
-  }
+  return(Rnew)
 }

@@ -12,7 +12,6 @@ Description: The datscience (dataanalysis and science) R-package contains
     help with formatting challenges I frequently encounter.
 Imports:
     pacman,
-    xtable,
     dplyr,
     tidyr,
     tidyselect,
@@ -25,12 +24,12 @@ Imports:
     magrittr,
     psych,
     flextable,
+    table1,
     stringr,
     tibble,
     xfun,
     rlang,
     methods,
-    janitor,
     labelled
 License: GPL-2 
 Encoding: UTF-8
@@ -46,3 +45,21 @@ Suggests:
     rmarkdown,
     covr
 Config/testthat/edition: 3
+Collate: 
+    'Rcitation_appendix.R'
+    'add_ci_2plot.R'
+    'apa_corrTable.R'
+    'apa_factorLoadings.R'
+    'booted_eigenvalues.R'
+    'boxplot_t_test.R'
+    'corstars.R'
+    'utility_numberparse.R'
+    'flex_table1.R'
+    'format_flextable.R'
+    'getCIs.R'
+    'get_number_of_decimals.R'
+    'pretty_scree.R'
+    'save_flextable.R'
+    'serialNext.R'
+    'spss_swap.R'
+    'utility.R'

@@ -12,7 +12,7 @@ utils::globalVariables(".")
 #' @description In many situations it can be useful to have the ability to replace the
 #' uninformative variable names (colnames) from a SPSS matrix (e.g. SD02, SD08_02)
 #' with their respective label attribute (e.g., "Gender/Sex" or "Age 15-25"). This
-#' function utilizes the function \code{\link[janitor]{make_clean_names}} to convert the
+#' function utilizes the utility function clean_names to convert the
 #' labels from SPSS to proper variable names (e.g.,"gender_sex" or "age_15_25") and sets
 #' them as new column names
 #' @param df tibble read in the \code{\link[haven]{read_sav}} from haven
@@ -26,7 +26,6 @@ utils::globalVariables(".")
 #' @export
 #'
 #' @importFrom labelled var_label
-#' @importFrom janitor make_clean_names
 spss_swap <- function(df) {
 
   # Validate user input
@@ -40,7 +39,7 @@ spss_swap <- function(df) {
     label <- labelled::var_label(df[,i])
     # Check if  label was supplied
     if(!is.null(unlist(label))){
-      clean_label <- janitor::make_clean_names(label)
+      clean_label <- clean_names(label)
     }else{
       clean_label <- names((df[,i]))
     }

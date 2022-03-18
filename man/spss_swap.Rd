@@ -16,7 +16,7 @@ A tibble with more human readable names (old labels as names)
 In many situations it can be useful to have the ability to replace the
 uninformative variable names (colnames) from a SPSS matrix (e.g. SD02, SD08_02)
 with their respective label attribute (e.g., "Gender/Sex" or "Age 15-25"). This
-function utilizes the function \code{\link[janitor]{make_clean_names}} to convert the
+function utilizes the utility function clean_names to convert the
 labels from SPSS to proper variable names (e.g.,"gender_sex" or "age_15_25") and sets
 them as new column names
 }

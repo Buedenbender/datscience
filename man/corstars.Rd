@@ -14,9 +14,7 @@ corstars(
   labels_rows = colnames(x),
   labels_cols = labels_rows[1:length(labels_rows)],
   sig.level = 0.05,
-  nod = 2,
-  caption = c("Correlation"),
-  filename = ""
+  nod = 2
 )
 }
 \arguments{
@@ -42,10 +40,6 @@ This helps formatting the decimal places. NA is especially used by the \code{\li
 \item{nod}{Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 on sample size is applied for determination of number of decimal points.
 See \code{\link{get_number_of_decimals}} or \code{?datscience::get_number_of_decimals}}
-
-\item{caption}{Caption for the table}
-
-\item{filename}{File name to save output to}
 }
 \value{
 Correlation table in console or file

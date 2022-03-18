@@ -44,34 +44,34 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
   invis.borders <- list("width" = 0, color = "black", style = "solid")
   formatted_ft <- ft %>%
     flextable::theme_booktabs() %>%
-    flextable::hline_top(part = "head", border = nice.borders) %>%
-    flextable::hline_bottom(part = "head", border = nice.borders) %>%
-    flextable::hline_top(part = "body", border = nice.borders) %>%
-    flextable::hline_bottom(part = "body", border = nice.borders) %>%
+    flextable::hline_top(.,part = "head", border = nice.borders) %>%
+    flextable::hline_bottom(.,part = "head", border = nice.borders) %>%
+    flextable::hline_top(.,part = "body", border = nice.borders) %>%
+    flextable::hline_bottom(.,part = "body", border = nice.borders) %>%
     # align(align = "center", part = "all") %>%
     # line_spacing(space = 1.5, part = "all") %>%
-    flextable::height(height = 0.55, part = "body") %>%
+    flextable::height(.,height = 0.55, part = "body") %>%
     # hrule(rule = "exact", part = "all") %>%
-    flextable::height(height = 0.55, part = "head") %>%
-    flextable::set_table_properties(layout = "autofit")
+    flextable::height(.,height = 0.55, part = "head") %>%
+    flextable::set_table_properties(.,layout = "autofit")
   # If provided, add table caption
   if (is(table_caption, "character")) {
     formatted_ft <- formatted_ft %>%
-      flextable::add_header_lines(values = rev(table_caption)) %>%
-      flextable::bold(part = "header", i = 1) %>%
-      flextable::italic(part = "header", i = 2) %>%
-      flextable::align(part = "header", i = c(1, 2), align = "left") %>%
-      flextable::border(part = "head", i = c(1, 2), border = invis.borders)
+      flextable::add_header_lines(.,values = rev(table_caption)) %>%
+      flextable::bold(.,part = "header", i = 1) %>%
+      flextable::italic(.,part = "header", i = c(2:length(table_caption))) %>%
+      flextable::align(.,part = "header", i = c(1:length(table_caption)), align = "left") %>%
+      flextable::border(.,part = "head", i = c(1:length(table_caption)), border = invis.borders)
   }
 
   # If provdied, add table note
   if (!is.na(table_note)) {
     formatted_ft <- formatted_ft %>%
-      flextable::add_footer_lines(values = table_note)
+      flextable::add_footer_lines(.,values = table_note)
   }
   formatted_ft <- formatted_ft %>%
-    flextable::fontsize(part = "all", size = fontsize) %>%
-    flextable::font(part = "all", fontname = font)
+    flextable::fontsize(.,part = "all", size = fontsize) %>%
+    flextable::font(.,part = "all", fontname = font)
 
 
   return(formatted_ft)
