@@ -158,21 +158,20 @@ with bivariate group comparison. There are only two mandatory arguments:
 **Creation of the Table**
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-
-ft <- flex_table1(
+flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
   data = breast_cancer_modified,
   table_caption = c(
     "Table 1",
     "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
   )
-)
-
-# For markdown we additionally need to fix the autofit property, this step is not
-# needed when directly saved to word e.g. with datscience::save_flextable()
-
-ft %>%
+)%>%
+  # Only For markdown we additionally need to fix the autofit property, this step is not
+  # needed when directly saved to word e.g. with datscience::save_flextable()
   set_table_properties(layout = "autofit", width = 1)
+
+
+
 ```
 
 
