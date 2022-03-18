@@ -43,6 +43,7 @@ of the Hmisc package is required. Run install.packages("Hmisc")'><!-- mathjax --
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues.html">Pretty Scree Plot with CIs for Eigenvalues </a>
+    <a class="dropdown-item" href="../articles/flex_table1.html">A Guide to Bivariate Table 1</a>
   </div>
 </li>
 <li class="nav-item">
@@ -94,9 +95,7 @@ of the Hmisc package is required. Run install.packages("Hmisc")</p>
   labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
   labels_cols <span class="op">=</span> <span class="va">labels_rows</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">labels_rows</span><span class="op">)</span><span class="op">]</span>,
   sig.level <span class="op">=</span> <span class="fl">0.05</span>,
-  nod <span class="op">=</span> <span class="fl">2</span>,
-  caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Correlation"</span><span class="op">)</span>,
-  filename <span class="op">=</span> <span class="st">""</span>
+  nod <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -125,10 +124,6 @@ This helps formatting the decimal places. NA is especially used by the <code><a 
 <dd><p>Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 on sample size is applied for determination of number of decimal points.
 See <code><a href="get_number_of_decimals.html">get_number_of_decimals</a></code> or <code><a href="get_number_of_decimals.html">?datscience::get_number_of_decimals</a></code></p></dd>
-<dt>caption</dt>
-<dd><p>Caption for the table</p></dd>
-<dt>filename</dt>
-<dd><p>File name to save output to</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

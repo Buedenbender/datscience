@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues.html">Pretty Scree Plot with CIs for Eigenvalues </a>
+    <a class="dropdown-item" href="../articles/flex_table1.html">A Guide to Bivariate Table 1</a>
   </div>
 </li>
 <li class="nav-item">
@@ -161,7 +162,7 @@
   <span class="fu">flextable</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="../reference/format_flextable.html">format_flextable</a></span><span class="op">(</span>table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, 
                                                  <span class="st">"Glimpse at the First 5 Rows of Shortened bfi Data"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<template id="3fafaa54-b8fb-4cff-8968-57f76dfb5dd0"><style>
+<template id="43efd50e-87b8-40b0-b1e5-f3d517f96a92"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -197,91 +198,91 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-602a2f56{table-layout:auto;width:0%;}.cl-602117a4{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-602117ae{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-602117b8{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-60213950{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6021395a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6021b42a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6021b43e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6021b43f{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6021b440{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-602a2f56">
+<style>.cl-b8bcdf1e{table-layout:auto;width:0%;}.cl-b8b73258{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b8b73262{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b8b7326c{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b8b74356{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b8b74360{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b8b7835c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b8b78366{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b8b78367{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b8b78370{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-b8bcdf1e">
 <thead>
-<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-6021b43f"><p class="cl-60213950"><span class="cl-602117a4">Table 1</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-6021b43f"><p class="cl-60213950"><span class="cl-602117ae">Glimpse at the First 5 Rows of Shortened bfi Data</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-b8b78367"><p class="cl-b8b74356"><span class="cl-b8b73258">Table 1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-b8b78367"><p class="cl-b8b74356"><span class="cl-b8b73262">Glimpse at the First 5 Rows of Shortened bfi Data</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">A1</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">A2</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">A3</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">A4</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">A5</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">E1</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">E2</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">E3</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">E4</span></p></td>
-<td class="cl-6021b440"><p class="cl-6021395a"><span class="cl-602117b8">E5</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">A1</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">A2</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">A3</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">A4</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">A5</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">E1</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">E2</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">E3</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">E4</span></p></td>
+<td class="cl-b8b78370"><p class="cl-b8b74360"><span class="cl-b8b7326c">E5</span></p></td>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">6</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">6</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">6</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">6</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">6</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">6</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">1</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">6</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">6</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b42a"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">1</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">6</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">6</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b7835c"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">2</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">4</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">5</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
-<td class="cl-6021b43e"><p class="cl-6021395a"><span class="cl-602117b8">3</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">2</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">4</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">5</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
+<td class="cl-b8b78366"><p class="cl-b8b74360"><span class="cl-b8b7326c">3</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="9516fbae-0fcc-4417-9dec-a09e3f013bd5"></div>
+</div></template><div class="flextable-shadow-host" id="75a3e4bb-44b7-4e39-96f5-71a35071dc1a"></div>
 <script>
-var dest = document.getElementById("9516fbae-0fcc-4417-9dec-a09e3f013bd5");
-var template = document.getElementById("3fafaa54-b8fb-4cff-8968-57f76dfb5dd0");
+var dest = document.getElementById("75a3e4bb-44b7-4e39-96f5-71a35071dc1a");
+var template = document.getElementById("43efd50e-87b8-40b0-b1e5-f3d517f96a92");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
