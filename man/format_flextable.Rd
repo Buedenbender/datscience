@@ -20,7 +20,8 @@ format_flextable(
 
 \item{fontsize}{Default is 12, bigger font size is not recommended.}
 
-\item{table_caption}{Takes a character vector. Recommend are the following elements
+\item{table_caption}{Takes a character vector. Note: when provided NA no caption will
+be placed! Recommend are the following elements
 \itemize{
 \item Table + number (e.g., "\strong{Table 1}")
 \item The description, use APA capital case

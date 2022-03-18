@@ -18,7 +18,8 @@ utils::globalVariables(".")
 #' @param ft A flextable object, to be formatted in accordance with APA. Required!
 #' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
 #' @param fontsize Default is 12, bigger font size is not recommended.
-#' @param table_caption Takes a character vector. Recommend are the following elements
+#' @param table_caption Takes a character vector. Note: when provided NA no caption will
+#' be placed! Recommend are the following elements
 #' \itemize{
 #' \item Table + number (e.g., "\strong{Table 1}")
 #' \item The description, use APA capital case
@@ -40,6 +41,7 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
                              table_note = NA,
                              ...) {
   nice.borders <- list("width" = 1, color = "black", style = "solid")
+  invis.borders <- list("width" = 0, color = "black", style = "solid")
   formatted_ft <- ft %>%
     flextable::theme_booktabs() %>%
     flextable::hline_top(part = "head", border = nice.borders) %>%
@@ -53,13 +55,15 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
     flextable::height(height = 0.55, part = "head") %>%
     flextable::set_table_properties(layout = "autofit")
   # If provided, add table caption
-  if ((length(table_caption) == 1 && !is.na(table_caption)) ||
-      length(table_caption) > 1) {
+  if (is(table_caption, "character")) {
     formatted_ft <- formatted_ft %>%
       flextable::add_header_lines(values = rev(table_caption)) %>%
       flextable::bold(part = "header", i = 1) %>%
-      flextable::italic(part = "header", i = 2)
+      flextable::italic(part = "header", i = 2) %>%
+      flextable::align(part = "header", i = c(1, 2), align = "left") %>%
+      flextable::border(part = "head", i = c(1, 2), border = invis.borders)
   }
+
   # If provdied, add table note
   if (!is.na(table_note)) {
     formatted_ft <- formatted_ft %>%
