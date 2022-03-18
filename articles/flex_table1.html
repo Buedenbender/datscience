@@ -90,7 +90,7 @@
 <p>Before starting this tutorial, I want to thank the developers of the packages <a href="https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html" class="external-link"><code>table1</code></a> (Benjamin Rich), and <a href="https://ardata-fr.github.io/flextable-book/" class="external-link"><code>flextable</code></a> (David Gohel and Colleagues). Really all credit should go to teams maintainig these two packages.</p>
 <p><strong>Full disclosure:</strong> My function merely provides an easy to use API or wrapper around their packages to get a beautiful publication ready bivariate comparison table 1.</p>
 <p>So what am I actually talking about, see for yourself below!</p>
-<template id="99e53819-4816-473c-85f8-78933e92b5fd"><style>
+<template id="7f1f439c-c831-4fa3-b382-207750802cd7"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -126,80 +126,80 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-be853e50{table-layout:auto;width:100%;}.cl-be7f880c{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-be7f8816{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-be7f8817{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-be7f9a36{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-be7f9a40{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-be7fd85c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd866{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd867{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd868{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd870{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd871{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd872{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd873{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd87a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd87b{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd884{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd885{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd88e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd88f{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd890{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-be7fd898{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-be853e50">
+<style>.cl-500e1752{table-layout:auto;width:100%;}.cl-500851b4{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-500851be{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-500851c8{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-50086456{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-50086457{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5008a416{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a420{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a42a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a42b{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a42c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a434{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a435{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a436{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a437{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a43e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a43f{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a440{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a448{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a449{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a44a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5008a452{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-500e1752">
 <thead>
-<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f880c">Table 1</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8816">Sample Characteristics, Comparison of Healthy Controls and Cancer Patients.</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851b4">Table 1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851be">Sample Characteristics, Comparison of Healthy Controls and Cancer Patients.</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd898"><p class="cl-be7f9a40"><span class="cl-be7f8817">Characteristic</span></p></td>
-<td class="cl-be7fd88f"><p class="cl-be7f9a40"><span class="cl-be7f8817">Healthy Controls<br>(N=52)</span></p></td>
-<td class="cl-be7fd88e"><p class="cl-be7f9a40"><span class="cl-be7f8817">Breast Cancer Patients<br>(N=64)</span></p></td>
-<td class="cl-be7fd890"><p class="cl-be7f9a40"><span class="cl-be7f8817">p</span></p></td>
+<td class="cl-5008a452"><p class="cl-50086457"><span class="cl-500851c8">Characteristic</span></p></td>
+<td class="cl-5008a449"><p class="cl-50086457"><span class="cl-500851c8">Healthy Controls<br>(N=52)</span></p></td>
+<td class="cl-5008a448"><p class="cl-50086457"><span class="cl-500851c8">Breast Cancer Patients<br>(N=64)</span></p></td>
+<td class="cl-5008a44a"><p class="cl-50086457"><span class="cl-500851c8">p</span></p></td>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">Fictional Smoking Status</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817"></span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817"></span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817">1</span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">Fictional Smoking Status</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8"></span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8"></span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">  Non-Smoker</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">19 (37 %)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">29 (45 %)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817"></span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">  Non-Smoker</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">20 (38 %)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">20 (31 %)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">  Occasionally</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">11 (21 %)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">7 (11 %)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817"></span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">  Occasionally</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">10 (19 %)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">14 (22 %)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">  Smoker</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">22 (42 %)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">28 (44 %)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817"></span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">  Smoker</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">22 (42 %)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">30 (47 %)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f880c">Glucose</span><span class="cl-be7f880c">***</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">88 (± 10)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">110 (± 27)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817">≤ 0.001</span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851b4">Glucose</span><span class="cl-500851b4">***</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">88 (± 10)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">110 (± 27)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8">≤ 0.001</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f880c">Insulin</span><span class="cl-be7f880c">**</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">6.9 (± 4.9)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">13 (± 12)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817">0.00796</span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851b4">Insulin</span><span class="cl-500851b4">**</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">6.9 (± 4.9)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">13 (± 12)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8">0.00796</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">Leptin</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">27 (± 19)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">27 (± 19)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817">1</span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">Leptin</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">27 (± 19)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">27 (± 19)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd868"><p class="cl-be7f9a36"><span class="cl-be7f8817">Age</span></p></td>
-<td class="cl-be7fd866"><p class="cl-be7f9a36"><span class="cl-be7f8817">58 (± 19)</span></p></td>
-<td class="cl-be7fd867"><p class="cl-be7f9a36"><span class="cl-be7f8817">57 (± 13)</span></p></td>
-<td class="cl-be7fd85c"><p class="cl-be7f9a36"><span class="cl-be7f8817">1</span></p></td>
+<td class="cl-5008a42b"><p class="cl-50086456"><span class="cl-500851c8">Age</span></p></td>
+<td class="cl-5008a420"><p class="cl-50086456"><span class="cl-500851c8">58 (± 19)</span></p></td>
+<td class="cl-5008a42a"><p class="cl-50086456"><span class="cl-500851c8">57 (± 13)</span></p></td>
+<td class="cl-5008a416"><p class="cl-50086456"><span class="cl-500851c8">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-be7fd873"><p class="cl-be7f9a36"><span class="cl-be7f8817">BMI</span></p></td>
-<td class="cl-be7fd872"><p class="cl-be7f9a36"><span class="cl-be7f8817">28 (± 5.4)</span></p></td>
-<td class="cl-be7fd871"><p class="cl-be7f9a36"><span class="cl-be7f8817">27 (± 4.6)</span></p></td>
-<td class="cl-be7fd870"><p class="cl-be7f9a36"><span class="cl-be7f8817">0.936</span></p></td>
+<td class="cl-5008a436"><p class="cl-50086456"><span class="cl-500851c8">BMI</span></p></td>
+<td class="cl-5008a435"><p class="cl-50086456"><span class="cl-500851c8">28 (± 5.4)</span></p></td>
+<td class="cl-5008a434"><p class="cl-50086456"><span class="cl-500851c8">27 (± 4.6)</span></p></td>
+<td class="cl-5008a42c"><p class="cl-50086456"><span class="cl-500851c8">0.936</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-be7fd885"><p class="cl-be7f9a36"><span class="cl-be7f8817">Note. Differences determined by independent sample t-test (Welch correction applied if necessary) or Pearon's χ²-test (Fisher's test for expected counts ≤ 5). Reported p-values are Bonferroni corrected.</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-5008a440"><p class="cl-50086456"><span class="cl-500851c8">Note. Differences determined by independent sample t-test (Welch correction applied if necessary) or Pearon's χ²-test (Fisher's test for expected counts ≤ 5). Reported p-values are Bonferroni corrected.</span></p></td></tr></tfoot>
 </table>
-</div></template><div class="flextable-shadow-host" id="82762cd3-cc8e-4906-8d99-6e69b6ecd27f"></div>
+</div></template><div class="flextable-shadow-host" id="320700d4-1118-4bee-8bbc-69c675170e25"></div>
 <script>
-var dest = document.getElementById("82762cd3-cc8e-4906-8d99-6e69b6ecd27f");
-var template = document.getElementById("99e53819-4816-473c-85f8-78933e92b5fd");
+var dest = document.getElementById("320700d4-1118-4bee-8bbc-69c675170e25");
+var template = document.getElementById("7f1f439c-c831-4fa3-b382-207750802cd7");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -284,91 +284,87 @@ If you want to customize the appearance of your table I recommend you to check o
 </ul>
 <p><strong>Creation of the Table</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flex_table1.html">flex_table1</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/flex_table1.html">flex_table1</a></span><span class="op">(</span>
   str_formula <span class="op">=</span> <span class="st">"~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis"</span>, 
   data <span class="op">=</span> <span class="va">breast_cancer_modified</span>,
   table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
     <span class="st">"Table 1"</span>,
     <span class="st">"Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."</span>
   <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># For markdown we additionally need to fix the autofit property, this step is not</span>
-<span class="co"># needed when directly saved to word e.g. with datscience::save_flextable()</span>
-
-<span class="va">ft</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="co"># Only For markdown we additionally need to fix the autofit property, this step is not</span>
+  <span class="co"># needed when directly saved to word e.g. with datscience::save_flextable()</span>
   <span class="fu">set_table_properties</span><span class="op">(</span>layout <span class="op">=</span> <span class="st">"autofit"</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <div class="tabwid">
-<style>.cl-bf0f8e7a{table-layout:auto;width:100%;}.cl-bf0a7e8a{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf0a7e94{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf0a7e9e{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf0a8a1a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bf0a8a24{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bf0ab724{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab72e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab72f{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab738{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab739{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab73a{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab742{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab743{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab74c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab74d{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab756{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab757{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab758{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab759{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab760{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf0ab761{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-bf0f8e7a">
+<style>.cl-50a896ce{table-layout:auto;width:100%;}.cl-50a386e8{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-50a386fc{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-50a386fd{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-50a39372{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-50a39373{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-50a3c0e0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0e1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0ea{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0eb{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0ec{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0f4{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0f5{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0f6{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0fe{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c0ff{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c100{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c108{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c109{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c112{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c113{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-50a3c11c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-50a896ce">
 <thead>
-<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e8a">Table 1</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e94">Sample Characteristics, Comparison of Healthy Controls and Cancer Patients.</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386e8">Table 1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fc">Sample Characteristics, Comparison of Healthy Controls and Cancer Patients.</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab761"><p class="cl-bf0a8a24"><span class="cl-bf0a7e9e">Characteristic</span></p></td>
-<td class="cl-bf0ab759"><p class="cl-bf0a8a24"><span class="cl-bf0a7e9e">Healthy Controls<br>(N=52)</span></p></td>
-<td class="cl-bf0ab758"><p class="cl-bf0a8a24"><span class="cl-bf0a7e9e">Breast Cancer Patients<br>(N=64)</span></p></td>
-<td class="cl-bf0ab760"><p class="cl-bf0a8a24"><span class="cl-bf0a7e9e">p</span></p></td>
+<td class="cl-50a3c11c"><p class="cl-50a39373"><span class="cl-50a386fd">Characteristic</span></p></td>
+<td class="cl-50a3c112"><p class="cl-50a39373"><span class="cl-50a386fd">Healthy Controls<br>(N=52)</span></p></td>
+<td class="cl-50a3c109"><p class="cl-50a39373"><span class="cl-50a386fd">Breast Cancer Patients<br>(N=64)</span></p></td>
+<td class="cl-50a3c113"><p class="cl-50a39373"><span class="cl-50a386fd">p</span></p></td>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">Fictional Smoking Status</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e"></span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e"></span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">1</span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">Fictional Smoking Status</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd"></span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd"></span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">  Non-Smoker</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">16 (31 %)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">22 (34 %)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e"></span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">  Non-Smoker</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">19 (37 %)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">30 (47 %)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">  Occasionally</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">11 (21 %)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">16 (25 %)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e"></span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">  Occasionally</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">14 (27 %)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">9 (14 %)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">  Smoker</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">25 (48 %)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">26 (41 %)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e"></span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">  Smoker</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">19 (37 %)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">25 (39 %)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e8a">Glucose</span><span class="cl-bf0a7e8a">***</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">88 (± 10)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">110 (± 27)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">≤ 0.001</span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386e8">Glucose</span><span class="cl-50a386e8">***</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">88 (± 10)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">110 (± 27)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd">≤ 0.001</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e8a">Insulin</span><span class="cl-bf0a7e8a">**</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">6.9 (± 4.9)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">13 (± 12)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">0.00796</span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386e8">Insulin</span><span class="cl-50a386e8">**</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">6.9 (± 4.9)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">13 (± 12)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd">0.00796</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">Leptin</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">27 (± 19)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">27 (± 19)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">1</span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">Leptin</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">27 (± 19)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">27 (± 19)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab738"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">Age</span></p></td>
-<td class="cl-bf0ab72e"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">58 (± 19)</span></p></td>
-<td class="cl-bf0ab72f"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">57 (± 13)</span></p></td>
-<td class="cl-bf0ab724"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">1</span></p></td>
+<td class="cl-50a3c0eb"><p class="cl-50a39372"><span class="cl-50a386fd">Age</span></p></td>
+<td class="cl-50a3c0e1"><p class="cl-50a39372"><span class="cl-50a386fd">58 (± 19)</span></p></td>
+<td class="cl-50a3c0ea"><p class="cl-50a39372"><span class="cl-50a386fd">57 (± 13)</span></p></td>
+<td class="cl-50a3c0e0"><p class="cl-50a39372"><span class="cl-50a386fd">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf0ab743"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">BMI</span></p></td>
-<td class="cl-bf0ab742"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">28 (± 5.4)</span></p></td>
-<td class="cl-bf0ab73a"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">27 (± 4.6)</span></p></td>
-<td class="cl-bf0ab739"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">0.936</span></p></td>
+<td class="cl-50a3c0f6"><p class="cl-50a39372"><span class="cl-50a386fd">BMI</span></p></td>
+<td class="cl-50a3c0f5"><p class="cl-50a39372"><span class="cl-50a386fd">28 (± 5.4)</span></p></td>
+<td class="cl-50a3c0f4"><p class="cl-50a39372"><span class="cl-50a386fd">27 (± 4.6)</span></p></td>
+<td class="cl-50a3c0ec"><p class="cl-50a39372"><span class="cl-50a386fd">0.936</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-bf0ab757"><p class="cl-bf0a8a1a"><span class="cl-bf0a7e9e">Note. Differences determined by independent sample t-test (Welch correction applied if necessary) or Pearon's χ²-test (Fisher's test for expected counts ≤ 5). Reported p-values are Bonferroni corrected.</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="4" class="cl-50a3c108"><p class="cl-50a39372"><span class="cl-50a386fd">Note. Differences determined by independent sample t-test (Welch correction applied if necessary) or Pearon's χ²-test (Fisher's test for expected counts ≤ 5). Reported p-values are Bonferroni corrected.</span></p></td></tr></tfoot>
 </table>
 </div>
 </div>
