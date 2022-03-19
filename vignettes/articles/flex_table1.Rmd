@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 ### Including Bivariate Comparisons
 
 Before starting this tutorial, I want to thank the developers of the packages
+
  * [`table1`](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html) (Benjamin Rich), and 
  * [`flextable`](https://ardata-fr.github.io/flextable-book/) (David Gohel and Colleagues).
  
@@ -103,11 +104,20 @@ library(labelled)
   
   
 The data we are using for this tutorial is publicly [Patricio, 2018] available on the homepage of the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Coimbra).
-First we will import the data with `read.csv`, additionally we will slightly modify
+First, we will import the data with `read.csv`, additionally we will slightly modify
 the original data set. 
 
-First, we will changing the column Classification to a factor and assigning the labels obtained
-from the UCI Repository. Additionally we will generate a new fictional variable called `random_Smoking` with 3 associated factor levels `c("Smoker","Non-Smoker","Occasionally")`.  
+For modification we will start by changing the column `Classification` to a factor and assigning the correct labels, obtained
+from the UCI repository.:
+
+```
+| Labels:
+| 1=Healthy controls
+| 2=Patients
+```
+
+Additionally we will generate a new fictional variable called `random_Smoking` with 3 associated factor levels `c("Smoker","Non-Smoker","Occasionally")`.   
+
 **Please note** that this is not part of the original data and was just fabricated to illustrate the utility of the `flex_table1()` function on comparison of factors.
 
 **Loading & Modifying the Data**
@@ -134,11 +144,19 @@ breast_cancer_modified <- breast_cancer %>%
   # Convert the Randomly Generated Variable into a Factor
   mutate(random_Smoking = factor(random_Smoking))
 
-var_label(breast_cancer_modified$random_Smoking) <- "Fictional Smoking Status"
-
 # Giving the new fictional column a name to be shown in the table
 var_label(breast_cancer_modified$random_Smoking) <- "Fictional Smoking Status"
 ```
+
+Just to get a glimpse and overview of the data.
+Additionally, this give the opportunity to showcase another 
+useful function of this (`datscience`) package the `format_flextable()`
+
+```{r}
+flextable(head(breast_cancer_modified)) %>% 
+  format_flextable()
+```
+
 
 
 ## 2.) Creation of Table 1
@@ -150,7 +168,7 @@ with bivariate group comparison. There are only two mandatory arguments:
  * str_formula = the variables that should be displayed and compared in formula notation. _Note_ formula is given as a string in this case. It starts allways with a tilde `"~"` followed by the variables to be shown in the rows combined with a plus sign `"Age + BMI"`. Lastly the groups to be compared a specified after `"| Diagnosis"`.  For more details please refere to the [table1 documentation](https://www.rdocumentation.org/packages/table1/versions/1.4.2/topics/table1).  Lets say for our cancer sample we want to know if there are difference in the following variables
     + Glucose, Insulin, Leptin, Age and BMI of the sample, Additionally if the fictional smoking status differs
     + Between Cancer Patients and Healthy Controls
-    + The formula string would look like this: `"~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis",`
+    + The formula string would look like this: `"~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis"`
   
 **Creation of the Table**
 
@@ -158,7 +176,6 @@ with bivariate group comparison. There are only two mandatory arguments:
 
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-knitr::opts_chunk$set(ft.shadow = FALSE)
 flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
   data = breast_cancer_modified,
