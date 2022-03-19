@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--03--13-yellowgreen.svg)](commits/main)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.1-orange.svg?style=flat-square)](commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--03--19-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.2-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
@@ -29,6 +29,11 @@ with formatting challenges I frequently encounter. To illustrate this, I
 will present and briefly elaborate on one typical problem I frequently
 encounter (getting the stats from R with the right format into MS Word),
 and what this package provides to solve this.
+
+As of March 2022 the new function `datscience::flex_table1()` makes the
+creation of the Sociodemograhpic Table 1 (including a subsample
+comparison), basically a piece of cake. Take a look at the new article
+`vignette("flex_table1")`
 
 ### Teaser of `datscience` Functionality
 
@@ -54,8 +59,8 @@ datscience::apa_corrTable(
 This creates the path (i.e., directories) `man/figures/` in the current
 working directory of R and also the desired word file (see below).
 
-**Screenshot of “CorrelationTable\_iris.docx”** ![Screenshot of
-apa\_corrTable() example](man/figures/README-apa_corrTableExample.png)
+**Screenshot of “CorrelationTable_iris.docx”** ![Screenshot of
+apa_corrTable() example](man/figures/README-apa_corrTableExample.png)
 
 **Please Note:** The code for the formatting was inspired and adapted
 from the blog post of [Rémi
@@ -106,7 +111,7 @@ cran website: <https://cran.r-project.org/bin/windows/Rtools/>
 The functions I appreciated the most, and use the most are
 `datscience::format_flextable()` and `datscience::apa_corrTable()`
 
-### apa\_corrTable() Function
+### apa_corrTable() Function
 
 The `datscience::apa_corrTable()` function was already showcased aboved.
 This function resolves around three other useful functions from this
@@ -143,7 +148,7 @@ package.
     savely (i.e., prohibiting overwrite of files by serializing the
     naming) write the flextable object to a Word (.docx) file
 
-### format\_flextable() Function
+### format_flextable() Function
 
 The flextable package is so versatile and it was exactly what I was
 looking for to get nicely formatted tables directly from R(studio) into

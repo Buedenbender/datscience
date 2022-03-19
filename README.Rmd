@@ -46,6 +46,10 @@ present and briefly elaborate on one typical problem I frequently encounter
 (getting the stats from R with the right format into MS Word), and what
 this package provides to solve this.
 
+As of March 2022 the new function `datscience::flex_table1()` makes the creation
+of the Sociodemograhpic Table 1 (including a subsample comparison), basically
+a piece of cake. Take a look at the new article `vignette("flex_table1")`
+
 ### Teaser of `datscience` Functionality
 
 While R provides so many opportunities and power to conduct whatever analyses one 
