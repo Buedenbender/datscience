@@ -100,6 +100,8 @@ library(datscience)
 # Additionally load dplyr and labelled for Data Wrangling
 library(dplyr)
 library(labelled)
+# We are also setting seed because we will generate random data with sample below
+set.seed(123)
 ```  
   
   
@@ -153,8 +155,13 @@ Additionally, this give the opportunity to showcase another
 useful function of this (`datscience`) package the `format_flextable()`
 
 ```{r}
-flextable(head(breast_cancer_modified)) %>% 
-  format_flextable()
+# determine how many number of decimal places by convention
+nod <- get_number_of_decimals(nrow(breast_cancer_modified))
+head(breast_cancer_modified) %>% 
+  # round numeric columns
+  mutate(across(where(is.numeric), ~ round(.x,nod))) %>% 
+  flextable() %>% 
+  format_flextable(table_caption = c("Table 2","First Cases (N = 5) of the Cancer Patients Data Set"))
 ```
 
 

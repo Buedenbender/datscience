@@ -106,7 +106,7 @@ flex_table1 <- function(str_formula,
 
     # Format the p-value, using an UNICODE for the less-than sign.
     # The initial empty string places the output on the line below the variable label.
-    c(sub("<", "\u2264 ", format.pval(p, digits = 3, eps = .001)), "")
+    c(sub("<", "\u2264 ", format.pval(round(p,4), digits = 3, eps = .001)), "")
   }
   # Helper to format the output of Metric Vars
   my.render.cont <- function(x) {
