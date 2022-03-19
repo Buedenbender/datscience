@@ -188,6 +188,7 @@ conveniently saved to word with `datscience::save_flextable()`
 **Descriptive Statistics and Distribution**
 
 ```{r}
+<<<<<<< HEAD
 breast_cancer_modified %>% 
   # remove categorical variables
   select(where(is.numeric)) %>% 
@@ -202,6 +203,13 @@ breast_cancer_modified %>%
     flextable() %>% 
   # format flextable
     format_flextable(table_caption = c("Table 3","Complete Sample - Numeric Variables: Distribution and Descriptive Stat."))
+# determine how many number of decimal places by convention
+nod <- get_number_of_decimals(nrow(breast_cancer_modified))
+head(breast_cancer_modified) %>% 
+  # round numeric columns
+  mutate(across(where(is.numeric), ~ round(.x,nod))) %>% 
+  flextable() %>% 
+  format_flextable(table_caption = c("Table 2","First Cases (N = 5) of the Cancer Patients Data Set"))
 ```
 
 
