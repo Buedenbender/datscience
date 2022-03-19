@@ -30,6 +30,7 @@ So what am I actually talking about, you might think?
 See for yourself below, it just requires one function call!
 
 ```{r eval=FALSE}
+# Only 2 mandaotry arguments: formula specifying variables to be used & data (see also table1::table1())
 flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
   data = breast_cancer_modified,
@@ -37,7 +38,6 @@ flex_table1(
     "Table 1",
     "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
   )
-
 ```
 
 
