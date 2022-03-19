@@ -2,7 +2,7 @@
 title: "A Guide to Bivariate Table 1"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A Guide to Bivariate Table 1}
+  %\VignetteIndexEntry{flex_table1}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -188,7 +188,6 @@ conveniently saved to word with `datscience::save_flextable()`
 **Descriptive Statistics and Distribution**
 
 ```{r}
-<<<<<<< HEAD
 breast_cancer_modified %>% 
   # remove categorical variables
   select(where(is.numeric)) %>% 
