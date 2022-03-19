@@ -26,7 +26,20 @@ Really all credit should go to the teams maintaining these two packages.
 **Full disclosure:** My function merely provides an easy to use API or wrapper around their packages to get
 a beautiful publication ready bivariate comparison table 1.
 
-So what am I actually talking about, see for yourself below! 
+So what am I actually talking about, you might think? 
+See for yourself below, it just requires one function call!
+
+```{r eval=FALSE}
+flex_table1(
+  str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
+  data = breast_cancer_modified,
+  table_caption = c(
+    "Table 1",
+    "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
+  )
+
+```
+
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
@@ -100,6 +113,8 @@ library(datscience)
 # Additionally load dplyr and labelled for Data Wrangling
 library(dplyr)
 library(labelled)
+# We are also setting seed because we will generate random data with sample below
+set.seed(123)
 ```  
   
   
@@ -152,9 +167,41 @@ Just to get a glimpse and overview of the data.
 Additionally, this give the opportunity to showcase another 
 useful function of this (`datscience`) package the `format_flextable()`
 
+**Inspection of the Data**
+
 ```{r}
-flextable(head(breast_cancer_modified)) %>% 
-  format_flextable()
+# determine how many number of decimal places by convention
+nod <- get_number_of_decimals(nrow(breast_cancer_modified))
+head(breast_cancer_modified) %>% 
+  # round numeric columns
+  mutate(across(where(is.numeric), ~ round(.x,nod))) %>% 
+  flextable() %>% 
+  format_flextable(table_caption = c("Table 2","First Cases (N = 5) of the Cancer Patients Data Set"))
+
+
+```
+Additionally lets inspect distributional parameters and descriptive statistics
+with the use of the function `psych::describe()`, and format the output
+again with `datscience::format_flextable()`. All outputs generated here can also be
+conveniently saved to word with `datscience::save_flextable()`
+
+**Descriptive Statistics and Distribution**
+
+```{r}
+breast_cancer_modified %>% 
+  # remove categorical variables
+  select(where(is.numeric)) %>% 
+  # get descriptives of metric variables
+    psych::describe() %>%
+    as.data.frame() %>% 
+    round(nod) %>% 
+  # add rownmaes (name of variable) as a separate columns
+    tibble::rownames_to_column(., var = "Variable") %>% 
+    select(-vars) %>% 
+  # generate flextable
+    flextable() %>% 
+  # format flextable
+    format_flextable(table_caption = c("Table 3","Complete Sample - Numeric Variables: Distribution and Descriptive Stat."))
 ```
 
 
@@ -173,14 +220,12 @@ with bivariate group comparison. There are only two mandatory arguments:
 **Creation of the Table**
 
 
-
-
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
   data = breast_cancer_modified,
   table_caption = c(
-    "Table 1",
+    "Table 4",
     "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
   )
 )%>%
