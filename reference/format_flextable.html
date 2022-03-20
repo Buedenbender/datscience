@@ -79,6 +79,8 @@ Reference on what APA style for tables constitutes can be obtained on the
   fontsize <span class="op">=</span> <span class="fl">12</span>,
   table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table x"</span>, <span class="st">"Some Description of the Table"</span><span class="op">)</span>,
   table_note <span class="op">=</span> <span class="cn">NA</span>,
+  italize_stats <span class="op">=</span> <span class="cn">TRUE</span>,
+  linespacing <span class="op">=</span> <span class="fl">1.25</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -86,7 +88,7 @@ Reference on what APA style for tables constitutes can be obtained on the
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>ft</dt>
-<dd><p>A flextable object, to be formatted in accordance with APA. Required!</p></dd>
+<dd><p>A flextable object (prefered) or data.frame, to be formatted in accordance with APA. Required!</p></dd>
 <dt>font</dt>
 <dd><p>Default is "Times New Roman", can be changed to your needs (e.g., "Arial")</p></dd>
 <dt>fontsize</dt>
@@ -98,8 +100,15 @@ be placed! Recommend are the following elements</p><ul><li><p>Table + number (e.
 (e.g., "<em>Sociodemographic Characteristics of the Total Sample</em>")</p></li>
 </ul></dd>
 <dt>table_note</dt>
-<dd><p>Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p &lt; .05. ** p &lt; .01. *** p &lt; .001").
+<dd><p>Takes a character vector. Will automatically prepend Note if not present.
+Default is NA (no table note). e.g., is c("Explanation of Abbreviations",
+"* p &lt; .05. ** p &lt; .01. *** p &lt; .001").
 Please note that you will need to manually set the formatting (i.e., setting italic for p values).</p></dd>
+<dt>italize_stats</dt>
+<dd><p>Boolean, default is TRUE. Searches the header for common statistic symbols (e.g. p N SD M) and
+sets font to italic</p></dd>
+<dt>linespacing</dt>
+<dd><p>Points of Linespacing defaults to 1.25, APA would be 1.5 or 2</p></dd>
 <dt>...</dt>
 <dd><p>(Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions</p></dd>
 </dl></div>

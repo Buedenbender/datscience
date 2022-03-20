@@ -87,6 +87,7 @@ a beautiful publication ready bivariate comparison Table 1.</p>
   correct <span class="op">=</span> <span class="st">"bonf"</span>,
   num <span class="op">=</span> <span class="cn">NA</span>,
   table_caption <span class="op">=</span> <span class="cn">NA</span>,
+  ref_correction <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -106,6 +107,8 @@ Provide NA if you dont want any correction. Defaults to "bonf"</p></dd>
 <dt>table_caption</dt>
 <dd><p>Caption for the table, each element of the vector represents
 a new line. The first line will be bold face. All additional lines are in italic.</p></dd>
+<dt>ref_correction</dt>
+<dd><p>Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.</p></dd>
 <dt>...</dt>
 <dd><p>(Optional), Additional arguments that can be passed to <code><a href="format_flextable.html">format_flextable</a></code>
 (e.g., fontsize, font ...) or to <code><a href="serialNext.html">serialNext</a></code></p></dd>
