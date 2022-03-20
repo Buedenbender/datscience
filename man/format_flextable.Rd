@@ -10,11 +10,13 @@ format_flextable(
   fontsize = 12,
   table_caption = c("Table x", "Some Description of the Table"),
   table_note = NA,
+  italize_stats = TRUE,
+  linespacing = 1.25,
   ...
 )
 }
 \arguments{
-\item{ft}{A flextable object, to be formatted in accordance with APA. Required!}
+\item{ft}{A flextable object (prefered) or data.frame, to be formatted in accordance with APA. Required!}
 
 \item{font}{Default is "Times New Roman", can be changed to your needs (e.g., "Arial")}
 
@@ -28,8 +30,15 @@ be placed! Recommend are the following elements
 (e.g., "\emph{Sociodemographic Characteristics of the Total Sample}")
 }}
 
-\item{table_note}{Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
+\item{table_note}{Takes a character vector. Will automatically prepend Note if not present.
+Default is NA (no table note). e.g., is c("Explanation of Abbreviations",
+"* p < .05. ** p < .01. *** p < .001").
 Please note that you will need to manually set the formatting (i.e., setting italic for p values).}
+
+\item{italize_stats}{Boolean, default is TRUE. Searches the header for common statistic symbols (e.g. p N SD M) and
+sets font to italic}
+
+\item{linespacing}{Points of Linespacing defaults to 1.25, APA would be 1.5 or 2}
 
 \item{...}{(Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions}
 }

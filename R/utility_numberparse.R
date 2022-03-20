@@ -1,24 +1,35 @@
 #' parse_oneNumber
 #' @param s one string to be parsed to a number
+#' @param first Bool default TRUE returns only the first decimal number found
 #' @noRd
-parse_oneNumber <- function(s) {
+parse_oneNumber <- function(s, first =TRUE) {
   # Check given argument, else return NA
   if (length(s) == 0) return(NA)
   if (is.na(s)) return(NA)
 
   # remove all non number related characters
   s <- gsub("[^0-9.-]", "", s)
-  # Only use the first decimal point (the digits before and after)
-  s <- unlist(strsplit(s,"\\."))
+  # if first character is a decimal point . prepend leading 0
+  if(substr(s,1,1) == ".") s <- paste0("0",s)
   # Only use digits after the -
   s <- gsub(".*-","-",s)
-  # Remove now empty strings due to multiple .
-  s <- s[s!=""]
-  # If decimal place was present concat to one string
-  if (length(s)>1) s <- paste0(s[1],".",s[2])
+  # extract multiple strings
+  s <- unlist(regmatches(s,gregexpr("(?>-)*[[:digit:]]+\\.*[[:digit:]]*",s, perl=TRUE)))
   # convert
   s <- as.numeric(s)
-  return(s)
+  if(first)  return(s[1]) else return(s)
+
+  # ARCHIVE
+  # # Only use the first decimal point (the digits before and after)
+  # s <- unlist(strsplit(s,"\\."))
+  # Only use digits after the -
+  # s <- gsub(".*-","-",s)
+  # # Remove now empty strings due to multiple .
+  # s <- s[s!=""]
+  # # If decimal place was present concat to one string
+  # if (length(s)>1) s <- paste0(s[1],".",s[2])
+
+
 }
 
 #' number_parse

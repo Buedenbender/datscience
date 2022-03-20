@@ -13,7 +13,7 @@ utils::globalVariables("Characteristic")
 utils::globalVariables("table_caption")
 
 # TODO: NOCH EINZUBAUEN https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
-
+# TODO: Add support for grouping variables with > 2 levels e.g., ANOVA
 
 
 #' Creates a Descriptive Bivariate Table1 for Pulbication (Table1 + Flextable)
@@ -37,6 +37,7 @@ utils::globalVariables("table_caption")
 #' @param num Integer number of comparisons. If NA will be determined automatically, by the number of terms in the formula
 #' @param table_caption Caption for the table, each element of the vector represents
 #' a new line. The first line will be bold face. All additional lines are in italic.
+#' @param ref_correction Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 #' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
@@ -65,6 +66,7 @@ flex_table1 <- function(str_formula,
                         correct = "bonf",
                         num = NA,
                         table_caption = NA,
+                        ref_correction = TRUE,
                         ...) {
 
   # Determine the number of Comparisons
@@ -78,6 +80,10 @@ flex_table1 <- function(str_formula,
   ### Helper Functions for the table1
   # https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
   pvalue <- function(x, ...) {
+    # Flaggs for append superscript letters for correction
+    fisher <- FALSE
+    levene <- FALSE
+
     # Construct vectors of data y, and groups (strata) g
     y <- unlist(x)
     g <- factor(rep(1:length(x), times = sapply(x, length)))
@@ -88,25 +94,33 @@ flex_table1 <- function(str_formula,
       p <- stats::t.test(y ~ g, var.equal = levene)$p.value
     } else {
       # For categorical variables, perform a chi-squared test of independence
-      tmp <- stats::chisq.test(table(y, g))
+      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
       # Or if one expected cell count is below 5a fishers exact test
       if (any(tmp$expected < 5)) {
         p <- stats::fisher.test(table(y, g))$p.value
+        fisher <- TRUE
       } else {
         p <- tmp$p.value
       }
     }
 
     # Bonferroni Correction
-    if (correct == "bonf") p <- p * num
-    if (correct == "sidark") p <- 1 - (1 - p)**num
+    if (!is.na(correct)) {
+      if (correct == "bonf") p <- p * num
+      if (correct == "sidark") p <- 1 - (1 - p)**num
+    }
 
     # Due to Correction replace values bigger > 1 with 1
     if (p > 1) p <- 1
 
     # Format the p-value, using an UNICODE for the less-than sign.
     # The initial empty string places the output on the line below the variable label.
-    c(sub("<", "\u2264 ", format.pval(round(p,4), digits = 3, eps = .001)), "")
+    out <- sub("<", "< ", sub("0.", ".", format.pval(round(p, 4), digits = 3, eps = .001)))
+    if (ref_correction) {
+      if (fisher) out <- paste(out, "\u0363")
+      if (levene) out <- paste(out, "\u1D47")
+    }
+    out
   }
   # Helper to format the output of Metric Vars
   my.render.cont <- function(x) {
@@ -140,11 +154,16 @@ flex_table1 <- function(str_formula,
 
   note <- NA
   # Add a Note if p-values corrected
-  note <- paste(
-    "Note. Differences determined by independent sample t-test",
-    "(Welch correction applied if necessary) or Pearon's \u03C7\u00B2-test",
-    "(Fisher\'s test for expected counts \u2264 5)."
-  )
+  if (ref_correction) {
+    note <- "Differences are determined by independent sample t-test, or Pearon's \u03C7\u00B2-test."
+  } else {
+    note <- paste(
+      "Differences determined by independent sample t-test",
+      "(Welch correction applied if necessary) or Pearon's \u03C7\u00B2-test",
+      "(Fisher\'s test for expected counts \u2264 5)."
+    )
+  }
+
   if (is(correct, "character")) {
     note <- paste(
       note,
@@ -172,14 +191,70 @@ flex_table1 <- function(str_formula,
       value = flextable::as_paragraph(
         Characteristic,
         flextable::as_chunk(ifelse(number_parse(p) <= 0.001,
-          "***",
-          ifelse(number_parse(p) < 0.01, "**", "*")
+          " ***",
+          ifelse(number_parse(p) < 0.01, " **", " *")
         ))
       )
     ) %>%
     flextable::align(.,
       i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
       part = "header", align = "center"
-    )
+    ) %>%
+    flextable::italic(.,j=~p,part = "header")
+
+  # convert table 1 to data.frame for manual adjustments of the table
+  df <- as.data.frame(tbl1)
+
+  if (ref_correction) {
+
+    # When Fishers Test was applied add note
+    if (any(grepl("\u0363", df$p))) {
+      ft <- ft %>%
+        flextable::footnote(.,
+          ref_symbols = " ", sep = " ",
+          value = as_paragraph("\u0363 Fisher's exact test, expected counts \u2264 5.")
+        )
+    }
+
+    # When Welchs COrrection was applied
+    if (any(grepl("\u1D47", df$p))) {
+      ft <- ft %>%
+        flextable::footnote(.,
+                            ref_symbols = " ", sep = " ",
+                            value = as_paragraph("\u1D47 Welch's correction for heterogeneity of variances."),
+                            inline=any(grepl("\u0363", df$p))
+        )
+    }
+  }
+
+  # Set the N in column header to italic
+  group1 <- df %>% colnames()
+  group1 <- group1[2]
+  n1 <- number_parse(df[1,2])
+
+  group2 <- df %>% colnames()
+  group2 <- group2[3]
+  n2 <- number_parse(df[1,3])
+
+  ft <- ft %>%
+    flextable::compose(.,
+      i= if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+      j = 2,
+      part = "header",
+      # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
+      value = as_paragraph(group1,"\n(",
+                           flextable::as_i("N"),
+                           " = ",
+                           as.character(n1),")")) %>%
+    flextable::compose(.,
+                       i= if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+                       j = 3,
+                       part = "header",
+                       # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
+                       value = as_paragraph(group2,"\n(",
+                                            flextable::as_i("N"),
+                                            " = ",
+                                            as.character(n2),")"))
+
   return(ft)
 }

@@ -90,7 +90,7 @@ class(df)
 df %>%
   head(5) %>%
   flextable() %>%
-  datscience::format_flextable(table_caption = c("Table 1", 
+  datscience::format_flextable(.,table_caption = c("Table 1", 
                                                  "Glimpse at the First 5 Rows of Shortened bfi Data"))
 ```
 

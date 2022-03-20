@@ -10,6 +10,7 @@ flex_table1(
   correct = "bonf",
   num = NA,
   table_caption = NA,
+  ref_correction = TRUE,
   ...
 )
 }
@@ -26,6 +27,8 @@ Provide NA if you dont want any correction. Defaults to "bonf"}
 
 \item{table_caption}{Caption for the table, each element of the vector represents
 a new line. The first line will be bold face. All additional lines are in italic.}
+
+\item{ref_correction}{Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 (e.g., fontsize, font ...) or to \code{\link{serialNext}}}

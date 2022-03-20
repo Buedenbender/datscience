@@ -15,7 +15,7 @@ utils::globalVariables(".")
 #' \href{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
 #' Reference on what APA style for tables constitutes can be obtained on the
 #' \href{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
-#' @param ft A flextable object, to be formatted in accordance with APA. Required!
+#' @param ft A flextable object (prefered) or data.frame, to be formatted in accordance with APA. Required!
 #' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
 #' @param fontsize Default is 12, bigger font size is not recommended.
 #' @param table_caption Takes a character vector. Note: when provided NA no caption will
@@ -25,8 +25,13 @@ utils::globalVariables(".")
 #' \item The description, use APA capital case
 #' (e.g., "\emph{Sociodemographic Characteristics of the Total Sample}")
 #' }
-#' @param table_note Takes a character vector. Default is NA (no table note). Every value is a new line, e.g., is c("Note. Explanation of Abbreviations", "* p < .05. ** p < .01. *** p < .001").
+#' @param table_note Takes a character vector. Will automatically prepend Note if not present.
+#' Default is NA (no table note). e.g., is c("Explanation of Abbreviations",
+#' "* p < .05. ** p < .01. *** p < .001").
 #' Please note that you will need to manually set the formatting (i.e., setting italic for p values).
+#' @param italize_stats Boolean, default is TRUE. Searches the header for common statistic symbols (e.g. p N SD M) and
+#' sets font to italic
+#' @param linespacing Points of Linespacing defaults to 1.25, APA would be 1.5 or 2
 #' @param ... (Optional) Additional Parameters, not utiliezd in this function, enables passing from passing of previous functions
 #'
 #' @return An APA style formatted flextable object.
@@ -35,43 +40,61 @@ utils::globalVariables(".")
 #'
 #' @export
 #' @importFrom magrittr "%>%"
-#' @importFrom flextable flextable theme_booktabs hline_top hline_bottom hline_bottom fontsize font height set_table_properties add_header_lines add_footer_lines bold italic
+#' @import flextable
 format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
                              table_caption = c("Table x", "Some Description of the Table"),
                              table_note = NA,
+                             italize_stats = TRUE,
+                             linespacing = 1.25,
                              ...) {
-  nice.borders <- list("width" = 1, color = "black", style = "solid")
+
+  # Construct Borders
+  apa.border <- list("width" = 1, color = "black", style = "solid")
   invis.borders <- list("width" = 0, color = "black", style = "solid")
+
+  # If not a flextable try to convert to one
+  if (!is(ft, "flextable")) {
+    tryCatch(
+      ft <- flextable::flextable(ft),
+      error = function(c) stop("Error could not convert to a flextable object!")
+    )
+  }
+
+  # Create Flextable
   formatted_ft <- ft %>%
     flextable::theme_booktabs() %>%
-    flextable::hline_top(.,part = "head", border = nice.borders) %>%
-    flextable::hline_bottom(.,part = "head", border = nice.borders) %>%
-    flextable::hline_top(.,part = "body", border = nice.borders) %>%
-    flextable::hline_bottom(.,part = "body", border = nice.borders) %>%
-    # align(align = "center", part = "all") %>%
-    # line_spacing(space = 1.5, part = "all") %>%
-    flextable::height(.,height = 0.55, part = "body") %>%
+    flextable::hline_top(., part = "head", border = apa.border) %>%
+    flextable::hline_bottom(., part = "head", border = apa.border) %>%
+    flextable::hline_top(., part = "body", border = apa.border) %>%
+    flextable::hline_bottom(., part = "body", border = apa.border) %>%
+    flextable::align(., align = "center", part = "head") %>%
+    flextable::line_spacing(., space = linespacing, part = "all") %>%
+    flextable::height(., height = 0.55, part = "body") %>%
     # hrule(rule = "exact", part = "all") %>%
-    flextable::height(.,height = 0.55, part = "head") %>%
-    flextable::set_table_properties(.,layout = "autofit")
+    flextable::height(., height = 0.55, part = "head") %>%
+    flextable::set_table_properties(., layout = "autofit")
   # If provided, add table caption
   if (is(table_caption, "character")) {
     formatted_ft <- formatted_ft %>%
-      flextable::add_header_lines(.,values = rev(table_caption)) %>%
-      flextable::bold(.,part = "header", i = 1) %>%
-      flextable::italic(.,part = "header", i = c(2:length(table_caption))) %>%
-      flextable::align(.,part = "header", i = c(1:length(table_caption)), align = "left") %>%
-      flextable::border(.,part = "head", i = c(1:length(table_caption)), border = invis.borders)
+      flextable::add_header_lines(., values = rev(table_caption)) %>%
+      flextable::bold(., part = "header", i = 1) %>%
+      flextable::italic(., part = "header", i = c(2:length(table_caption))) %>%
+      flextable::align(., part = "header", i = c(1:length(table_caption)), align = "left") %>%
+      flextable::border(., part = "head", i = c(1:length(table_caption)), border = invis.borders)
   }
 
-  # If provdied, add table note
-  if (!is.na(table_note)) {
+  # If provided, add table note
+  if (!anyNA(table_note)) {
     formatted_ft <- formatted_ft %>%
-      flextable::add_footer_lines(.,values = table_note)
+      flextable::add_footer_lines(., values = "") %>%
+      flextable::compose(.,i=1,j=1,value=as_paragraph(as_i("Note.")), part = "footer") %>%
+      flextable::footnote(.,value = as_paragraph(table_note),
+                          inline = TRUE,ref_symbols = NA,sep = " ")
   }
+
   formatted_ft <- formatted_ft %>%
-    flextable::fontsize(.,part = "all", size = fontsize) %>%
-    flextable::font(.,part = "all", fontname = font)
+    flextable::fontsize(., part = "all", size = fontsize) %>%
+    flextable::font(., part = "all", fontname = font)
 
 
   return(formatted_ft)
