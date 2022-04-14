@@ -261,6 +261,10 @@ flex_table1(
 
 ```
 
+# Multiple Groups
+
+Please note as of version 0.2.3 of datscience one can also compare multiple groups
+with the flex_table1 function (see also News.md)
 
 # Literature
 [Patricio, 2018] Patrício, M., Pereira, J., Crisóstomo, J., Matafome, P., Gomes, M., Seiça, R., & Caramelo, F. (2018). Using Resistin, glucose, age and BMI to predict the presence of breast cancer. BMC Cancer, 18(1)

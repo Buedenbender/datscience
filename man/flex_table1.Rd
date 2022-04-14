@@ -2,7 +2,7 @@
 % Please edit documentation in R/flex_table1.R
 \name{flex_table1}
 \alias{flex_table1}
-\title{Creates a Descriptive Bivariate Table1 for Pulbication (Table1 + Flextable)}
+\title{Creates a Descriptive Bivariate Table1 for Publication (Table1 + Flextable)}
 \usage{
 flex_table1(
   str_formula,
@@ -40,15 +40,16 @@ it also creates the respective file (e.g., a word .docx file)
 \description{
 A convenience function, that provides and easy wrapper for the two main enginges of the function
 \itemize{
-\item \code{\link[table1]{table1}} provides a nice API given a formula to create sociodemographic tables.
-I basically just advanced the functionality of the p-value function, added the possiblity
+\item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
+I basically just advanced the functionality of the p-value function, added the possibility
 to correct p-values with either Bonferroni or Sidark, and set some sensible defaults to achieve a nice look
 \item \code{\link[flextable]{flextable}} which gives all the power to format the table as you please (e.g., conditional formatting ->
-aadding bold for p values below .05), adding italic headers or notes explaining what was done.
+adding bold for p values below .05), adding italic headers or notes explaining what was done.
 }
 Really all credit should go to these two packages their developers, on full disclosure
 my function just provides an easy to use API or wrapper around their packages to get
-a beautiful publication ready bivariate comparison Table 1.
+a beautiful publication ready bivariate comparison Table 1. New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than
+2 Groups
 }
 \examples{
 \dontrun{

@@ -13,3 +13,4 @@
 ^tink/*$
 ^codecov\.yml$
 ^vignettes/articles$
+^LICENSE\.md$

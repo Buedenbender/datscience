@@ -4,10 +4,21 @@
 \alias{spss_swap}
 \title{Swaps labels and col names from a .sav (SPSS) matrix}
 \usage{
-spss_swap(df)
+spss_swap(
+  df,
+  repl_umlaut = TRUE,
+  old_itemnames = c("remove", "prepend", "append")
+)
 }
 \arguments{
 \item{df}{tibble read in the \code{\link[haven]{read_sav}} from haven}
+
+\item{repl_umlaut}{Default is TRUE. If provided True it replaces umlauts (vowel mutations)
+like ä, ö, ü and ß with respective ae, oe, ue, and ss}
+
+\item{old_itemnames}{Options are "prepend", "append" or, "remove". Default is "prepend"
+With "prepend" the new item names will be prepended by the old item names. E.g., the old item name
+was "q0003" and the description "Gender" the new item name will be "q0003_gender"}
 }
 \value{
 A tibble with more human readable names (old labels as names)

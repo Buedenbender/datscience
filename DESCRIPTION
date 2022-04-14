@@ -1,7 +1,7 @@
 Package: datscience
 Type: Package
 Title: Dataanalysis and Science Utility Functions
-Version: 0.2.2
+Version: 0.2.3
 Author: Björn Büdenbender
 Maintainer: Björn Büdenbender <b_buedenbender@yahoo.de>
 Description: The datscience (dataanalysis and science) R-package contains
@@ -31,7 +31,7 @@ Imports:
     rlang,
     methods,
     labelled
-License: MIT 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
@@ -42,6 +42,7 @@ VignetteBuilder: knitr
 Suggests: 
     testthat (>= 3.0.0),
     Hmisc,
+    car,
     rmarkdown,
     covr
 Config/testthat/edition: 3

@@ -2,9 +2,26 @@
 #' Pseudo Documentation see if we can get this running
 #' @param .data vector of oclnames
 #' @param unique Boolean if names should be unique
+#' @param repl_umlaut Default is TRUE. If provided True it replaces umlauts (vowel mutations)
+#' like ä, ö, ü and ß with respective ae, oe, ue, and ss
 #' @noRd
-clean_names <- function(.data, unique = FALSE) {
+clean_names <- function(.data, unique = FALSE, repl_umlaut = TRUE) {
   n <- if (is.data.frame(.data)) colnames(.data) else .data
+  if (repl_umlaut) {
+    n <- gsub("\u00E4","ae",n)
+    n <- gsub("\u00FC","ue",n)
+    n <- gsub("\u00F6","oe",n)
+    n <- gsub("\u00DF","ss",n)
+    #TODO: Find a Regex / Function that removes accents from letters e.g. é
+    # Until then control for most common accent letter combinations
+    n <- gsub("\u00E9","e",n)
+    n <- gsub("\u00E8","e",n)
+    n <- gsub("\u00E0","a",n)
+    n <- gsub("\u00E1","a",n)
+    n <- gsub("\u00EE","i",n)
+    n <- gsub("\u00F4","o",n)
+
+  }
   n <- gsub("%+", "_pct_", n)
   n <- gsub("\\$+", "_dollars_", n)
   n <- gsub("\\++", "_plus_", n)

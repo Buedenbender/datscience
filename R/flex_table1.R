@@ -16,18 +16,19 @@ utils::globalVariables("table_caption")
 # TODO: Add support for grouping variables with > 2 levels e.g., ANOVA
 
 
-#' Creates a Descriptive Bivariate Table1 for Pulbication (Table1 + Flextable)
+#' Creates a Descriptive Bivariate Table1 for Publication (Table1 + Flextable)
 #' @description A convenience function, that provides and easy wrapper for the two main enginges of the function
 #' \itemize{
-#' \item \code{\link[table1]{table1}} provides a nice API given a formula to create sociodemographic tables.
-#' I basically just advanced the functionality of the p-value function, added the possiblity
+#' \item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
+#' I basically just advanced the functionality of the p-value function, added the possibility
 #' to correct p-values with either Bonferroni or Sidark, and set some sensible defaults to achieve a nice look
 #' \item \code{\link[flextable]{flextable}} which gives all the power to format the table as you please (e.g., conditional formatting ->
-#' aadding bold for p values below .05), adding italic headers or notes explaining what was done.
+#' adding bold for p values below .05), adding italic headers or notes explaining what was done.
 #' }
 #' Really all credit should go to these two packages their developers, on full disclosure
 #' my function just provides an easy to use API or wrapper around their packages to get
-#' a beautiful publication ready bivariate comparison Table 1.
+#' a beautiful publication ready bivariate comparison Table 1. New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than
+#' 2 Groups
 #' @include utility_numberparse.R
 #' @param str_formula A string representing a formula, e.g., \code{"~ Sepal.Length + Sepal.Width | Species"}
 #' used to construct the \code{\link[table1]{table1}}.
@@ -54,9 +55,10 @@ utils::globalVariables("table_caption")
 #' flex_table1(str_formula, data = data, table_caption = table_caption)
 #' }
 #' @export
-#' @importFrom stats terms as.formula var.test t.test chisq.test fisher.test
+#' @importFrom stats terms as.formula var.test t.test chisq.test fisher.test oneway.test aov
 #' @importFrom table1 table1 stats.default stats.apply.rounding t1flex
 #' @importFrom flextable bold compose as_paragraph as_chunk align
+#' @importFrom rstatix levene_test
 #' @seealso
 #' \code{\link{format_flextable}},
 #' \code{\link[flextable]{flextable}}
@@ -87,12 +89,36 @@ flex_table1 <- function(str_formula,
     # Construct vectors of data y, and groups (strata) g
     y <- unlist(x)
     g <- factor(rep(1:length(x), times = sapply(x, length)))
+    # Determine number of groups
+    n_grps <- length(levels(g))
+
+    # Numerical Dependent Var
     if (is.numeric(y)) {
-      # For numeric check equality of variances
-      levene <- stats::var.test(y ~ g)$p.value > .05
-      # Either perform a standard t-Test or a Welch Test for Heterogeneity of variances
-      p <- stats::t.test(y ~ g, var.equal = levene)$p.value
-    } else {
+      # Determine Homogeneity of Variances Across groups
+      homogeneity <- rstatix::levene_test(dv ~ grp, data = data.frame(dv=y,grp=g))$p  > .05
+
+      # Decide t-test or ANOVA
+      #   - Albeit with Equal Variance the Results are the same
+      #     as t² = F and p are identical
+
+      # t-Test
+      if (n_grps == 2) {
+        # Either perform a standard t-Test or a Welch Test for Heterogeneity of variances
+        p <- stats::t.test(y ~ g, var.equal = homogeneity)$p.value
+      }
+      # ANOVA
+      else {
+        if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
+          ano <- stats::aov(y ~ g)
+          p <- unname(unlist(summary(ano)))[9]
+        } else{
+          p <- stats::oneway.test(y~g)$p.value
+        }
+
+      }
+    }
+    # Categorical Dependent Var
+    else {
       # For categorical variables, perform a chi-squared test of independence
       tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
       # Or if one expected cell count is below 5a fishers exact test
