@@ -79,6 +79,9 @@ flex_table1 <- function(str_formula,
     num <- length(labels(stats::terms(as.formula(s_num))))
   }
 
+  grp_var <- trimws(unlist(strsplit(str_formula,"\\|"))[2])
+  n_grps <- unname(lengths(unique(data[grp_var])))
+
   ### Helper Functions for the table1
   # https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
   pvalue <- function(x, ...) {
@@ -95,7 +98,7 @@ flex_table1 <- function(str_formula,
     # Numerical Dependent Var
     if (is.numeric(y)) {
       # Determine Homogeneity of Variances Across groups
-      homogeneity <- rstatix::levene_test(dv ~ grp, data = data.frame(dv=y,grp=g))$p  > .05
+      homogeneity <- rstatix::levene_test(dv ~ grp, data = data.frame(dv = y, grp = g))$p > .05
 
       # Decide t-test or ANOVA
       #   - Albeit with Equal Variance the Results are the same
@@ -111,10 +114,9 @@ flex_table1 <- function(str_formula,
         if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
           ano <- stats::aov(y ~ g)
           p <- unname(unlist(summary(ano)))[9]
-        } else{
-          p <- stats::oneway.test(y~g)$p.value
+        } else {
+          p <- stats::oneway.test(y ~ g)$p.value
         }
-
       }
     }
     # Categorical Dependent Var
@@ -180,11 +182,18 @@ flex_table1 <- function(str_formula,
 
   note <- NA
   # Add a Note if p-values corrected
+  # Determine if t-test or one way ANOVA was conducted
+  type_test <- ifelse(n_grps == 2, "independent sample t-test", "one way ANOVA")
   if (ref_correction) {
-    note <- "Differences are determined by independent sample t-test, or Pearon's \u03C7\u00B2-test."
+    note <- paste(
+      "Differences are determined by",
+      type_test,
+      "or Pearon's \u03C7\u00B2-test."
+    )
   } else {
     note <- paste(
-      "Differences determined by independent sample t-test",
+      "Differences determined by",
+      type_test,
       "(Welch correction applied if necessary) or Pearon's \u03C7\u00B2-test",
       "(Fisher\'s test for expected counts \u2264 5)."
     )
@@ -226,7 +235,7 @@ flex_table1 <- function(str_formula,
       i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
       part = "header", align = "center"
     ) %>%
-    flextable::italic(.,j=~p,part = "header")
+    flextable::italic(., j = ~p, part = "header")
 
   # convert table 1 to data.frame for manual adjustments of the table
   df <- as.data.frame(tbl1)
@@ -246,9 +255,9 @@ flex_table1 <- function(str_formula,
     if (any(grepl("\u1D47", df$p))) {
       ft <- ft %>%
         flextable::footnote(.,
-                            ref_symbols = " ", sep = " ",
-                            value = as_paragraph("\u1D47 Welch's correction for heterogeneity of variances."),
-                            inline=any(grepl("\u0363", df$p))
+          ref_symbols = " ", sep = " ",
+          value = as_paragraph("\u1D47 Welch's correction for heterogeneity of variances."),
+          inline = any(grepl("\u0363", df$p))
         )
     }
   }
@@ -256,31 +265,37 @@ flex_table1 <- function(str_formula,
   # Set the N in column header to italic
   group1 <- df %>% colnames()
   group1 <- group1[2]
-  n1 <- number_parse(df[1,2])
+  n1 <- number_parse(df[1, 2])
 
   group2 <- df %>% colnames()
   group2 <- group2[3]
-  n2 <- number_parse(df[1,3])
+  n2 <- number_parse(df[1, 3])
 
   ft <- ft %>%
     flextable::compose(.,
-      i= if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
       j = 2,
       part = "header",
       # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
-      value = as_paragraph(group1,"\n(",
-                           flextable::as_i("N"),
-                           " = ",
-                           as.character(n1),")")) %>%
+      value = as_paragraph(
+        group1, "\n(",
+        flextable::as_i("N"),
+        " = ",
+        as.character(n1), ")"
+      )
+    ) %>%
     flextable::compose(.,
-                       i= if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-                       j = 3,
-                       part = "header",
-                       # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
-                       value = as_paragraph(group2,"\n(",
-                                            flextable::as_i("N"),
-                                            " = ",
-                                            as.character(n2),")"))
+      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+      j = 3,
+      part = "header",
+      # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
+      value = as_paragraph(
+        group2, "\n(",
+        flextable::as_i("N"),
+        " = ",
+        as.character(n2), ")"
+      )
+    )
 
   return(ft)
 }
