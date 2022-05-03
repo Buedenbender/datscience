@@ -79,7 +79,7 @@ flex_table1 <- function(str_formula,
     num <- length(labels(stats::terms(as.formula(s_num))))
   }
 
-  grp_var <- trimws(unlist(strsplit(str_formula,"\\|"))[2])
+  grp_var <- trimws(unlist(strsplit(str_formula, "\\|"))[2])
   n_grps <- unname(lengths(unique(data[grp_var])))
 
   ### Helper Functions for the table1
@@ -123,9 +123,28 @@ flex_table1 <- function(str_formula,
     else {
       # For categorical variables, perform a chi-squared test of independence
       tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+
       # Or if one expected cell count is below 5a fishers exact test
       if (any(tmp$expected < 5)) {
-        p <- stats::fisher.test(table(y, g))$p.value
+
+        # Try to run a Fisher test w default workspace for comupting time advantage
+        result <- tryCatch(
+          {
+            stats::fisher.test(table(y, g))
+          },
+          error = function(cond) {
+            # If Fisher's Test fails due to small workspace, increase it
+            if (grepl("^FEXACT error 7", cond$message)) {
+              # Error due to small workspace for a reference see:
+              # https://github.com/Lagkouvardos/Rhea/issues/17#issuecomment-442861341
+              return(stats::fisher.test(table(y, g), workspace = 2e8))
+            }
+            # Choose a return value in case of error
+            return(cond)
+          }
+        ) # END tryCatch
+
+        p <- result$p.value
         fisher <- TRUE
       } else {
         p <- tmp$p.value

@@ -14,4 +14,3 @@
 ^codecov\.yml$
 ^vignettes/articles$
 ^LICENSE\.md$
-^R/pretty_cm\.R$
