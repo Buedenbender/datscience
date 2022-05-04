@@ -30,7 +30,8 @@ pretty_cm(
 ggplot2 object - visualization of the confusion matrix.
 }
 \description{
-Takes a caret confusion matrix and plots a nice visualization
+Takes a caret confusion matrix and plots a nice visualization.
+Thanks to Felicitas Kinniger for helping with the code.
 }
 \examples{
 \dontrun{
