@@ -2,6 +2,7 @@
 
 * Added possibility to maintain old itemnames with `spss_swap()` function
 * Added the possibility of multiple group comparisons to `flex_table1()` (recommended by Rémi and Taylor)
+* Added the function `pretty_cm()` for plotting of caret::confusionMatrix()
 
 # datscience 0.2.2
 

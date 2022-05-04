@@ -59,6 +59,7 @@ Collate:
     'format_flextable.R'
     'getCIs.R'
     'get_number_of_decimals.R'
+    'pretty_cm2.R'
     'pretty_scree.R'
     'save_flextable.R'
     'serialNext.R'
