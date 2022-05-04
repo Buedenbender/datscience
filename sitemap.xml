@@ -67,6 +67,9 @@
     <loc>https://buedenbender.github.io/datscience/reference/number_parse.html</loc>
   </url>
   <url>
+    <loc>https://buedenbender.github.io/datscience/reference/pretty_cm.html</loc>
+  </url>
+  <url>
     <loc>https://buedenbender.github.io/datscience/reference/pretty_scree.html</loc>
   </url>
   <url>
@@ -77,5 +80,8 @@
   </url>
   <url>
     <loc>https://buedenbender.github.io/datscience/reference/spss_swap.html</loc>
+  </url>
+  <url>
+    <loc>https://buedenbender.github.io/datscience/reference/util_rev_fac.html</loc>
   </url>
 </urlset>
