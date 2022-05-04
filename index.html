@@ -172,20 +172,21 @@
   <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span>
     <span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,
     <span class="op">~</span> <span class="fu">if_else</span><span class="op">(</span><span class="op">(</span><span class="va">.</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">bind_cols</span><span class="op">(</span>Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,
-            Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,
-            Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,<span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">bind_cols</span><span class="op">(</span>
+    Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,
+    Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,
+    Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"items"</span><span class="op">)</span></code></pre></div>
 <p><strong>Formatting these loadings to APA with just one function:</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">formatted_loadings</span> <span class="op">&lt;-</span> <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">pc_loadings</span><span class="op">)</span>,
-                                                   table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>,<span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span><span class="op">)</span>
+  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>, <span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span>
+<span class="op">)</span>
 <span class="va">formatted_loadings</span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-format_flextableExample.png" alt=""><p class="caption">FLFF.png</p>
-</div>
+<p><img src="reference/figures/README-format_flextableExample.png"></p>
 </div>
 </div>
 <div class="section level2">
@@ -242,8 +243,8 @@
 <li><a href="https://app.codecov.io/gh/Buedenbender/datscience?branch=main" class="external-link"><img src="https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://www.repostatus.org/#active" class="external-link"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
 <li><a href="https://choosealicense.com/licenses/mit/" class="external-link"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license"></a></li>
-<li><a href="commits/main"><img src="https://img.shields.io/badge/last%20change-2022--03--19-yellowgreen.svg" alt="Last-changedate"></a></li>
-<li><a href="commits/main"><img src="https://img.shields.io/badge/Package%20version-0.2.2-orange.svg?style=flat-square" alt="packageversion"></a></li>
+<li><a href="commits/main"><img src="https://img.shields.io/badge/last%20change-2022--05--04-yellowgreen.svg" alt="Last-changedate"></a></li>
+<li><a href="commits/main"><img src="https://img.shields.io/badge/Package%20version-0.2.3-orange.svg?style=flat-square" alt="packageversion"></a></li>
 </ul>
 </div>
 
