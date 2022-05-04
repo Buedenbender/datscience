@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--03--19-yellowgreen.svg)](commits/main)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.2-orange.svg?style=flat-square)](commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--05--04-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.3-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
@@ -180,11 +180,13 @@ pc_loadings <- pc %>%
   mutate(across(
     everything(),
     ~ if_else((. < 0.3), "", as.character(.))
-  )) %>% 
-  bind_cols(Communality = pc$communality,
-            Uniqueness = pc$uniquenesses,
-            Complexity = pc$complexity) %>% 
-  mutate(across(where(is.numeric),round, 2)) %>% 
+  )) %>%
+  bind_cols(
+    Communality = pc$communality,
+    Uniqueness = pc$uniquenesses,
+    Complexity = pc$complexity
+  ) %>%
+  mutate(across(where(is.numeric), round, 2)) %>%
   tibble::rownames_to_column("items")
 ```
 
@@ -192,11 +194,12 @@ pc_loadings <- pc %>%
 
 ``` r
 formatted_loadings <- datscience::format_flextable(flextable::flextable(pc_loadings),
-                                                   table_caption = c("Table 3","Factor Loadings in Exemplary PCA"))
+  table_caption = c("Table 3", "Factor Loadings in Exemplary PCA")
+)
 formatted_loadings
 ```
 
-![FLFF.png](man/figures/README-format_flextableExample.png)
+![](man/figures/README-format_flextableExample.png)
 
 ## Next Steps for `datscience` R-Package
 

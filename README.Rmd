@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-description <- read.dcf('DESCRIPTION')
-version <- as.vector(description[, 'Version'])
+description <- read.dcf("DESCRIPTION")
+version <- as.vector(description[, "Version"])
 ```
 
 # datscience R-Package
@@ -179,11 +179,13 @@ pc_loadings <- pc %>%
   mutate(across(
     everything(),
     ~ if_else((. < 0.3), "", as.character(.))
-  )) %>% 
-  bind_cols(Communality = pc$communality,
-            Uniqueness = pc$uniquenesses,
-            Complexity = pc$complexity) %>% 
-  mutate(across(where(is.numeric),round, 2)) %>% 
+  )) %>%
+  bind_cols(
+    Communality = pc$communality,
+    Uniqueness = pc$uniquenesses,
+    Complexity = pc$complexity
+  ) %>%
+  mutate(across(where(is.numeric), round, 2)) %>%
   tibble::rownames_to_column("items")
 ```
 
@@ -191,10 +193,11 @@ pc_loadings <- pc %>%
 
 ```{r}
 formatted_loadings <- datscience::format_flextable(flextable::flextable(pc_loadings),
-                                                   table_caption = c("Table 3","Factor Loadings in Exemplary PCA"))
+  table_caption = c("Table 3", "Factor Loadings in Exemplary PCA")
+)
 formatted_loadings
 ```
-![FLFF.png](man/figures/README-format_flextableExample.png)
+![ ](man/figures/README-format_flextableExample.png)
 
 ## Next Steps for `datscience` R-Package
 
