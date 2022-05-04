@@ -8,7 +8,8 @@ utils::globalVariables(".")
 
 #' @title pretty_cm - Pretty Caret Confusion Matrices
 #' @description Takes a caret confusion matrix and plots a nice visualization.
-#' Thanks to Felicitas Kinniger for helping with the code.
+#' Thanks to Felicitas Kininger for inspiring the inclusion of this function
+#' in the package.
 #' @param cm A \code{\link[caret]{confusionMatrix}} (mandatory parameter)
 #' @param color_grad Pole of color gradient to use for the tiles, Default: c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))
 #' @param midpoint Manually setting a middle point in percentage for the color scale, Default: 50

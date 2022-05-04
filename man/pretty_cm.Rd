@@ -31,7 +31,8 @@ ggplot2 object - visualization of the confusion matrix.
 }
 \description{
 Takes a caret confusion matrix and plots a nice visualization.
-Thanks to Felicitas Kinniger for helping with the code.
+Thanks to Felicitas Kininger for inspiring the inclusion of this function
+in the package.
 }
 \examples{
 \dontrun{
