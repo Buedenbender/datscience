@@ -10,6 +10,8 @@ pretty_cm(
   midpoint = 50,
   hideZero = FALSE,
   ord = NA,
+  diag = c("r", "reverse"),
+  tile = c("both", "b", "prop", "p", "freq", "f"),
   plot = TRUE
 )
 }
@@ -22,7 +24,12 @@ pretty_cm(
 
 \item{hideZero}{Hide tiles with 0 percentage, Default: FALSE}
 
-\item{ord}{Order of the factor levels to display (if you want to change it manually for the plot), Default: NA}
+\item{ord}{Order of the factor levels to display (if you want to change it manually for the plot), Default: NA,}
+
+\item{diag}{Orientation of the diagonal (sensitivities), possible values diag = "r" or "reverse"}
+
+\item{tile}{Character, either "p" or "prop" for proportion | "f" or "freq" for frequency | "b" or "both" for both.
+if character is not recognized or missing -> Default: "both"}
 
 \item{plot}{Shall the output also be plotted? Default: TRUE}
 }
