@@ -47,6 +47,7 @@ Suggests:
     covr
 Config/testthat/edition: 3
 Collate: 
+    'ICD_10.R'
     'Rcitation_appendix.R'
     'add_ci_2plot.R'
     'apa_corrTable.R'
