@@ -98,13 +98,13 @@ dependency to run your script becomes transparent.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Rcitation_appendix</span><span class="op">(</span>
-  outdirectory <span class="op">=</span> <span class="st">"Appendix"</span>,
-  filename <span class="op">=</span> <span class="st">"Appendix - R Packages.docx"</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,
-  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table A1"</span>, <span class="st">"All R-Packages Utilized and Dependencies"</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Rcitation_appendix</span><span class="op">(</span></span>
+<span>  outdirectory <span class="op">=</span> <span class="st">"Appendix"</span>,</span>
+<span>  filename <span class="op">=</span> <span class="st">"Appendix - R Packages.docx"</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table A1"</span>, <span class="st">"All R-Packages Utilized and Dependencies"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -113,27 +113,41 @@ dependency to run your script becomes transparent.</p>
 <dd><p>(Optional) Character vector for the output directory
 (for the two files, .bib and .csv). Default is "Appendix/" in the current
 working directory (see with getwd())</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>(Optional) Character vector. Custom name for the formatted
 APA-style table, that should end with .docx. A docx file will be provided.
 If NA, a csv file of the table will be saved.</p></dd>
+
+
 <dt>overwrite</dt>
 <dd><p>(Optional) Boolean, default is FALSE. When overwrite is
 FALSE and the files already exists, a serialized version of the filename
 will be created (i.e., appending _001, or _002). Utilizes <code><a href="serialNext.html">serialNext</a></code></p></dd>
+
+
 <dt>table_caption</dt>
 <dd><p>Takes a character vector. For reference see see <code><a href="format_flextable.html">format_flextable</a></code>.<br>
 Recommend are the following elements</p><ul><li><p>Table + number (e.g., "<strong>Table 1</strong>")</p></li>
 <li><p>The description, use APA capital case
 (e.g., "<em>Sociodemographic Characteristics of the Total Sample</em>")</p></li>
 </ul></dd>
+
+
 <dt>...</dt>
 <dd><p>(Optional), Additional arguments that can be passed to <code><a href="format_flextable.html">format_flextable</a></code>
 (e.g., fontsize, font ...)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Creates (respective returns, depending on the arguments specified) the following: <br></p><ul><li><p>Creates the directory Appendix/ (if no other outcomedirectory is specified)</p></li>
+    
+
+<p>Creates (respective returns, depending on the arguments specified) the following: <br></p>
+
+
+<ul><li><p>Creates the directory Appendix/ (if no other outcomedirectory is specified)</p></li>
 <li><p>In the "Appendix/" dir a <em>.bib</em> file is created for the citation</p></li>
 <li><p>Either creates an APA 7th style table in a <em>.docx</em> or a plain <em>.csv</em> table</p></li>
 <li><p>Additionally returns the <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable::flextable</a></code> object with the APA 7th style table.</p></li>
@@ -149,11 +163,11 @@ Recommend are the following elements</p><ul><li><p>Table + number (e.g., "<stron
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Not executed example, as it creates unnecessary files in the package</span></span>
-<span class="r-in"><span class="fu">Rcitation_appendix</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Not executed example, as it creates unnecessary files in the package</span></span></span>
+<span class="r-in"><span><span class="fu">Rcitation_appendix</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -165,7 +179,7 @@ Recommend are the following elements</p><ul><li><p>Table + number (e.g., "<stron
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

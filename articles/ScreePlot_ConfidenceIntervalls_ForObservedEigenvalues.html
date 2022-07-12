@@ -70,8 +70,9 @@
 
 
 <script src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/tabwid-1.0.0/scrool.css" rel="stylesheet">
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Pretty Scree Plot with CIs for Eigenvalues </h1>
             
       
@@ -121,7 +122,7 @@
 </ul>
 <p>I personally like <a href="https://www.rdocumentation.org/packages/pacman/versions/0.5.1" class="external-link"><code>pacman</code></a> package manager for loading libraries in R. But that’s up to your preference, you might as well just you <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> instead</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">datscience</span>, <span class="va">psych</span>, <span class="va">dplyr</span>, <span class="va">flextable</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">datscience</span>, <span class="va">psych</span>, <span class="va">dplyr</span>, <span class="va">flextable</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
@@ -129,40 +130,40 @@
 <p>We will use the <code>bfi</code> data, that comes with the <code>psych</code> package as an example here. The data set contains information on <span class="math inline">\(k = 25\)</span> items from a Big Five personality questionnaire and additional <span class="math inline">\(k = 3\)</span> items on sociodemograhpic data from <span class="math inline">\(n = 2800\)</span> participants. More details can be obtained with <code>?bfi</code>.</p>
 <p>For this vignette we will just use the 10 items on agreeableness and extraversion, and sample randomly 300 participants in order to improve the run time. Below you can get first insights into the data.frame. For the overview we used the <a href="https://buedenbender.github.io/datscience/reference/format_flextable.html"><code>datscience::format_flextable</code></a> function for the apperance of the table.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span> <span class="co"># necessary for reproducible results</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bfi</span><span class="op">)</span>
-<span class="co"># Select only agreeableness and extraversion and sample participants</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">bfi</span> <span class="op">%&gt;%</span>  
-    <span class="fu">select</span><span class="op">(</span><span class="fu">matches</span><span class="op">(</span><span class="st">"^(E\\d|A\\d)"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="co"># Regex run down </span>
-  <span class="co">#   ^ : starts with</span>
-  <span class="co">#   (|) : Logical or</span>
-  <span class="co">#   E\\d: E followed by any digit, e.g. E3 matches E\\d</span>
-  <span class="co">#   A\\d: A followed by any digit, e.g. A5 matches E\\d</span>
-  <span class="fu">sample_n</span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>
-  
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; [1] 300  10</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    300 obs. of  10 variables:</span>
-<span class="co">#&gt;  $ A1: int  6 1 4 1 2 3 1 1 2 3 ...</span>
-<span class="co">#&gt;  $ A2: int  4 5 5 5 4 6 6 6 5 4 ...</span>
-<span class="co">#&gt;  $ A3: int  4 5 5 3 4 4 6 5 5 3 ...</span>
-<span class="co">#&gt;  $ A4: int  1 4 3 6 4 6 6 6 6 6 ...</span>
-<span class="co">#&gt;  $ A5: int  6 4 5 6 3 5 6 5 5 3 ...</span>
-<span class="co">#&gt;  $ E1: int  2 1 1 4 5 5 1 3 4 5 ...</span>
-<span class="co">#&gt;  $ E2: int  4 2 1 2 5 2 1 2 2 4 ...</span>
-<span class="co">#&gt;  $ E3: int  3 4 5 2 3 4 5 1 5 2 ...</span>
-<span class="co">#&gt;  $ E4: int  3 5 6 5 3 5 6 4 6 3 ...</span>
-<span class="co">#&gt;  $ E5: int  1 4 5 2 3 5 5 1 5 3 ...</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; [1] "data.frame"</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">flextable</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="../reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="va">.</span>,table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, 
-                                                 <span class="st">"Glimpse at the First 5 Rows of Shortened bfi Data"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<template id="dffb46de-733e-46a7-b448-9e2647c72d01"><style>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span> <span class="co"># necessary for reproducible results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bfi</span><span class="op">)</span></span>
+<span><span class="co"># Select only agreeableness and extraversion and sample participants</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">bfi</span> <span class="op">%&gt;%</span>  </span>
+<span>    <span class="fu">select</span><span class="op">(</span><span class="fu">matches</span><span class="op">(</span><span class="st">"^(E\\d|A\\d)"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># Regex run down </span></span>
+<span>  <span class="co">#   ^ : starts with</span></span>
+<span>  <span class="co">#   (|) : Logical or</span></span>
+<span>  <span class="co">#   E\\d: E followed by any digit, e.g. E3 matches E\\d</span></span>
+<span>  <span class="co">#   A\\d: A followed by any digit, e.g. A5 matches E\\d</span></span>
+<span>  <span class="fu">sample_n</span><span class="op">(</span><span class="fl">300</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 300  10</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    300 obs. of  10 variables:</span></span>
+<span><span class="co">#&gt;  $ A1: int  6 1 4 1 2 3 1 1 2 3 ...</span></span>
+<span><span class="co">#&gt;  $ A2: int  4 5 5 5 4 6 6 6 5 4 ...</span></span>
+<span><span class="co">#&gt;  $ A3: int  4 5 5 3 4 4 6 5 5 3 ...</span></span>
+<span><span class="co">#&gt;  $ A4: int  1 4 3 6 4 6 6 6 6 6 ...</span></span>
+<span><span class="co">#&gt;  $ A5: int  6 4 5 6 3 5 6 5 5 3 ...</span></span>
+<span><span class="co">#&gt;  $ E1: int  2 1 1 4 5 5 1 3 4 5 ...</span></span>
+<span><span class="co">#&gt;  $ E2: int  4 2 1 2 5 2 1 2 2 4 ...</span></span>
+<span><span class="co">#&gt;  $ E3: int  3 4 5 2 3 4 5 1 5 2 ...</span></span>
+<span><span class="co">#&gt;  $ E4: int  3 5 6 5 3 5 6 4 6 3 ...</span></span>
+<span><span class="co">#&gt;  $ E5: int  1 4 5 2 3 5 5 1 5 3 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "data.frame"</span></span>
+<span><span class="va">df</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">flextable</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="../reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="va">.</span>,table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, </span>
+<span>                                                 <span class="st">"Glimpse at the First 5 Rows of Shortened bfi Data"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<template id="200cb0a1-e42d-468f-abe7-620ebabf12f5"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -198,91 +199,91 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-a5f964e0{table-layout:auto;width:0%;}.cl-a5eebd06{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a5eebd1a{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a5eebd24{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a5eedfd4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-a5eedfde{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-a5eedfdf{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-a5ef7318{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a5ef732c{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a5ef7336{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a5ef7337{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-a5f964e0">
+<style>.cl-1004b0fc{table-layout:auto;width:0%;}.cl-0ffd0366{font-family:'Times New Roman';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0ffd037a{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:italic;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0ffd037b{font-family:'Times New Roman';font-size:12pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0ffd1e6e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-0ffd1e78{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-0ffd1e79{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1.25;background-color:transparent;}.cl-0ffd8fd4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0ffd8fde{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0ffd8fe8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0ffd8fe9{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-1004b0fc">
 <thead>
-<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-a5ef7336"><p class="cl-a5eedfd4"><span class="cl-a5eebd06">Table 1</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-a5ef7336"><p class="cl-a5eedfd4"><span class="cl-a5eebd1a">Glimpse at the First 5 Rows of Shortened bfi Data</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-0ffd8fe8"><p class="cl-0ffd1e6e"><span class="cl-0ffd0366">Table 1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="10" class="cl-0ffd8fe8"><p class="cl-0ffd1e6e"><span class="cl-0ffd037a">Glimpse at the First 5 Rows of Shortened bfi Data</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">A1</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">A2</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">A3</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">A4</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">A5</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">E1</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">E2</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">E3</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">E4</span></p></td>
-<td class="cl-a5ef7337"><p class="cl-a5eedfde"><span class="cl-a5eebd24">E5</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">A1</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">A2</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">A3</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">A4</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">A5</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">E1</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">E2</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">E3</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">E4</span></p></td>
+<td class="cl-0ffd8fe9"><p class="cl-0ffd1e78"><span class="cl-0ffd037b">E5</span></p></td>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">6</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">6</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">6</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">6</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">6</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">6</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">1</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">6</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">6</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef7318"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">1</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">6</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">6</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fd4"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">2</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">4</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">5</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
-<td class="cl-a5ef732c"><p class="cl-a5eedfdf"><span class="cl-a5eebd24">3</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">2</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">4</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">5</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
+<td class="cl-0ffd8fde"><p class="cl-0ffd1e79"><span class="cl-0ffd037b">3</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="dfba0861-c448-4532-bd15-cf1ea00bb092"></div>
+</div></template><div class="flextable-shadow-host" id="2fdcc623-fa0e-4266-806f-e72a54aac5df"></div>
 <script>
-var dest = document.getElementById("dfba0861-c448-4532-bd15-cf1ea00bb092");
-var template = document.getElementById("dffb46de-733e-46a7-b448-9e2647c72d01");
+var dest = document.getElementById("2fdcc623-fa0e-4266-806f-e72a54aac5df");
+var template = document.getElementById("200cb0a1-e42d-468f-abe7-620ebabf12f5");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -301,10 +302,10 @@ fantome.appendChild(templateContent);
 </h3>
 <p>The psych package makes it pretty convenient to conduct a parallel analysis. The <code>fa</code> parameter allows you to specify if you want to run a principal component analysis (<code>fa = "pca"</code>), or a factor analysis (<code>fa = "fa"</code>) or both (<code>fa = "both"</code>). As we want to showcase CI for the observed Eigenvalues for both method we chose “both” here.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Run a Parallel Analysis (Horn, 1965) with psych pacakge and save the parallel object</span>
-<span class="va">parallel_analysis</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">fa.parallel</a></span><span class="op">(</span><span class="va">df</span>, fa<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Run a Parallel Analysis (Horn, 1965) with psych pacakge and save the parallel object</span></span>
+<span><span class="va">parallel_analysis</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">fa.parallel</a></span><span class="op">(</span><span class="va">df</span>, fa<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/setup-1.png" width="700"></p>
-<pre><code><span class="co">#&gt; Parallel analysis suggests that the number of factors =  3  and the number of components =  2</span></code></pre>
+<pre><code><span><span class="co">#&gt; Parallel analysis suggests that the number of factors =  3  and the number of components =  2</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="create-bootstrapped-confidence-intervals-for-observed-eigenvalues">3. Create Bootstrapped Confidence Intervals for observed Eigenvalues<a class="anchor" aria-label="anchor" href="#create-bootstrapped-confidence-intervals-for-observed-eigenvalues"></a>
@@ -314,22 +315,22 @@ fantome.appendChild(templateContent);
 <h4 id="bootstrapped-cis-for-pca">3.1 Bootstrapped CIs for PCA<a class="anchor" aria-label="anchor" href="#bootstrapped-cis-for-pca"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PCA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"pc"</span><span class="op">)</span>
-<span class="va">PCA_bootObj</span>
-
-<span class="va">PCA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">PCA_bootObj</span><span class="op">)</span>
-<span class="va">PCA_CIs</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PCA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"pc"</span><span class="op">)</span></span>
+<span><span class="va">PCA_bootObj</span></span>
+<span></span>
+<span><span class="va">PCA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">PCA_bootObj</span><span class="op">)</span></span>
+<span><span class="va">PCA_CIs</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="efa-eigenvalues-cis">EFA Eigenvalues CIs<a class="anchor" aria-label="anchor" href="#efa-eigenvalues-cis"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">EFA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"fa"</span><span class="op">)</span>
-<span class="va">EFA_bootObj</span>
-
-<span class="va">EFA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">EFA_bootObj</span><span class="op">)</span>
-<span class="va">EFA_bootObj</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">EFA_bootObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/booted_eigenvalues.html">booted_eigenvalues</a></span><span class="op">(</span><span class="va">df</span>, iterations <span class="op">=</span> <span class="fl">500</span>, fa <span class="op">=</span> <span class="st">"fa"</span><span class="op">)</span></span>
+<span><span class="va">EFA_bootObj</span></span>
+<span></span>
+<span><span class="va">EFA_CIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCIs.html">getCIs</a></span><span class="op">(</span><span class="va">EFA_bootObj</span><span class="op">)</span></span>
+<span><span class="va">EFA_bootObj</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="plotting">4. Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
@@ -339,10 +340,10 @@ fantome.appendChild(templateContent);
 </h4>
 <p>The output of the <code><a href="https://rdrr.io/pkg/psych/man/fa.parallel.html" class="external-link">psych::fa.parallel</a></code> can be easily beautified by the <code>pretty_scree</code> function (below we exemplarily showcase the pretty scree for pca).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"pc"</span><span class="op">)</span>
-<span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"fa"</span><span class="op">)</span>
-
-<span class="va">PCA_Plot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"pc"</span><span class="op">)</span></span>
+<span><span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pretty_scree.html">pretty_scree</a></span><span class="op">(</span><span class="va">parallel_analysis</span>,fa<span class="op">=</span><span class="st">"fa"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">PCA_Plot</span></span></code></pre></div>
 <p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/prettyscree-1.png" width="700"></p>
 </div>
 </div>
@@ -351,13 +352,13 @@ fantome.appendChild(templateContent);
 </h3>
 <p>Adding the obtained CIs to the plot is also pretty easy with the function <code><a href="../reference/add_ci_2plot.html">add_ci_2plot()</a></code>. You can either chose to display the CIs as bands (with <code>type = "band"</code> or as error bars with <code>type = "errorbars"</code> )</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">EFA_Plot</span>,<span class="va">EFA_CIs</span>,type<span class="op">=</span><span class="st">"band"</span><span class="op">)</span>
-<span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">PCA_Plot</span>,<span class="va">PCA_CIs</span>,type<span class="op">=</span><span class="st">"errorbars"</span><span class="op">)</span>
-
-<span class="va">EFA_Plot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">EFA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">EFA_Plot</span>,<span class="va">EFA_CIs</span>,type<span class="op">=</span><span class="st">"band"</span><span class="op">)</span></span>
+<span><span class="va">PCA_Plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_ci_2plot.html">add_ci_2plot</a></span><span class="op">(</span><span class="va">PCA_Plot</span>,<span class="va">PCA_CIs</span>,type<span class="op">=</span><span class="st">"errorbars"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">EFA_Plot</span></span></code></pre></div>
 <p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PCA_Plot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PCA_Plot</span></span></code></pre></div>
 <p><img src="ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues_files/figure-html/addCIs-2.png" width="700"></p>
 </div>
 </div>
@@ -374,7 +375,7 @@ fantome.appendChild(templateContent);
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

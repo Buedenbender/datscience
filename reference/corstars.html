@@ -85,49 +85,70 @@ of the Hmisc package is required. Run install.packages("Hmisc")</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">corstars</span><span class="op">(</span>
-  <span class="va">x</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"spearman"</span>, <span class="st">"polychoric"</span><span class="op">)</span>,
-  removeTriangle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"upper"</span>, <span class="st">"lower"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  rmDiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  rmLastCol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span><span class="op">)</span>,
-  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
-  labels_cols <span class="op">=</span> <span class="va">labels_rows</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">labels_rows</span><span class="op">)</span><span class="op">]</span>,
-  sig.level <span class="op">=</span> <span class="fl">0.05</span>,
-  nod <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">corstars</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pearson"</span>, <span class="st">"spearman"</span>, <span class="st">"polychoric"</span><span class="op">)</span>,</span>
+<span>  removeTriangle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"upper"</span>, <span class="st">"lower"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  rmDiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  rmLastCol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span><span class="op">)</span>,</span>
+<span>  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  labels_cols <span class="op">=</span> <span class="va">labels_rows</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">labels_rows</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  sig.level <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  nod <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>a matrix containing the data</p></dd>
+
+
 <dt>method</dt>
 <dd><p>correlation method. "pearson", "spearman" or "polychoric" are supported</p></dd>
+
+
 <dt>removeTriangle</dt>
 <dd><p>remove upper or lower triangle, or FALSE for not removing any triangle</p></dd>
+
+
 <dt>rmDiag</dt>
 <dd><p>if one triangle of the matrix is removed, should the diagonal be kept = FALSE; or removed = TRUE</p></dd>
+
+
 <dt>rmLastCol</dt>
 <dd><p>chose if the last column can be removed, to shorten the table if necessary, default = TRUE</p></dd>
+
+
 <dt>result</dt>
 <dd><p>Print result in Console ("none"), generate HTML file ("html"), generate latex file ("latex")</p></dd>
+
+
 <dt>labels_rows</dt>
 <dd><p>Labels for the rows (i.e., variable names). Length musst be same as number of variables</p></dd>
+
+
 <dt>labels_cols</dt>
 <dd><p>Labels for columns. Length musst be same as number of variables - 1</p></dd>
+
+
 <dt>sig.level</dt>
 <dd><p>Significance level (.1 or .05). If NA is provided, no stars marking the significance will be printed.
 This helps formatting the decimal places. NA is especially used by the <code><a href="apa_corrTable.html">apa_corrTable</a></code> function</p></dd>
+
+
 <dt>nod</dt>
 <dd><p>Integer. Number of Decimals. Default is nod = 2. In case of -1 a simple convention based
 on sample size is applied for determination of number of decimal points.
 See <code><a href="get_number_of_decimals.html">get_number_of_decimals</a></code> or <code><a href="get_number_of_decimals.html">?datscience::get_number_of_decimals</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Correlation table in console or file</p>
+    
+
+<p>Correlation table in console or file</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -140,35 +161,35 @@ See <code><a href="get_number_of_decimals.html">get_number_of_decimals</a></code
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Console output</span></span>
-<span class="r-in"><span class="fu">corstars</span><span class="op">(</span><span class="va">mtcars</span>,</span>
-<span class="r-in">  method <span class="op">=</span> <span class="st">"pearson"</span>, removeTriangle <span class="op">=</span> <span class="st">"upper"</span>, result <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span class="r-in">  caption <span class="op">=</span> <span class="st">"Correlations"</span>,</span>
-<span class="r-in">  sig.level <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"(1) mpg"</span>, <span class="st">"(2) cyl"</span>, <span class="st">"(3) disp"</span>, <span class="st">"(4) hp"</span>,</span>
-<span class="r-in">    <span class="st">"(5) drat"</span>, <span class="st">"(6) wt"</span>, <span class="st">"(7) qsec"</span>, <span class="st">"(8) vs"</span>,</span>
-<span class="r-in">    <span class="st">"(9) am"</span>, <span class="st">"(10) gear"</span>,</span>
-<span class="r-in">    <span class="st">"(11) carb"</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  labels_cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># HTML output</span></span>
-<span class="r-in"><span class="fu">corstars</span><span class="op">(</span><span class="va">mtcars</span>,</span>
-<span class="r-in">  method <span class="op">=</span> <span class="st">"pearson"</span>, removeTriangle <span class="op">=</span> <span class="st">"upper"</span>, result <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span class="r-in">  caption <span class="op">=</span> <span class="st">"Correlations"</span>, filename <span class="op">=</span> <span class="st">"corr.html"</span>,</span>
-<span class="r-in">  sig.level <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"(1) mpg"</span>, <span class="st">"(2) cyl"</span>, <span class="st">"(3) disp"</span>, <span class="st">"(4) hp"</span>,</span>
-<span class="r-in">    <span class="st">"(5) drat"</span>, <span class="st">"(6) wt"</span>, <span class="st">"(7) qsec"</span>, <span class="st">"(8) vs"</span>,</span>
-<span class="r-in">    <span class="st">"(9) am"</span>, <span class="st">"(10) gear"</span>,</span>
-<span class="r-in">    <span class="st">"(11) carb"</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  labels_cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Console output</span></span></span>
+<span class="r-in"><span><span class="fu">corstars</span><span class="op">(</span><span class="va">mtcars</span>,</span></span>
+<span class="r-in"><span>  method <span class="op">=</span> <span class="st">"pearson"</span>, removeTriangle <span class="op">=</span> <span class="st">"upper"</span>, result <span class="op">=</span> <span class="st">"none"</span>,</span></span>
+<span class="r-in"><span>  caption <span class="op">=</span> <span class="st">"Correlations"</span>,</span></span>
+<span class="r-in"><span>  sig.level <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"(1) mpg"</span>, <span class="st">"(2) cyl"</span>, <span class="st">"(3) disp"</span>, <span class="st">"(4) hp"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(5) drat"</span>, <span class="st">"(6) wt"</span>, <span class="st">"(7) qsec"</span>, <span class="st">"(8) vs"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(9) am"</span>, <span class="st">"(10) gear"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(11) carb"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  labels_cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># HTML output</span></span></span>
+<span class="r-in"><span><span class="fu">corstars</span><span class="op">(</span><span class="va">mtcars</span>,</span></span>
+<span class="r-in"><span>  method <span class="op">=</span> <span class="st">"pearson"</span>, removeTriangle <span class="op">=</span> <span class="st">"upper"</span>, result <span class="op">=</span> <span class="st">"html"</span>,</span></span>
+<span class="r-in"><span>  caption <span class="op">=</span> <span class="st">"Correlations"</span>, filename <span class="op">=</span> <span class="st">"corr.html"</span>,</span></span>
+<span class="r-in"><span>  sig.level <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>  labels_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"(1) mpg"</span>, <span class="st">"(2) cyl"</span>, <span class="st">"(3) disp"</span>, <span class="st">"(4) hp"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(5) drat"</span>, <span class="st">"(6) wt"</span>, <span class="st">"(7) qsec"</span>, <span class="st">"(8) vs"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(9) am"</span>, <span class="st">"(10) gear"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"(11) carb"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  labels_cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -180,7 +201,7 @@ See <code><a href="get_number_of_decimals.html">get_number_of_decimals</a></code
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

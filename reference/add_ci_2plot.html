@@ -67,42 +67,59 @@ adds CI around the observd eigenvalues</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_ci_2plot</span><span class="op">(</span>
-  <span class="va">plot</span>,
-  <span class="va">CIs</span>,
-  met <span class="op">=</span> <span class="st">"normal"</span>,
-  color <span class="op">=</span> <span class="st">"darkseagreen3"</span>,
-  outline <span class="op">=</span> <span class="st">"black"</span>,
-  transparency <span class="op">=</span> <span class="fl">0.5</span>,
-  type <span class="op">=</span> <span class="st">"band"</span>,
-  lt <span class="op">=</span> <span class="st">"dotted"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_ci_2plot</span><span class="op">(</span></span>
+<span>  <span class="va">plot</span>,</span>
+<span>  <span class="va">CIs</span>,</span>
+<span>  met <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"darkseagreen3"</span>,</span>
+<span>  outline <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  transparency <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"band"</span>,</span>
+<span>  lt <span class="op">=</span> <span class="st">"dotted"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>plot</dt>
 <dd><p>The plot object as obtained by pretty_scree()</p></dd>
+
+
 <dt>CIs</dt>
 <dd><p>Data.frame obtained from getCIs() and booted_eigenvalues()</p></dd>
+
+
 <dt>met</dt>
 <dd><p>the type of CI to be used default "normal"
 | other options: "basic", "stud", "perc", "bca"</p></dd>
+
+
 <dt>color</dt>
 <dd><p>If type of visual display of the CI = "band"
 the color of the area between Upper and Lower</p></dd>
+
+
 <dt>outline</dt>
 <dd><p>Color of the Outline for the Area</p></dd>
+
+
 <dt>transparency</dt>
 <dd><p>Alpha value, how transparent shall the filling color be</p></dd>
+
+
 <dt>type</dt>
 <dd><p>either "band" or "errorbars", defaults to "band"</p></dd>
+
+
 <dt>lt</dt>
 <dd><p>Linetype, 0 for no outline around the band, other options include: "dotted", "dashed", "solid"</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A new pretty_plot with the Parallel Analysis,
+    
+
+<p>A new pretty_plot with the Parallel Analysis,
 including CIs around the observed Eigenvalues.</p>
     </div>
     <div class="section level2">
@@ -123,7 +140,7 @@ including CIs around the observed Eigenvalues.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

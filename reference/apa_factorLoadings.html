@@ -67,17 +67,17 @@ If desired this table can directly be exported to a Word file (.docx).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">apa_factorLoadings</span><span class="op">(</span>
-  <span class="va">fa_object</span>,
-  filepath <span class="op">=</span> <span class="cn">NA</span>,
-  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table X"</span>, <span class="st">"PCA / EFA Factor Loadings"</span><span class="op">)</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,
-  nod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>,
-  n.obs <span class="op">=</span> <span class="cn">NA</span>,
-  cutoff <span class="op">=</span> <span class="fl">0.3</span>,
-  orderbyloading <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">apa_factorLoadings</span><span class="op">(</span></span>
+<span>  <span class="va">fa_object</span>,</span>
+<span>  filepath <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table X"</span>, <span class="st">"PCA / EFA Factor Loadings"</span><span class="op">)</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  nod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  n.obs <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  cutoff <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  orderbyloading <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,19 +85,27 @@ If desired this table can directly be exported to a Word file (.docx).</p>
     <dl><dt>fa_object</dt>
 <dd><p>Either an <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></code> or <code><a href="https://rdrr.io/pkg/psych/man/principal.html" class="external-link">principal</a></code>, from
 which the factor loadings are to be extracted</p></dd>
+
+
 <dt>filepath</dt>
 <dd><p>(Optional) Path and filename were the APA ready table should
 be saved, options include the common filetypes .docx (Word), .pptx (Powerpoint),
 .html (Webpage). Default is filepath = NA. If NA is given, no file will be saved.</p></dd>
+
+
 <dt>table_caption</dt>
 <dd><p>Takes a character vector. Recommend are the following elements</p><ul><li><p>Table + number (e.g., "<strong>Table 3</strong>")</p></li>
 <li><p>The description, use APA capital case
 (e.g., "<em>PCA / EFA Factor Loadings</em>")</p></li>
 </ul></dd>
+
+
 <dt>overwrite</dt>
 <dd><p>(Optional) Boolean, default is FALSE. When overwrite is
 FALSE and the files already exists, a serialized version of the filename
 will be created (i.e., appending _001, or _002). Utilizes <code><a href="serialNext.html">serialNext</a></code></p></dd>
+
+
 <dt>nod</dt>
 <dd><p>(Optional) Integer or Integer Vector. Number of Decimals.
 In case of -1 a simple convention based on sample size is applied for determination
@@ -108,25 +116,36 @@ factor loadings, the second for additional stats. E.g., c(2,-1) would give 2 dec
 for factor loadings and apply the convention for Complexity, Uniqueness and Communality.
 Default is nod = c(3,2). <br>
 See <code><a href="get_number_of_decimals.html">get_number_of_decimals</a></code> or<code><a href="get_number_of_decimals.html">?datscience::get_number_of_decimals</a></code></p></dd>
+
+
 <dt>n.obs</dt>
 <dd><p>(Optional), Only required if you want to apply the convention to number
 of decimals, and did calculate the factor analysis (PCA, EFA) directly on a correlation
 or covariance matrix.</p></dd>
+
+
 <dt>cutoff</dt>
 <dd><p>(Optional), Integer, determines the minimum threshold, values below are omitted.
 Default is cutoff = 0.3.</p></dd>
+
+
 <dt>orderbyloading</dt>
 <dd><p>(Optional), Boolean, default is <code>orderbyloading = TRUE</code>. If TRUE, items in the
 table will be sorted by loading on the first factor / component (as in the convention). In some use cases, you rather
 want to maintain the ordering you used to conduct the analysis (e.g., alphabetical). You can archieve this
 by providing <code>orderbyloading = FALSE</code></p></dd>
+
+
 <dt>...</dt>
 <dd><p>(Optional), Additional arguments that can be passed to <code><a href="format_flextable.html">format_flextable</a></code>
 (e.g., fontsize, font ...) or to <code><a href="serialNext.html">serialNext</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></code> object with APA ready correlation table. If a filepath is provided
+    
+
+<p>A <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></code> object with APA ready correlation table. If a filepath is provided
 it also creates the respective file (e.g., a word .docx file)</p>
     </div>
     <div class="section level2">
@@ -141,7 +160,7 @@ it also creates the respective file (e.g., a word .docx file)</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">datscience</span><span class="fu">::</span><span class="fu">apa_factorLoadings</span><span class="op">(</span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">mtcars</span>, nfactors <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">datscience</span><span class="fu">::</span><span class="fu">apa_factorLoadings</span><span class="op">(</span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">mtcars</span>, nfactors <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: GPArotation</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>I am sorry, to do these rotations requires the GPArotation package to be installed</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a flextable object.</span>
@@ -166,7 +185,7 @@ it also creates the respective file (e.g., a word .docx file)</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

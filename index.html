@@ -91,11 +91,11 @@
 <p><strong>Example Problem:</strong> Get a <em>nicely</em> formatted (in accordance with APA 7th publication manual) correlation table directly into a Word file (*.docx).</p>
 <p><code>datscience</code> provides with the <code><a href="reference/apa_corrTable.html">apa_corrTable()</a></code> function an easy solution for this task.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/apa_corrTable.html">apa_corrTable</a></span><span class="op">(</span>
-  df <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, summarystats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"range"</span><span class="op">)</span>,
-  filepath <span class="op">=</span> <span class="st">"man/figures/CorrelationTable_iris.docx"</span>,
-  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"Correlation and Descriptive Statistics"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/apa_corrTable.html">apa_corrTable</a></span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, summarystats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"range"</span><span class="op">)</span>,</span>
+<span>  filepath <span class="op">=</span> <span class="st">"man/figures/CorrelationTable_iris.docx"</span>,</span>
+<span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"Correlation and Descriptive Statistics"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>This creates the path (i.e., directories) <code>man/figures/</code> in the current working directory of R and also the desired word file (see below).</p>
 <p><strong>Screenshot of “CorrelationTable_iris.docx”</strong> <img src="reference/figures/README-apa_corrTableExample.png" alt="Screenshot of apa_corrTable() example"></p>
 <p><strong>Please Note:</strong> The code for the formatting was inspired and adapted from the blog post of <a href="https://remi-theriault.com/blog_table.html" class="external-link">Rémi Thériault</a>, the correlations with marked significance from <a href="https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R" class="external-link">Dominik Vogel’s package</a></p>
@@ -106,16 +106,16 @@
 </h2>
 <p>You can install the latest released version of datscience easily, directly from <a href="https://github.com/Buedenbender/datscience#readme" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Plesae Note:</strong> that datscience depends on many useful packages, which will be installed in the process (e.g. dplyr, ggplot2, …).</p>
 <div class="section level4">
 <h4 id="installation-troubleshoot">Installation Troubleshoot<a class="anchor" aria-label="anchor" href="#installation-troubleshoot"></a>
 </h4>
 <p>Some users might encounter: <code>(System Error 267 @win/processx.c:1040)</code>, which is due to special characters in the username and the path to the directories (e.g., <code>ö</code> or <code>é</code>). In this case, you can try to install <code>datscience</code> with the remotes package in standalone mode in a fresh R-sessions (no packages loaded) (see below and for reference this <a href="https://stackoverflow.com/q/68400661/7318488" class="external-link">stackoverflow posting</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>R_REMOTES_STANDALONE<span class="op">=</span><span class="st">"true"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>R_REMOTES_STANDALONE<span class="op">=</span><span class="st">"true"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></span></code></pre></div>
 <p>Further, some users might need to update some of the packages <code>datscience</code> depends on (most prominently e.g. <a href="https://cran.r-project.org/web/packages/stringi/index.html" class="external-link">stringi</a>). Since R-Version 4.x you probably will need to manually download and install Rtools (and add it to the path) in advance, to be able to successfully update stringi. A quick guide on RTools is given on the cran website: <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link uri">https://cran.r-project.org/bin/windows/Rtools/</a></p>
 </div>
 </div>
@@ -131,20 +131,20 @@
 <li>
 <p>Creates the correlation table by calling <code><a href="reference/corstars.html">datscience::corstars()</a></code><a href="https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R" class="external-link"><sup>[1]</sup></a>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/corstars.html">corstars</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt;              Sepal.Length Sepal.Width Petal.Length</span>
-<span class="co">#&gt; Sepal.Length                                      </span>
-<span class="co">#&gt; Sepal.Width     -0.12                             </span>
-<span class="co">#&gt; Petal.Length     0.87***    -0.43***              </span>
-<span class="co">#&gt; Petal.Width      0.82***    -0.37***      0.96***</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/corstars.html">corstars</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              Sepal.Length Sepal.Width Petal.Length</span></span>
+<span><span class="co">#&gt; Sepal.Length                                      </span></span>
+<span><span class="co">#&gt; Sepal.Width     -0.12                             </span></span>
+<span><span class="co">#&gt; Petal.Length     0.87***    -0.43***              </span></span>
+<span><span class="co">#&gt; Petal.Width      0.82***    -0.37***      0.96***</span></span></code></pre></div>
 </li>
 <li><p>Appends desired summary stats to the flextable.</p></li>
 <li>
 <p>Formatting of the <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable::flextable()</a></code> object to APA 7th style, by utilizing the <code><a href="reference/format_flextable.html">format_flextable()</a></code> function. To illustrate the function, we here use it to display the first 5 rows of the iris data set.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
-  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Illustrating Functionality of format_flextable()"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Illustrating Functionality of format_flextable()"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-format_flextableIris.png" alt=""><p class="caption">FFIE.png</p>
 </div>
@@ -160,32 +160,32 @@
 <p><strong>Let’s first create an exemplary PCA</strong><sup>[<a href="https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor" class="external-link">1</a>, <a href="https://personality-project.org/r/psych/help/principal.html" class="external-link">2</a>]</sup><strong>and extract the factor loadings</strong>:<br>
 (Which is also more conveniently packaged in the function <code><a href="reference/apa_factorLoadings.html">apa_factorLoadings()</a></code> function)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Creation of an Example Prinicipal Component Analysis</span>
-<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">psych</span>, <span class="va">dplyr</span><span class="op">)</span>
-<span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu">principal</span><span class="op">(</span><span class="va">Harman74.cor</span><span class="op">$</span><span class="va">cov</span>, <span class="fl">4</span>, rotate <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span>
-<span class="va">pc_loadings</span> <span class="op">&lt;-</span> <span class="va">pc</span> <span class="op">%&gt;%</span>
-  <span class="fu">fa.sort</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="va">.</span><span class="op">[[</span><span class="st">"loadings"</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span>
-    <span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,
-    <span class="op">~</span> <span class="fu">if_else</span><span class="op">(</span><span class="op">(</span><span class="va">.</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">bind_cols</span><span class="op">(</span>
-    Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,
-    Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,
-    Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"items"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Creation of an Example Prinicipal Component Analysis</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html" class="external-link">p_load</a></span><span class="op">(</span><span class="va">psych</span>, <span class="va">dplyr</span><span class="op">)</span></span>
+<span><span class="va">pc</span> <span class="op">&lt;-</span> <span class="fu">principal</span><span class="op">(</span><span class="va">Harman74.cor</span><span class="op">$</span><span class="va">cov</span>, <span class="fl">4</span>, rotate <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span>
+<span><span class="va">pc_loadings</span> <span class="op">&lt;-</span> <span class="va">pc</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">fa.sort</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="va">.</span><span class="op">[[</span><span class="st">"loadings"</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span></span>
+<span>    <span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="op">~</span> <span class="fu">if_else</span><span class="op">(</span><span class="op">(</span><span class="va">.</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">bind_cols</span><span class="op">(</span></span>
+<span>    Communality <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">communality</span>,</span>
+<span>    Uniqueness <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">uniquenesses</span>,</span>
+<span>    Complexity <span class="op">=</span> <span class="va">pc</span><span class="op">$</span><span class="va">complexity</span></span>
+<span>  <span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"items"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Formatting these loadings to APA with just one function:</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">formatted_loadings</span> <span class="op">&lt;-</span> <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">pc_loadings</span><span class="op">)</span>,
-  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>, <span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">formatted_loadings</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">formatted_loadings</span> <span class="op">&lt;-</span> <span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="va">pc_loadings</span><span class="op">)</span>,</span>
+<span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>, <span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">formatted_loadings</span></span></code></pre></div>
 <p><img src="reference/figures/README-format_flextableExample.png"></p>
 </div>
 </div>
@@ -259,7 +259,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>
