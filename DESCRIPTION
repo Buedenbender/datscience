@@ -15,6 +15,7 @@ Imports:
     dplyr,
     tidyr,
     tidyselect,
+    forcats,
     utils,
     ggplot2,
     ggpubr,
@@ -60,6 +61,7 @@ Collate:
     'format_flextable.R'
     'getCIs.R'
     'get_number_of_decimals.R'
+    'independent_sample_means.R'
     'pretty_cm2.R'
     'pretty_scree.R'
     'save_flextable.R'
