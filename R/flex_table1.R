@@ -48,9 +48,18 @@ utils::globalVariables("table_caption")
 #' @author Bjoern Buedenbender
 #' @examples
 #' \dontrun{
+#' # Comparison of just two Groups
 #' str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
 #' data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
 #' data$test <- factor(rep(c("Female", "Male"), 50))
+#' table_caption <- c("Table 1", "A test on the Iris Data")
+#' flex_table1(str_formula, data = data, table_caption = table_caption)
+#'
+#' # Comparison of Multiple Groups (ANOVA)
+#' str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
+#' data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
+#' data <- iris
+#' data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
 #' table_caption <- c("Table 1", "A test on the Iris Data")
 #' flex_table1(str_formula, data = data, table_caption = table_caption)
 #' }
@@ -71,7 +80,12 @@ flex_table1 <- function(str_formula,
                         ref_correction = TRUE,
                         ...) {
 
-  # Determine the number of Comparisons
+
+# 1) Prepare Formula String -----------------------------------------------
+  # Remove line breaks
+  str_formula <- sub("\\\n","",str_formula)
+
+  # Determine the number of Comparisons: Necessary for Correction of the p-value
   #   - Use the number of Terms in the formula
   if (is.na(num)) {
     # Remove the grouping variable | as this is not recognized correctly
@@ -264,57 +278,44 @@ flex_table1 <- function(str_formula,
     # When Fishers Test was applied add note
     if (any(grepl("\u0363", df$p))) {
       ft <- ft %>%
-        flextable::footnote(.,
-          ref_symbols = " ", sep = " ",
-          value = as_paragraph("\u0363 Fisher's exact test, expected counts \u2264 5.")
-        )
+      flextable::add_footer_lines(.,
+                                  values = "\u0363 Fisher's exact test, expected cell-count \u2264 5."
+      )
     }
 
     # When Welchs COrrection was applied
     if (any(grepl("\u1D47", df$p))) {
       ft <- ft %>%
-        flextable::footnote(.,
-          ref_symbols = " ", sep = " ",
-          value = as_paragraph("\u1D47 Welch's correction for heterogeneity of variances."),
-          inline = any(grepl("\u0363", df$p))
+        flextable::add_footer_lines(.,
+          value = "\u1D47 Welch's correction for heterogeneity of variances.",
         )
     }
   }
 
   # Set the N in column header to italic
-  group1 <- df %>% colnames()
-  group1 <- group1[2]
-  n1 <- number_parse(df[1, 2])
+  #   - get all column names
+  names <- df %>% names()
+  #   - iterate over all groups
+  for(j in c(2:(n_grps+1))){
+    # Extract Name an N for the respective group
+    group_name <- names[j]
+    n <- number_parse(df[1, j])
 
-  group2 <- df %>% colnames()
-  group2 <- group2[3]
-  n2 <- number_parse(df[1, 3])
-
-  ft <- ft %>%
-    flextable::compose(.,
-      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-      j = 2,
-      part = "header",
-      # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
-      value = as_paragraph(
-        group1, "\n(",
-        flextable::as_i("N"),
-        " = ",
-        as.character(n1), ")"
+    # Replace Header with cursive N
+    ft <- ft %>%
+      flextable::compose(.,
+                         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+                         j = j,
+                         part = "header",
+                         # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
+                         value = as_paragraph(
+                           group_name, "\n(",
+                           flextable::as_i("N"),
+                           " = ",
+                           as.character(n), ")"
+                         )
       )
-    ) %>%
-    flextable::compose(.,
-      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-      j = 3,
-      part = "header",
-      # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
-      value = as_paragraph(
-        group2, "\n(",
-        flextable::as_i("N"),
-        " = ",
-        as.character(n2), ")"
-      )
-    )
+  }
 
   return(ft)
 }

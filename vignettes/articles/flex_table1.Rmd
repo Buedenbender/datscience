@@ -74,11 +74,12 @@ breast_cancer_modified <- breast_cancer %>%
 var_label(breast_cancer_modified$random_Smoking) <- "Fictional Smoking Status"
 
 ft <- flex_table1(
-  str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", data = breast_cancer_modified,
-  table_caption = c(
-    "Table 1",
-    "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
-  )
+  str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
+  data = breast_cancer_modified
+  # table_caption = c(
+  #   "Table 1",
+  #   "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
+  # )
 )
 
 ft %>%

@@ -68,7 +68,6 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
     flextable::hline_top(., part = "body", border = apa.border) %>%
     flextable::hline_bottom(., part = "body", border = apa.border) %>%
     flextable::align(., align = "center", part = "head") %>%
-    flextable::line_spacing(., space = linespacing, part = "all") %>%
     flextable::height(., height = 0.55, part = "body") %>%
     # hrule(rule = "exact", part = "all") %>%
     flextable::height(., height = 0.55, part = "head") %>%
@@ -87,14 +86,13 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
   if (!anyNA(table_note)) {
     formatted_ft <- formatted_ft %>%
       flextable::add_footer_lines(., values = "") %>%
-      flextable::compose(.,i=1,j=1,value=as_paragraph(as_i("Note.")), part = "footer") %>%
-      flextable::footnote(.,value = as_paragraph(table_note),
-                          inline = TRUE,ref_symbols = NA,sep = " ")
+      flextable::compose(.,i=1,j=1,value=as_paragraph(as_i("Note. "),table_note), part = "footer")
   }
 
   formatted_ft <- formatted_ft %>%
     flextable::fontsize(., part = "all", size = fontsize) %>%
-    flextable::font(., part = "all", fontname = font)
+    flextable::font(., part = "all", fontname = font) %>%
+    flextable::line_spacing(., space = linespacing, part = "all")
 
 
   return(formatted_ft)

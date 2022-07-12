@@ -53,9 +53,18 @@ a beautiful publication ready bivariate comparison Table 1. New feature since ve
 }
 \examples{
 \dontrun{
+# Comparison of just two Groups
 str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
 data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
 data$test <- factor(rep(c("Female", "Male"), 50))
+table_caption <- c("Table 1", "A test on the Iris Data")
+flex_table1(str_formula, data = data, table_caption = table_caption)
+
+# Comparison of Multiple Groups (ANOVA)
+str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
+data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
+data <- iris
+data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
 table_caption <- c("Table 1", "A test on the Iris Data")
 flex_table1(str_formula, data = data, table_caption = table_caption)
 }
