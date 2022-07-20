@@ -304,7 +304,7 @@ flex_table1 <- function(str_formula,
           }
         ) # END tryCatch
 
-        df <- "/"
+        df <- ""
       } else {
         df <- tmp$parameter
       }
