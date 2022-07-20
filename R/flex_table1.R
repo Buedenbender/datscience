@@ -39,6 +39,8 @@ utils::globalVariables("table_caption")
 #' @param table_caption Caption for the table, each element of the vector represents
 #' a new line. The first line will be bold face. All additional lines are in italic.
 #' @param ref_correction Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.
+#' @param include_teststat Boolean, default = TRUE, if TRUE includes two additional columns in the table.
+#' 1) Test statistic (either t, f or X²) and 2) degrees of Freedom
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 #' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
@@ -78,10 +80,11 @@ flex_table1 <- function(str_formula,
                         num = NA,
                         table_caption = NA,
                         ref_correction = TRUE,
+                        include_teststat = TRUE,
                         ...) {
 
 
-# 1) Prepare Formula String -----------------------------------------------
+  # 1) Prepare Formula String -----------------------------------------------
   # Remove line breaks
   str_formula <- sub("\\\n","",str_formula)
 
@@ -183,6 +186,134 @@ flex_table1 <- function(str_formula,
     }
     out
   }
+
+
+  # Function for test statistic
+  teststat <- function(x, ...) {
+    # Construct vectors of data y, and groups (strata) g
+    y <- unlist(x)
+    g <- factor(rep(1:length(x), times = sapply(x, length)))
+    # Determine number of groups
+    n_grps <- length(levels(g))
+
+    # Numerical Dependent Var
+    if (is.numeric(y)) {
+      # Determine Homogeneity of Variances Across groups
+      homogeneity <- rstatix::levene_test(dv ~ grp, data = data.frame(dv = y, grp = g))$p > .05
+      # t-Test
+      if (n_grps == 2) {
+        # Either perform a standard t-Test or a Welch Test for Heterogeneity of variances
+        stat <- stats::t.test(y ~ g, var.equal = homogeneity)$statistic
+      }
+      # ANOVA
+      else {
+        if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
+          res <- stats::aov(y ~ g)
+          stat <- summary(res)[[1]][1,4]
+        } else {
+          res <- stats::oneway.test(y ~ g)
+          stat <- res$statistic
+        }
+      }
+    }
+    # Categorical Dependent Var
+    else {
+      # For categorical variables, perform a chi-squared test of independence
+      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+
+      # Or if one expected cell count is below 5a fishers exact test
+      if (any(tmp$expected < 5)) {
+
+        # Try to run a Fisher test w default workspace for comupting time advantage
+        result <- tryCatch(
+          {
+            stats::fisher.test(table(y, g))
+          },
+          error = function(cond) {
+            # If Fisher's Test fails due to small workspace, increase it
+            if (grepl("^FEXACT error 7", cond$message)) {
+              # Error due to small workspace for a reference see:
+              # https://github.com/Lagkouvardos/Rhea/issues/17#issuecomment-442861341
+              return(stats::fisher.test(table(y, g), workspace = 2e8))
+            }
+            # Choose a return value in case of error
+            return(cond)
+          }
+        ) # END tryCatch
+
+        stat <- ""
+      } else {
+        stat <- tmp$statistic
+      }
+    }
+
+    if (is.character(stat)) stat else round(stat,2)
+  }
+
+  # Function for test statistic
+  degreesfreedom <- function(x, ...) {
+    # Construct vectors of data y, and groups (strata) g
+    y <- unlist(x)
+    g <- factor(rep(1:length(x), times = sapply(x, length)))
+    # Determine number of groups
+    n_grps <- length(levels(g))
+
+    # Numerical Dependent Var
+    if (is.numeric(y)) {
+      # Determine Homogeneity of Variances Across groups
+      homogeneity <- rstatix::levene_test(dv ~ grp, data = data.frame(dv = y, grp = g))$p > .05
+      # t-Test
+      if (n_grps == 2) {
+        # Either perform a standard t-Test or a Welch Test for Heterogeneity of variances
+        df <- round(stats::t.test(y ~ g, var.equal = homogeneity)$parameter,2)
+      }
+      # ANOVA
+      else {
+        if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
+          res <- stats::aov(y ~ g)
+          df <- paste0(summary(res)[[1]][1,1],", ",summary(res)[[1]][2,1])
+        } else {
+          res <- stats::oneway.test(y ~ g)
+          param <- round(res$parameter,2)
+          df <- paste0(param[1],", ",param[2])
+        }
+      }
+    }
+    # Categorical Dependent Var
+    else {
+      # For categorical variables, perform a chi-squared test of independence
+      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+
+      # Or if one expected cell count is below 5a fishers exact test
+      if (any(tmp$expected < 5)) {
+
+        # Try to run a Fisher test w default workspace for comupting time advantage
+        result <- tryCatch(
+          {
+            stats::fisher.test(table(y, g))
+          },
+          error = function(cond) {
+            # If Fisher's Test fails due to small workspace, increase it
+            if (grepl("^FEXACT error 7", cond$message)) {
+              # Error due to small workspace for a reference see:
+              # https://github.com/Lagkouvardos/Rhea/issues/17#issuecomment-442861341
+              return(stats::fisher.test(table(y, g), workspace = 2e8))
+            }
+            # Choose a return value in case of error
+            return(cond)
+          }
+        ) # END tryCatch
+
+        df <- "/"
+      } else {
+        df <- tmp$parameter
+      }
+    }
+
+    df
+  }
+
+
   # Helper to format the output of Metric Vars
   my.render.cont <- function(x) {
     with(
@@ -190,6 +321,7 @@ flex_table1 <- function(str_formula,
       c("Mean (SD)" = sprintf("%s (\u00B1 %s)", MEAN, SD))
     )
   }
+
   # Helper to format the output of Categorical Vars
   my.render.cat <- function(x) {
     c("", sapply(table1::stats.default(x), function(y) {
@@ -203,13 +335,20 @@ flex_table1 <- function(str_formula,
   # Convert string to formula
   form <- stats::as.formula(str_formula)
 
+  # Number of Extra Columns
+  if (include_teststat) {
+    extra_col <- list(
+      "t / X"=teststat,
+      "df" = degreesfreedom,
+      "p" = pvalue)
+  }else extra_col <- list("p" = pvalue)
 
   tbl1 <- table1::table1(
     form,
     data = data,
     render.continuous = my.render.cont, render.categorical = my.render.cat,
     render.missing = NULL, droplevels = TRUE, overall = FALSE,
-    extra.col = list(`p` = pvalue),
+    extra.col = extra_col,
     rowlabelhead = "Characteristic"
   )
 
@@ -240,6 +379,8 @@ flex_table1 <- function(str_formula,
       "corrected."
     )
   }
+  # t / \u03C7\u00B2
+
   ft <- table1::t1flex(tbl1) %>%
     datscience::format_flextable(
       table_note = note,
@@ -248,27 +389,42 @@ flex_table1 <- function(str_formula,
     ) %>%
     flextable::bold(., part = "body", j = 1, bold = FALSE) %>%
     flextable::bold(.,
-      i = ~ number_parse(p) < 0.05,
-      j = ~Characteristic,
-      bold = TRUE
+                    i = ~ number_parse(p) < 0.05,
+                    j = ~Characteristic,
+                    bold = TRUE
     ) %>%
     flextable::compose(.,
-      part = "body",
-      j = ~Characteristic,
-      i = ~ number_parse(as.character(p)) < 0.05,
-      value = flextable::as_paragraph(
-        Characteristic,
-        flextable::as_chunk(ifelse(number_parse(p) <= 0.001,
-          " ***",
-          ifelse(number_parse(p) < 0.01, " **", " *")
-        ))
-      )
+                       part = "body",
+                       j = ~Characteristic,
+                       i = ~ number_parse(as.character(p)) < 0.05,
+                       value = flextable::as_paragraph(
+                         Characteristic,
+                         flextable::as_chunk(ifelse(number_parse(p) <= 0.001,
+                                                    " ***",
+                                                    ifelse(number_parse(p) < 0.01, " **", " *")
+                         ))
+                       )
     ) %>%
     flextable::align(.,
-      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-      part = "header", align = "center"
+                     i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+                     part = "header", align = "center"
     ) %>%
     flextable::italic(., j = ~p, part = "header")
+
+  # When Teststatistic included in the table
+  if (include_teststat) {
+    if (n_grps == 2) header_teststat <- "t / \u03C7\u00B2" else  header_teststat <- "F / \u03C7\u00B2"
+    ft <- ft %>%
+      # Correct heading for the teststatistic
+      flextable::compose(.,
+                         part = "header",
+                         j = (n_grps + 2),
+                         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+                         value = flextable::as_paragraph(header_teststat)) %>%
+      # Make Degrees of Freedom italic
+      flextable::italic(., j = ~df, part = "header")
+
+  }
 
   # convert table 1 to data.frame for manual adjustments of the table
   df <- as.data.frame(tbl1)
@@ -278,16 +434,16 @@ flex_table1 <- function(str_formula,
     # When Fishers Test was applied add note
     if (any(grepl("\u0363", df$p))) {
       ft <- ft %>%
-      flextable::add_footer_lines(.,
-                                  values = "\u0363 Fisher's exact test, expected cell-count \u2264 5."
-      )
+        flextable::add_footer_lines(.,
+                                    values = "\u0363 Fisher's exact test, expected cell-count \u2264 5."
+        )
     }
 
     # When Welchs COrrection was applied
     if (any(grepl("\u1D47", df$p))) {
       ft <- ft %>%
         flextable::add_footer_lines(.,
-          value = "\u1D47 Welch's correction for heterogeneity of variances.",
+                                    value = "\u1D47 Welch's correction for heterogeneity of variances.",
         )
     }
   }

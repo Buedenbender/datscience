@@ -11,6 +11,7 @@ flex_table1(
   num = NA,
   table_caption = NA,
   ref_correction = TRUE,
+  include_teststat = TRUE,
   ...
 )
 }
@@ -29,6 +30,9 @@ Provide NA if you dont want any correction. Defaults to "bonf"}
 a new line. The first line will be bold face. All additional lines are in italic.}
 
 \item{ref_correction}{Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.}
+
+\item{include_teststat}{Boolean, default = TRUE, if TRUE includes two additional columns in the table.
+1) Test statistic (either t, f or X²) and 2) degrees of Freedom}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 (e.g., fontsize, font ...) or to \code{\link{serialNext}}}
