@@ -10,8 +10,7 @@ Description: The datscience (dataanalysis and science) R-package contains
     analyses or principal component analyses.  
     The overall goal was to improve the workflow of data analysis and
     help with formatting challenges I frequently encounter.
-Imports:
-    Rdpack,
+Imports: Rdpack,
     pacman,
     dplyr,
     tidyr,

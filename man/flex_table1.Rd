@@ -45,54 +45,54 @@ A \code{\link[flextable]{flextable}} object with APA ready correlation table. If
 it also creates the respective file (e.g., a word .docx file)
 }
 \description{
-A convenience function, that provides and easy wrapper for the two main enginges of the function
-\itemize{
-\item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
-I basically just advanced the functionality of the p-value function, added the possibility
-to correct p-values with either Bonferroni or Sidark, and set some sensible defaults to achieve a nice look
-\item \code{\link[flextable]{flextable}} which gives all the power to format the table as you please (e.g., conditional formatting ->
-adding bold for p values below .05), adding italic headers or notes explaining what was done.
-}
-Really all credit should go to these two packages their developers, on full disclosure
-my function just provides an easy to use API or wrapper around their packages to get
-a beautiful publication ready bivariate comparison Table 1.
+A convenience function, that provides and easy wrapper for the two
+   main enginges of the function \itemize{
+        \item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
+        I basically just advanced the functionality of the p-value function, added the possibility
+        to correct p-values with either Bonferroni or Sidark, and set some sensible defaults to achieve a nice look
+        \item \code{\link[flextable]{flextable}} which gives all the power to format the table as you please
+        (e.g., conditional formatting ->adding bold for p values below .05), adding italic headers or notes
+        explaining what was done.
+    }
+    Really all credit should go to these two packages their developers, on full disclosure
+    my function just provides an easy to use API or wrapper around their packages to get
+    a beautiful publication ready bivariate comparison Table 1.
 }
 \details{
-New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than
-2 Groups \cr
-# On Fisher's Exact Test (FET) vs Pearson's χ²-test. \cr
-Newest feature, according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience} as of 21.07.2022
-the function refrains from using Fisher's exact test (FET) for categorical
-variables and only applies FET in the the rare case of cells with an expected
-cell frequencies do not exceed 1. This is due to the fact, that the FET can be
-extreme ressource intensive (and slow), and can have type I error rates less
-than the nominal level \insertCite{Crans2008}{datscience}  \cr
-Contemporary evidence suggests, that Pearson's χ²-test with the
-modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
-and generally recommended \insertCite{Lydersen2009}{datscience} .
-
- @references
-\insertRef{Harrell_cross_11}{datscience}
-\insertRef{Crans2008}{datscience}
-\insertRef{Lydersen2009}{datscience}
+New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2 Groups \cr
+    **On Fisher's Exact Test (FET) vs Pearson s χ²-test** \cr
+    Newest feature, according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience}
+    as of 21.07.2022 the function refrains from using Fisher's exact test (FET) for categorical
+    variables and only applies FET in the the rare case of cells with an expected
+    cell frequencies do not exceed 1. This is due to the fact, that the FET can be
+    extreme ressource intensive (and slow), and can have type I error rates less
+    than the nominal level \insertCite{Crans2008}{datscience}  \cr
+    Contemporary evidence suggests, that Pearson s χ²-test with the
+    modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
+    and generally recommended \insertCite{Lydersen2009}{datscience} .
 }
 \examples{
-\dontrun{
-# Comparison of just two Groups
-str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
-data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
-data$test <- factor(rep(c("Female", "Male"), 50))
-table_caption <- c("Table 1", "A test on the Iris Data")
-flex_table1(str_formula, data = data, table_caption = table_caption)
 
-# Comparison of Multiple Groups (ANOVA)
-str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
-data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
-data <- iris
-data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
-table_caption <- c("Table 1", "A test on the Iris Data")
-flex_table1(str_formula, data = data, table_caption = table_caption)
+\dontrun{
+  # Comparison of just two Groups
+   str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
+   data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
+   data$test <- factor(rep(c("Female", "Male"), 50))
+   table_caption <- c("Table 1", "A test on the Iris Data")
+   flex_table1(str_formula, data = data, table_caption = table_caption)
+
+  # Comparison of Multiple Groups (ANOVA)
+   str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
+   data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
+   data <- iris
+   data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
+   table_caption <- c("Table 1", "A test on the Iris Data")
+   flex_table1(str_formula, data = data, table_caption = table_caption)
+   }
+
 }
+\references{
+\insertAllCited{}
 }
 \seealso{
 \code{\link{format_flextable}},
@@ -100,5 +100,7 @@ flex_table1(str_formula, data = data, table_caption = table_caption)
 \code{\link[table1]{table1}}
 }
 \author{
-Bjoern Buedenbender
+Bjoern Buedenbender,
+
+Imports & Name Space
 }
