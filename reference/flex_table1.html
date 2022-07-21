@@ -92,6 +92,7 @@ a beautiful publication ready bivariate comparison Table 1. New feature since ve
 <span>  table_caption <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  ref_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_teststat <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  drop_unused_cats <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -128,6 +129,10 @@ a new line. The first line will be bold face. All additional lines are in italic
 <dt>include_teststat</dt>
 <dd><p>Boolean, default = TRUE, if TRUE includes two additional columns in the table.
 1) Test statistic (either t, f or X²) and 2) degrees of Freedom</p></dd>
+
+
+<dt>drop_unused_cats</dt>
+<dd><p>Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.</p></dd>
 
 
 <dt>...</dt>
