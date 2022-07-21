@@ -47,13 +47,13 @@ utils::globalVariables("table_caption")
 #' @details
 #'
 #'     New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2 Groups \cr
-#'     **On Fisher's Exact Test (FET) vs Pearson s χ²-test** \cr
-#'     Newest feature, according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience}
-#'     as of 21.07.2022 the function refrains from using Fisher's exact test (FET) for categorical
+#'     \strong{On Fisher's Exact Test (FET) vs Pearson s χ²-test} \cr
+#'     Newest feature (as of 07/22), according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience}
+#'     the function refrains from using Fisher's exact test (FET) for categorical
 #'     variables and only applies FET in the the rare case of cells with an expected
 #'     cell frequencies do not exceed 1. This is due to the fact, that the FET can be
 #'     extreme ressource intensive (and slow), and can have type I error rates less
-#'     than the nominal level \insertCite{Crans2008}{datscience}  \cr
+#'     than the nominal level \insertCite{Crans2008}{datscience}
 #'     Contemporary evidence suggests, that Pearson s χ²-test with the
 #'     modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
 #'     and generally recommended \insertCite{Lydersen2009}{datscience} .
