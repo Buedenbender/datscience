@@ -6,7 +6,7 @@
 #' ANOVA is conducted instead
 #' \item \code{1. Detect outliers and extreme values} including boxplots to identify those values. Utilizes \link[rstatix]{identify_outliers}
 #' \item \code{2. Calculate descriptive statistics} for each groups, self-explanatory.
-#' \item \code{3. Check noraml distribution (assumptions)} uses a formal test (Shapiro-Wilk) as well as a visual inspection method (qqplots).
+#' \item \code{3. Check normal distribution (assumptions)} uses a formal test (Shapiro-Wilk) as well as a visual inspection method (qqplots).
 #' Carefully judge this step, as the function has no default handling for non-normality. Options include check the literature if the test in your scenario is
 #' robust for violations (see also central limit theorem and Glass, 1972), or switch to a non-parametric alternative.
 #' \item \code{4. Check homogeneity of variances (assumption)} for this purpose a levene test will be conducted. A significant (by convention p < .05) result indicates

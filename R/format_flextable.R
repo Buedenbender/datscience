@@ -15,6 +15,9 @@ utils::globalVariables(".")
 #' \href{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
 #' Reference on what APA style for tables constitutes can be obtained on the
 #' \href{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
+#' See also the very neat packages \code{\link[flextable]{flextable}} and \code{\link[officer]{read_docx}},
+#' by David Gohel and Colleagues, which enables us to get our publication ready tables directly
+#' into MS Word.
 #' @param ft A flextable object (prefered) or data.frame, to be formatted in accordance with APA. Required!
 #' @param font Default is "Times New Roman", can be changed to your needs (e.g., "Arial")
 #' @param fontsize Default is 12, bigger font size is not recommended.
@@ -41,6 +44,8 @@ utils::globalVariables(".")
 #' @export
 #' @importFrom magrittr "%>%"
 #' @import flextable
+#' @seealso
+#' \code{\link[flextable]{flextable}}
 format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
                              table_caption = c("Table x", "Some Description of the Table"),
                              table_note = NA,

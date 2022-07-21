@@ -52,6 +52,12 @@ The initial idea for this function stems from
 \href{https://remi-theriault.com/blog_table.html}{Remi Theriault's Blog}. \cr
 Reference on what APA style for tables constitutes can be obtained on the
 \href{https://apastyle.apa.org/style-grammar-guidelines/tables-figures/tables}{apastyle.apa.org website}.
+See also the very neat packages \code{\link[flextable]{flextable}} and \code{\link[officer]{read_docx}},
+by David Gohel and Colleagues, which enables us to get our publication ready tables directly
+into MS Word.
+}
+\seealso{
+\code{\link[flextable]{flextable}}
 }
 \author{
 Bjoern Buedenbender / Remi Theriault
