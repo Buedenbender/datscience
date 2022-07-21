@@ -2,7 +2,7 @@
 % Please edit documentation in R/flex_table1.R
 \name{flex_table1}
 \alias{flex_table1}
-\title{Creates a Descriptive Bivariate Table1 Ready for Publication (Table1 + Flextable)}
+\title{Creates a Descriptive Bivariate Table1 Ready for Publication}
 \usage{
 flex_table1(
   str_formula,

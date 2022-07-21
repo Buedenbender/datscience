@@ -29,7 +29,7 @@ utils::globalVariables("table_caption")
 #' \code{\link[flextable]{flextable}}
 #' \code{\link[table1]{table1}}
 #'
-#' @title Creates a Descriptive Bivariate Table1 Ready for Publication (Table1 + Flextable)
+#' @title Creates a Descriptive Bivariate Table1 Ready for Publication
 #'
 #' @description A convenience function, that provides and easy wrapper for the two
 #'    main enginges of the function \itemize{
