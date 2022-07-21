@@ -11,6 +11,7 @@ Description: The datscience (dataanalysis and science) R-package contains
     The overall goal was to improve the workflow of data analysis and
     help with formatting challenges I frequently encounter.
 Imports:
+    Rdpack,
     pacman,
     dplyr,
     tidyr,
@@ -32,6 +33,7 @@ Imports:
     rlang,
     methods,
     labelled
+RdMacros: Rdpack
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

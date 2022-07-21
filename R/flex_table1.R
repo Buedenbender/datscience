@@ -16,7 +16,7 @@ utils::globalVariables("table_caption")
 # TODO: Add support for grouping variables with > 2 levels e.g., ANOVA
 
 
-#' Creates a Descriptive Bivariate Table1 for Publication (Table1 + Flextable)
+#' Creates a Descriptive Bivariate Table1 Ready for Publication (Table1 + Flextable)
 #' @description A convenience function, that provides and easy wrapper for the two main enginges of the function
 #' \itemize{
 #' \item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
@@ -27,8 +27,26 @@ utils::globalVariables("table_caption")
 #' }
 #' Really all credit should go to these two packages their developers, on full disclosure
 #' my function just provides an easy to use API or wrapper around their packages to get
-#' a beautiful publication ready bivariate comparison Table 1. New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than
-#' 2 Groups
+#' a beautiful publication ready bivariate comparison Table 1.
+#' @details
+#' New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than
+#' 2 Groups \cr
+#' # On Fisher's Exact Test (FET) vs Pearson's χ²-test. \cr
+#' Newest feature, according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience} as of 21.07.2022
+#' the function refrains from using Fisher's exact test (FET) for categorical
+#' variables and only applies FET in the the rare case of cells with an expected
+#' cell frequencies do not exceed 1. This is due to the fact, that the FET can be
+#' extreme ressource intensive (and slow), and can have type I error rates less
+#' than the nominal level \insertCite{Crans2008}{datscience}  \cr
+#' Contemporary evidence suggests, that Pearson's χ²-test with the
+#' modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
+#' and generally recommended \insertCite{Lydersen2009}{datscience} .
+#'
+#'  @references
+#' \insertRef{Harrell_cross_11}{datscience}
+#' \insertRef{Crans2008}{datscience}
+#' \insertRef{Lydersen2009}{datscience}
+#'
 #' @include utility_numberparse.R
 #' @param str_formula A string representing a formula, e.g., \code{"~ Sepal.Length + Sepal.Width | Species"}
 #' used to construct the \code{\link[table1]{table1}}.
@@ -72,6 +90,7 @@ utils::globalVariables("table_caption")
 #' @importFrom flextable bold compose as_paragraph as_chunk align
 #' @importFrom rstatix levene_test
 #' @importFrom forcats fct_drop
+#' @importFrom Rdpack reprompt
 #' @seealso
 #' \code{\link{format_flextable}},
 #' \code{\link[flextable]{flextable}}
@@ -369,13 +388,13 @@ flex_table1 <- function(str_formula,
     note <- paste(
       "Differences are determined by",
       type_test,
-      "or Pearon's \u03C7\u00B2-test."
+      "or Pearson's \u03C7\u00B2-test."
     )
   } else {
     note <- paste(
       "Differences determined by",
       type_test,
-      "(Welch correction applied if necessary) or Pearon's \u03C7\u00B2-test",
+      "(Welch correction applied if necessary) or Pearson's \u03C7\u00B2-test",
       "(Fisher\'s test for expected counts \u2264 5)."
     )
   }
