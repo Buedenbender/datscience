@@ -12,6 +12,7 @@ flex_table1(
   table_caption = NA,
   ref_correction = TRUE,
   include_teststat = TRUE,
+  drop_unused_cats = TRUE,
   ...
 )
 }
@@ -33,6 +34,8 @@ a new line. The first line will be bold face. All additional lines are in italic
 
 \item{include_teststat}{Boolean, default = TRUE, if TRUE includes two additional columns in the table.
 1) Test statistic (either t, f or X²) and 2) degrees of Freedom}
+
+\item{drop_unused_cats}{Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 (e.g., fontsize, font ...) or to \code{\link{serialNext}}}

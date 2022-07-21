@@ -41,6 +41,7 @@ utils::globalVariables("table_caption")
 #' @param ref_correction Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.
 #' @param include_teststat Boolean, default = TRUE, if TRUE includes two additional columns in the table.
 #' 1) Test statistic (either t, f or X²) and 2) degrees of Freedom
+#' @param drop_unused_cats Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 #' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
@@ -70,6 +71,7 @@ utils::globalVariables("table_caption")
 #' @importFrom table1 table1 stats.default stats.apply.rounding t1flex
 #' @importFrom flextable bold compose as_paragraph as_chunk align
 #' @importFrom rstatix levene_test
+#' @importFrom forcats fct_drop
 #' @seealso
 #' \code{\link{format_flextable}},
 #' \code{\link[flextable]{flextable}}
@@ -81,6 +83,7 @@ flex_table1 <- function(str_formula,
                         table_caption = NA,
                         ref_correction = TRUE,
                         include_teststat = TRUE,
+                        drop_unused_cats = TRUE,
                         ...) {
 
 
@@ -94,6 +97,12 @@ flex_table1 <- function(str_formula,
     # Remove the grouping variable | as this is not recognized correctly
     s_num <- sub("\\|.*", "", str_formula)
     num <- length(labels(stats::terms(as.formula(s_num))))
+  }
+
+  # Drop unused / empty categorie
+  if(missing(drop_unused_cats) | drop_unused_cats){
+    data <- data %>%
+      dplyr::mutate(dplyr::across(where(is.factor), ~forcats::fct_drop(.)))
   }
 
   grp_var <- trimws(unlist(strsplit(str_formula, "\\|"))[2])
