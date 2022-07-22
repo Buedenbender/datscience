@@ -56,7 +56,9 @@ utils::globalVariables("table_caption")
 #'     than the nominal level \insertCite{Crans2008}{datscience}
 #'     Contemporary evidence suggests, that Pearson s χ²-test with the
 #'     modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
-#'     and generally recommended \insertCite{Lydersen2009}{datscience} .
+#'     and generally recommended \insertCite{Lydersen2009}{datscience}. Thus
+#'     in accordance we use the N-1 Pearson proposed by (E.) Pearson and recommended
+#'     as optimum test policy by \insertCite{Campbell2007}{datscience}.
 #'
 #'
 #' @param str_formula A string representing a formula, e.g., \code{"~ Sepal.Length + Sepal.Width | Species"}
@@ -172,10 +174,10 @@ flex_table1 <- function(str_formula,
     # Categorical Dependent Var
     else {
       # For categorical variables, perform a chi-squared test of independence
-      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+      tmp <- suppressWarnings(n1chisq.test(table(y, g)))
 
       # Or if one expected cell count is below 5a fishers exact test
-      if (any(tmp$expected < 5)) {
+      if (any(tmp$expected < 1)) {
 
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(
@@ -250,12 +252,13 @@ flex_table1 <- function(str_formula,
       }
     }
     # Categorical Dependent Var
+
     else {
       # For categorical variables, perform a chi-squared test of independence
-      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+      tmp <- suppressWarnings(n1chisq.test(table(y, g)))
 
       # Or if one expected cell count is below 5a fishers exact test
-      if (any(tmp$expected < 5)) {
+      if (any(tmp$expected < 1)) {
 
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(
@@ -315,10 +318,10 @@ flex_table1 <- function(str_formula,
     # Categorical Dependent Var
     else {
       # For categorical variables, perform a chi-squared test of independence
-      tmp <- suppressWarnings(stats::chisq.test(table(y, g)))
+      tmp <- suppressWarnings(n1chisq.test(table(y, g)))
 
       # Or if one expected cell count is below 5a fishers exact test
-      if (any(tmp$expected < 5)) {
+      if (any(tmp$expected < 1)) {
 
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(

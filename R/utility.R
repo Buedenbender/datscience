@@ -67,3 +67,41 @@ util_rev_fac <- function(f) {
   l <- levels(f)
   factor(f, levels = l[c(length(l):1)])
 }
+
+#' @author Wassermann
+#'
+#' @importFrom stats chisq.test pchisq
+#'
+#' @title Calculate a N-1 (E. Pearson) X²-Test
+#'
+#' @description  E. Pearson N-1 Correction to K. Pearson X² Test, implementation
+#' provided by wasserman \insertCite{wasserman}{datscience}
+#'
+#' @param t A table / matrix
+#'
+#' @return A list with class "htest"
+#'
+#' @examples
+#' \dontrun{
+#' t <- matrix(c(1, 5, 3, 2), nrow = 2)
+#'  n1chisq.test(t)
+#' }
+#' @rdname n1chisq.test
+#'
+
+#'
+#' @references
+#'   \insertAllCited{}
+#'
+#' @export
+n1chisq.test <- function(t) {
+  #  'N − 1' Pearson's Chi-squared test
+    chisqtst <- stats::chisq.test(t, correct = FALSE)
+    N <- sum(chisqtst$observed)
+    chisqtst$statistic = ((N-1)/N) * chisqtst$statistic
+    chisqtst$p.value <- 1 - stats::pchisq(chisqtst$statistic, chisqtst$parameter)
+    chisqtst$method <- paste("'N-1'", chisqtst$method)
+    return(chisqtst)
+  }
+
+

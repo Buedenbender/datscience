@@ -69,7 +69,9 @@ New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2
     than the nominal level \insertCite{Crans2008}{datscience}
     Contemporary evidence suggests, that Pearson s χ²-test with the
     modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
-    and generally recommended \insertCite{Lydersen2009}{datscience} .
+    and generally recommended \insertCite{Lydersen2009}{datscience}. Thus
+    in accordance we use the N-1 Pearson proposed by (E.) Pearson and recommended
+    as optimum test policy by \insertCite{Campbell2007}{datscience}.
 }
 \examples{
 
