@@ -101,6 +101,7 @@ utils::globalVariables("table_caption")
 #' @references
 #'   \insertAllCited{}
 #'
+#' @export
 
 flex_table1 <- function(str_formula,
                         data,
