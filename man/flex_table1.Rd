@@ -13,6 +13,7 @@ flex_table1(
   ref_correction = TRUE,
   include_teststat = TRUE,
   drop_unused_cats = TRUE,
+  PCTexcludeNA = TRUE,
   ...
 )
 }
@@ -36,6 +37,9 @@ a new line. The first line will be bold face. All additional lines are in italic
 1) Test statistic (either t, f or X²) and 2) degrees of Freedom}
 
 \item{drop_unused_cats}{Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.}
+
+\item{PCTexcludeNA}{Boolean, default = TRUE, Should calculation of percentages include or exclude Missings values.
+if PCTexcludeNA = TRUE, missings will be excluded.}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 (e.g., fontsize, font ...) or to \code{\link{serialNext}}}

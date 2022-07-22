@@ -74,7 +74,7 @@ util_rev_fac <- function(f) {
 #' @seealso
 #' \code{\link[stats]{chisq.test}}
 #'
-#' @title Calculate a N-1 (E. Pearson) X²-Test
+#' @title Calculate a N-1 (E. Pearson) χ² - Test
 #'
 #' @description  E. Pearson N-1 Correction to K. Pearson χ²-test Test, implementation
 #' provided on stackoverflow and copied pasted \insertCite{wasserman}{datscience}

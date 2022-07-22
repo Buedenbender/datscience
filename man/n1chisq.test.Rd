@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility.R
 \name{n1chisq.test}
 \alias{n1chisq.test}
-\title{Calculate a N-1 (E. Pearson) X²-Test}
+\title{Calculate a N-1 (E. Pearson) χ² - Test}
 \usage{
 n1chisq.test(t)
 }

@@ -73,6 +73,8 @@ utils::globalVariables("table_caption")
 #' @param include_teststat Boolean, default = TRUE, if TRUE includes two additional columns in the table.
 #' 1) Test statistic (either t, f or X²) and 2) degrees of Freedom
 #' @param drop_unused_cats Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.
+#' @param PCTexcludeNA Boolean, default = TRUE, Should calculation of percentages include or exclude Missings values.
+#' if PCTexcludeNA = TRUE, missings will be excluded.
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
 #' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
 #'
@@ -111,6 +113,7 @@ flex_table1 <- function(str_formula,
                         ref_correction = TRUE,
                         include_teststat = TRUE,
                         drop_unused_cats = TRUE,
+                        PCTexcludeNA = TRUE,
                         ...) {
 
 
@@ -364,7 +367,7 @@ flex_table1 <- function(str_formula,
     c("", sapply(table1::stats.default(x), function(y) {
       with(
         y,
-        sprintf("%d (%0.0f %%)", FREQ, PCT)
+        sprintf("%d (%0.0f %%)", FREQ, if (PCTexcludeNA) PCTnoNA else PCT)
       )
     }))
   }
