@@ -71,11 +71,13 @@ util_rev_fac <- function(f) {
 #' @author Wassermann
 #'
 #' @importFrom stats chisq.test pchisq
+#' @seealso
+#' \code{\link[stats]{chisq.test}}
 #'
 #' @title Calculate a N-1 (E. Pearson) X²-Test
 #'
-#' @description  E. Pearson N-1 Correction to K. Pearson X² Test, implementation
-#' provided by wasserman \insertCite{wasserman}{datscience}
+#' @description  E. Pearson N-1 Correction to K. Pearson χ²-test Test, implementation
+#' provided on stackoverflow and copied pasted \insertCite{wasserman}{datscience}
 #'
 #' @param t A table / matrix
 #'

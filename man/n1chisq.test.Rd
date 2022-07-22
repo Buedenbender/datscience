@@ -13,8 +13,8 @@ n1chisq.test(t)
 A list with class "htest"
 }
 \description{
-E. Pearson N-1 Correction to K. Pearson X² Test, implementation
-provided by wasserman \insertCite{wasserman}{datscience}
+E. Pearson N-1 Correction to K. Pearson χ²-test Test, implementation
+provided on stackoverflow and copied pasted \insertCite{wasserman}{datscience}
 }
 \examples{
 \dontrun{
@@ -24,6 +24,9 @@ t <- matrix(c(1, 5, 3, 2), nrow = 2)
 }
 \references{
 \insertAllCited{}
+}
+\seealso{
+\code{\link[stats]{chisq.test}}
 }
 \author{
 Wassermann
