@@ -2,7 +2,7 @@
 title: "A Guide to Bivariate Table 1"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{flex_table1}
+  %\VignetteIndexEntry{A Guide to Bivariate Table 1}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
