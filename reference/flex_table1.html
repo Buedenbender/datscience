@@ -96,6 +96,7 @@ Really all credit should go to these two packages their developers, on full disc
 <span>  ref_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_teststat <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  drop_unused_cats <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  PCTexcludeNA <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -136,6 +137,11 @@ a new line. The first line will be bold face. All additional lines are in italic
 
 <dt>drop_unused_cats</dt>
 <dd><p>Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.</p></dd>
+
+
+<dt>PCTexcludeNA</dt>
+<dd><p>Boolean, default = TRUE, Should calculation of percentages include or exclude Missings values.
+if PCTexcludeNA = TRUE, missings will be excluded.</p></dd>
 
 
 <dt>...</dt>
