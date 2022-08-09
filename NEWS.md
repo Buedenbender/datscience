@@ -1,3 +1,10 @@
+# datscience 0.2.4
+
+* Improved units tests (code cov) and further implemented CI support
+* Optimized referencing (scientific sources)
+* Updated the fundamentals for the statistics underlying `flex_table1()`
+* Updated badges
+
 # datscience 0.2.3
 
 * Added possibility to maintain old itemnames with `spss_swap()` function

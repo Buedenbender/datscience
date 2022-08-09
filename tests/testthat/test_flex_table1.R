@@ -8,8 +8,13 @@ biv_table_caption <- c("Table 1", "A test on the Iris Data")
 bivariate <- flex_table1(biv_str_formula, data = biv_data,
                          table_caption = biv_table_caption)
 
+bivariate_nocorrection <- flex_table1(biv_str_formula, data = biv_data,
+                         table_caption = biv_table_caption,correct = NA)
+
 bivariate_corrected <- flex_table1(biv_str_formula, data = biv_data,
                          table_caption = biv_table_caption,correct = "sida")
+
+
 
 # Creating Multivariate  Groups (ANOVA)
 mult_str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"

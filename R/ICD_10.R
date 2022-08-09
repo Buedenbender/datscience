@@ -13,6 +13,11 @@
 #' get_ICD_10_cats("ger") # returns the german ones
 #' @export
 get_ICD_10_cats <- function(lang="eng") {
+
+  # Validate correct inputs
+  if (!is(lang,"character")) stop(paste0("Invalid argument type. The argument",
+  "lang is required to be a character specifying the desired language"))
+
   eng <- c("F01-F09 Mental disorders due to known physiological conditions",
                     "F10-F19 Mental and behavioral disorders due to psychoactive substance use",
                     "F20-F29 Schizophrenia, schizotypal, delusional, and other non-mood psychotic disorders",

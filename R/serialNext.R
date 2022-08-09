@@ -28,7 +28,29 @@ serialNext <- function(path,
                        n_digits = 3,
                        maxruns = 500,
                        ...) {
+
   # Validate correct inputs
+  if (missing(path)) stop("Need to specify the mandatory argument \"path\"")
+  if (!is(path, "character")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"path\" is required to be a character"
+    ))
+  }
+  if (!is(n_digits, "numeric")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"n_digits\" is required to be a numeric"
+    ))
+  }
+  if (!is(maxruns, "numeric")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"maxruns\" is required to be a numeric"
+    ))
+  }
+
+
 
   # Currently only supports ignore file extension case
   # Check if file exists, if not just return filename
@@ -46,8 +68,8 @@ serialNext <- function(path,
   # Append 3 digit integer number with leading 0
   repeat {
     f <- paste0(paste(filename,
-                      stringr::str_pad(i, n_digits, pad = "0"),
-                      sep = "_"
+      stringr::str_pad(i, n_digits, pad = "0"),
+      sep = "_"
     ), ".", extension)
     if (!file.exists(f)) {
       return(f)

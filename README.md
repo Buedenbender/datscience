@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--05--04-yellowgreen.svg)](commits/main)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.3-orange.svg?style=flat-square)](commits/main)
+![Last-changedate](https://img.shields.io/github/last-commit/buedenbender/datscience?style=plastic)
+![packageversion](https://img.shields.io/github/r-package/v/Buedenbender/datscience?style=plastic) 
 
 </center>
 <!-- badges: end -->

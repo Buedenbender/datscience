@@ -31,45 +31,53 @@ utils::globalVariables(".")
 #' @export
 #'
 #' @importFrom labelled var_label
-spss_swap <- function(df, repl_umlaut = TRUE, old_itemnames = c("remove","prepend","append")) {
-  #TODO Write a mini Vignette for spss_swap
+spss_swap <- function(df, repl_umlaut = TRUE, old_itemnames = c("remove", "prepend", "append")) {
+  # TODO Write a mini Vignette for spss_swap
   # Validate user input
-  if (!is(df,"tbl_df")) stop("Invalid argument type. df is required to be an spss matrix read with haven::read_sav()")
+  if (missing(df)) stop("Need to specify the mandatory argument \"df\"")
+
+  if (!is(df, "tbl_df")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"df\" is required to be an spss matrix read with haven::read_sav()"
+    ))
+  }
   # Backup old user input
   old_names <- colnames(df)
   new_names <- c()
   i <- 1
   # Iterate over each column
   for (i in 1:ncol(df)) {
-    label <- labelled::var_label(df[,i])
+    label <- labelled::var_label(df[, i])
     # Check if  label was supplied
-    if(!is.null(unlist(label))){
+    if (!is.null(unlist(label))) {
       # Default will be overwritten when old_itemnames is supplied
       clean_label <- clean_names(label, repl_umlaut = repl_umlaut)
       # Shall old itemnames be prepend o. appended?
-      if (!missing(old_itemnames) & length(old_itemnames ==1)) {
+      if (!missing(old_itemnames) & length(old_itemnames == 1)) {
         # Prepend old Item Names
-        if(tolower(old_itemnames) == "prepend") {
-          clean_label <- paste(names((df[,i])), # old name
-                               clean_names(label, repl_umlaut = repl_umlaut), # cleaned desc
-                               sep = "_")
+        if (tolower(old_itemnames) == "prepend") {
+          clean_label <- paste(names((df[, i])), # old name
+            clean_names(label, repl_umlaut = repl_umlaut), # cleaned desc
+            sep = "_"
+          )
         }
-        if(tolower(old_itemnames) == "append") {
+        if (tolower(old_itemnames) == "append") {
           clean_label <- paste(clean_names(label, repl_umlaut = repl_umlaut), # cleaned desc
-                               names((df[,i])), # old name
-                               sep = "_")
+            names((df[, i])), # old name
+            sep = "_"
+          )
         }
-
       }
-    }else{
-      clean_label <- names((df[,i]))
+    } else {
+      clean_label <- names((df[, i]))
     }
     # Append the new name to the character vector
-    new_names <- c(new_names,clean_label)
+    new_names <- c(new_names, clean_label)
   }
   # Replace the new names
   colnames(df) <- new_names
   # Replace the labels with the old col names
   labelled::var_label(df) <- old_names
   return(df)
-  }
+}
