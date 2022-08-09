@@ -172,7 +172,7 @@ flex_table1 <- function(str_formula,
 
 
   # 2) Preparing additional arguments ---------------------------------------
-  if(!missing(correct)) correct <- tolower(correct)
+  if(!missing(correct) & !is.na(correct)) correct <- tolower(correct)
 
   ### Helper Functions for the table1
   # https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
