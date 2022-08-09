@@ -7,7 +7,7 @@
 flex_table1(
   str_formula,
   data,
-  correct = "bonf",
+  correct = NA,
   num = NA,
   table_caption = NA,
   ref_correction = TRUE,
@@ -23,8 +23,13 @@ used to construct the \code{\link[table1]{table1}}.}
 
 \item{data}{The dataset containing the variables for the table1 call (all terms from the str_formula must be present)}
 
-\item{correct}{Character, currently available are "bonf" for Bonferroni correction or "sidark" for Sidark correction.
-Provide NA if you dont want any correction. Defaults to "bonf"}
+\item{correct}{Character, default = NA; NA for no correction.
+Currently available are "bonf" for
+Bonferroni correction or "sidark" for Sidark correction. If you want any
+other correction included just open an issue
+<https://github.com/Buedenbender/datscience/issues> or contact me via mail.
+Please see also the references and details on correction for multiple
+comparison}
 
 \item{num}{Integer number of comparisons. If NA will be determined automatically, by the number of terms in the formula}
 
@@ -63,8 +68,7 @@ A convenience function, that provides and easy wrapper for the two
     a beautiful publication ready bivariate comparison Table 1.
 }
 \details{
-New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2 Groups \cr
-    \strong{On Fisher's Exact Test (FET) vs Pearson's χ²-test} \cr
+\strong{On Fisher's Exact Test (FET) vs Pearson's χ²-test} \cr
     Newest feature (as of 07/22), according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience}
     the function refrains from using Fisher's exact test (FET) for categorical
     variables and only applies FET in the the rare case of cells with an expected
@@ -75,7 +79,36 @@ New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2
     modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
     and generally recommended \insertCite{Lydersen2009}{datscience}. Thus
     in accordance we use the N-1 Pearson χ²-test proposed by (E.) Pearson and recommended
-    as optimum test policy by \insertCite{Campbell2007}{datscience}.
+    as optimum test policy by \insertCite{Campbell2007}{datscience}.\cr\cr
+
+    \strong{On Multiple Comparisons} \cr
+    Let me start with a direct quote
+    "(..) \emph{researchers should not automatically (mindlessly)
+    assume that alpha adjustment is necessary during multiple testing.}"
+    \insertCite{Rubin2021}{datscience}\cr
+    Whether, how and when to correct for multiple comparison in inferential statistic, is
+    still a an area of ongoing debate. However it was recently argued that it is
+    essential to differentiate between different forms of multiple comparisons,
+    to make the decision for or against a correction \insertCite{Rubin2021}{datscience}.
+    The types of multiple testing are:
+    \itemize{
+        \item disjunction testing
+        \item conjunction testing
+        \item individual testing
+    }
+    Please refer to the very well written and laid out original publication
+    for more details. For the use case of this function, one can assume
+    a joint null hypotheses, being that Group A <...> Group N do not differ.
+    Now for example, if it is sufficient that the groups differ significantly
+    in one characteristic, this would be considered disjunction testing.\cr
+    However, if we are only interested in the constituent (null-)hypotheses (e.g.,
+    the groups differ in their highest level of education vs. they differ in the current
+    employment status), it could be categorized as individual testing.
+    Please chose considerately for your individual case.
+    However for the typical exploratory
+    bivariate comparison in sociodemographic table1, I deem it to be frequently
+    cases of individual testing, thus the \code{flex_table1()} function defaults
+    to applying no correction.
 }
 \examples{
 
