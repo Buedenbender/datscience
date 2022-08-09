@@ -90,7 +90,7 @@ Really all credit should go to these two packages their developers, on full disc
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flex_table1</span><span class="op">(</span></span>
 <span>  <span class="va">str_formula</span>,</span>
 <span>  <span class="va">data</span>,</span>
-<span>  correct <span class="op">=</span> <span class="st">"bonf"</span>,</span>
+<span>  correct <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  num <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  table_caption <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  ref_correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -113,8 +113,13 @@ used to construct the <code><a href="https://rdrr.io/pkg/table1/man/table1.html"
 
 
 <dt>correct</dt>
-<dd><p>Character, currently available are "bonf" for Bonferroni correction or "sidark" for Sidark correction.
-Provide NA if you dont want any correction. Defaults to "bonf"</p></dd>
+<dd><p>Character, default = NA; NA for no correction.
+Currently available are "bonf" for
+Bonferroni correction or "sidark" for Sidark correction. If you want any
+other correction included just open an issue
+&lt;https://github.com/Buedenbender/datscience/issues&gt; or contact me via mail.
+Please see also the references and details on correction for multiple
+comparison</p></dd>
 
 
 <dt>num</dt>
@@ -158,7 +163,7 @@ it also creates the respective file (e.g., a word .docx file)</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>New feature since version (0.2.3) comparisons with (Welch) ANOVA for more than 2 Groups <br><strong>On Fisher's Exact Test (FET) vs Pearson's χ²-test</strong> <br>
+    <p><strong>On Fisher's Exact Test (FET) vs Pearson's χ²-test</strong> <br>
     Newest feature (as of 07/22), according to an excellent post on cross-validated (Harrell 2011)
 
     the function refrains from using Fisher's exact test (FET) for categorical
@@ -173,7 +178,34 @@ it also creates the respective file (e.g., a word .docx file)</p>
 . Thus
     in accordance we use the N-1 Pearson χ²-test proposed by (E.) Pearson and recommended
     as optimum test policy by (Campbell 2007)
-.</p>
+.<br><br></p>
+<p><strong>On Multiple Comparisons</strong> <br>
+    Let me start with a direct quote
+    "(..) <em>researchers should not automatically (mindlessly)
+    assume that alpha adjustment is necessary during multiple testing.</em>"
+    (Rubin 2021)
+<br>
+    Whether, how and when to correct for multiple comparison in inferential statistic, is
+    still a an area of ongoing debate. However it was recently argued that it is
+    essential to differentiate between different forms of multiple comparisons,
+    to make the decision for or against a correction (Rubin 2021)
+.
+    The types of multiple testing are:</p><ul><li><p>disjunction testing</p></li>
+<li><p>conjunction testing</p></li>
+<li><p>individual testing</p></li>
+</ul><p>Please refer to the very well written and laid out original publication
+    for more details. For the use case of this function, one can assume
+    a joint null hypotheses, being that Group A &lt;...&gt; Group N do not differ.
+    Now for example, if it is sufficient that the groups differ significantly
+    in one characteristic, this would be considered disjunction testing.<br>
+    However, if we are only interested in the constituent (null-)hypotheses (e.g.,
+    the groups differ in their highest level of education vs. they differ in the current
+    employment status), it could be categorized as individual testing.
+    Please chose considerately for your individual case.
+    However for the typical exploratory
+    bivariate comparison in sociodemographic table1, I deem it to be frequently
+    cases of individual testing, thus the <code>flex_table1()</code> function defaults
+    to applying no correction.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -192,7 +224,11 @@ URL:https://stats.stackexchange.com/q/14230 (version: 2021-01-26), https://stats
 “Recommended tests for association in 2×2 tables.”
 <em>Statistics in Medicine</em>, <b>28</b>(7), 1159--1175.
 ISSN 02776715, <a href="https://doi.org/10.1002/sim.3531" class="external-link">doi:10.1002/sim.3531</a>
-, <a href="https://onlinelibrary.wiley.com/doi/10.1002/sim.3531" class="external-link">https://onlinelibrary.wiley.com/doi/10.1002/sim.3531</a>.</p>
+, <a href="https://onlinelibrary.wiley.com/doi/10.1002/sim.3531" class="external-link">https://onlinelibrary.wiley.com/doi/10.1002/sim.3531</a>.<br><br> Rubin M (2021).
+<em>When to adjust alpha during multiple testing : a consideration of disjunction , conjunction , and individual testing</em>,  number 0123456789.
+Springer Netherlands.
+ISBN 0123456789, <a href="https://doi.org/10.1007/s11229-021-03276-4" class="external-link">doi:10.1007/s11229-021-03276-4</a>
+.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
