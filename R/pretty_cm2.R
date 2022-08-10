@@ -6,25 +6,69 @@
 #' @importFrom utils globalVariables
 utils::globalVariables(".")
 
-#' @title pretty_cm - Pretty Caret Confusion Matrices
-#' @description Takes a caret confusion matrix and plots a nice visualization.
-#' Thanks to Felicitas Kininger for inspiring the inclusion of this function
-#' in the package.
-#' @param cm A \code{\link[caret]{confusionMatrix}} (mandatory parameter)
-#' @param color_grad Pole of color gradient to use for the tiles, Default: c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))
-#' @param midpoint Manually setting a middle point in percentage for the color scale, Default: 50
-#' @param hideZero Hide tiles with 0 percentage, Default: FALSE
-#' @param ord Order of the factor levels to display (if you want to change it manually for the plot), Default: NA,
-#' @param diag Orientation of the diagonal (sensitivities), possible values diag = "r" or "reverse"
-#' @param tile Character, either "p" or "prop" for proportion | "f" or "freq" for frequency | "b" or "both" for both.
-#' if character is not recognized or missing -> Default: "both"
-#' @param plot Shall the output also be plotted? Default: TRUE
-#' @return ggplot2 object - visualization of the confusion matrix.
 #' @author Björn Büdenbender
+#'
+#' @import ggplot2
+#' @importFrom dplyr group_by mutate ungroup case_when
+#' @importFrom rlang .data
+#'
+#' @seealso
+#' \code{\link[caret]{confusionMatrix}}
+#' \code{\link[ggplot2]{theme}}
+#'
+#' @title pretty_cm - Pretty Confusion Matrices
+#'
+#' @description
+#'   Takes a confusion matrix (either a data.frame, table or an
+#'   \code{\link[caret]{confusionMatrix}} object and plots a nice visualization.
+#'   Thanks to Felicitas Kininger for inspiring the inclusion of this function
+#'   into the package.
+#'
+#' @details
+#'   You can change all fonts of the plot later on with
+#'   \code{\link[ggplot2]{theme}}. Use the following inside the call to theme
+#'   \itemize{
+#'     \item
+#'       \code{theme(axis.title.x = element_text(size=14))}
+#'       to change axis title
+#'     \item
+#'       \code{axis.text.x = element_text(size=12)}
+#'       to change axis ticks (description labels)
+#'   }
+#'
+#' @param cm
+#'   Either a \code{\link[caret]{confusionMatrix}}, a table or a data.frame,
+#'   with prediction as the
+#'   the rows and reference as the columns (mandatory parameter)
+#' @param color_grad
+#'   Pole of color gradient to use for the tiles, Default:
+#'   c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))
+#' @param midpoint
+#'   Manually setting a middle point in percentage for the color
+#'   scale, Default: 50
+#' @param hide_zero Hide tiles with 0 percentage, Default: FALSE
+#' @param ord
+#'   Order of the factor levels to display (if you want to change it
+#'   manually for the plot), Default: NA,
+#' @param diag
+#'   Orientation of the diagonal (sensitivities), possible values
+#'   diag = "r" or "reverse"
+#' @param tile
+#'   Character, either "p" or "prop" for proportion | "f" or
+#'   "freq" for frequency | "b" or "both" for both.
+#'   if character is not recognized or missing -> Default: "both"
+#' @param tile_size
+#'   Numeric determines the size of the font in the tiles.
+#'   Be wary, other scale than for usual font size, Default: 3.5
+#' @param plot Shall the output also be plotted? Default: TRUE
+#'
+#' @return ggplot2 object - visualization of the confusion matrix.
+#'
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   # Creating random example data: prediction of neural network on content of animal pictures
+#'   # Creating random example data: prediction of neural network on content
+#'   # of animal pictures
 #'   set.seed(23)
 #'   pred <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
 #'   ref <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
@@ -33,30 +77,29 @@ utils::globalVariables(".")
 #'   pretty_cm(cm)
 #' }
 #' }
+#'
 #' @rdname pretty_cm
-#' @importFrom dplyr group_by mutate ungroup case_when
-#' @importFrom rlang .data
-#' @import ggplot2
+#'
 #' @export
-#' @seealso
-#' \code{\link[caret]{confusionMatrix}}
 
 pretty_cm <- function(cm,
                       color_grad = c(
                         alpha("yellowgreen", 0.4),
                         alpha("springgreen3", 0.85)
                       ),
-                      midpoint = 50, hideZero = FALSE, ord = NA,
+                      midpoint = 50, hide_zero = FALSE, ord = NA,
                       diag = c("r", "reverse"),
                       tile = c("both", "b", "prop", "p", "freq", "f"),
+                      tile_size = 3.5,
                       plot = TRUE) {
-  # Validate correct inputs
+
+  ### Validate correct inputs ###
   if (missing(cm)) stop("Need to specify the mandatory argument \"cm\"")
 
-  if (!is(cm, "confusionMatrix")) {
+  if (!is(cm, "confusionMatrix") & !is(cm, "table") & !is(cm, "data.frame")) {
     stop(paste(
       "Invalid argument type. The argument",
-      "\"cm\" is required to be a confusionMatrix"
+      "\"cm\" is required to be a confusionMatrix, table or data.frame"
     ))
   }
   # Check Numeric Vars: midpoint
@@ -66,17 +109,23 @@ pretty_cm <- function(cm,
       "\"midpoint\" is required to be a numeric"
     ))
   }
-  # Check Logical Vars: plot, hideZero
+  if (!is(tile_size, "numeric")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"tile_size\" is required to be a numeric"
+    ))
+  }
+  # Check Logical Vars: plot, hide_zero
   if (!is(plot, "logical")) {
     stop(paste(
       "Invalid argument type. The argument",
       "\"plot\" is required to be a logical"
     ))
   }
-  if (!is(hideZero, "logical")) {
+  if (!is(hide_zero, "logical")) {
     stop(paste(
       "Invalid argument type. The argument",
-      "\"hideZero\" is required to be a logical"
+      "\"hide_zero\" is required to be a logical"
     ))
   }
   # Check character Vars: tile, diag
@@ -87,15 +136,22 @@ pretty_cm <- function(cm,
       "\"tile\" is required to be a character of length 1"
     ))
   }
-  if (!is(diag, "character") | length(diag) != 1) {
+  if (!missing(diag) & (!is(diag, "character") | length(diag) != 1)) {
     stop(paste(
       "Invalid argument type. The argument",
       "\"diag\" is required to be a character of length 1"
     ))
   }
 
-  # PREPARATION OF THE DATA MATRIX
-  cm_d <- as.data.frame(cm$table)
+  ### PREPARATION OF THE DATA MATRIX ###
+  if (is(cm, "confusionMatrix")) {
+    cm_d <- as.data.frame(cm$table)
+  } else if (is(cm, "table")) {
+    cm_d <- as.data.frame(cm)
+  } else {
+    cm_d <- cm
+  }
+
   labels <- names(cm_d)
   # extract the confusion matrix values as data.frame
   cm_d <- cm_d %>%
@@ -112,7 +168,11 @@ pretty_cm <- function(cm,
   if (missing(ord)) {
     ord <- levels(cm_d[[labels[2]]])
   } else if (length(ord) == 1) {
-    if (ord == "r" | ord == "reverse") ord <- levels(util_rev_fac(cm_d[[labels[2]]]))
+    if (ord == "r" | ord == "reverse") {
+      ord <- levels(util_rev_fac(
+        cm_d[[labels[2]]]
+      ))
+    }
   }
 
   # Change order of the y Axis
@@ -131,11 +191,9 @@ pretty_cm <- function(cm,
     }
   }
 
-
-
   cm_d$ndiag <- cm_d[[labels[1]]] != cm_d[[labels[2]]] # Not the Diagonal
   cm_d$diag <- cm_d[[labels[1]]] == cm_d[[labels[2]]] # Get the Diagonal
-  if (hideZero) {
+  if (hide_zero) {
     cm_d[cm_d == "0%"] <- NA # Replace 0 with NA for white tiles
     cm_d[cm_d == 0] <- NA # Replace 0 with NA for white tiles
   }
@@ -155,7 +213,7 @@ pretty_cm <- function(cm,
   }
 
 
-  # === Creating the Plot ===
+  ### Creating the Plot ###
   cm_d_p <- ggplot(data = cm_d, aes(
     x = .data[[labels[1]]], y = .data[[labels[2]]],
     fill = .data$Freq
@@ -165,21 +223,19 @@ pretty_cm <- function(cm,
     scale_fill_gradient2(
       low = alpha("white", 1),
       mid = color_grad[1],
-      # high=alpha("limegreen",0.99),
-      # high=alpha("forestgreen",1),
       high = color_grad[2],
       midpoint = midpoint,
       na.value = "black"
     ) +
-    geom_text(aes(label = tile_content), color = "black", size = 5) +
+    geom_text(aes(label = tile_content), color = "black", size = tile_size) +
     theme_light() +
     theme(
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       plot.margin = unit(c(1, 1, 1, 1), "cm"),
       axis.text.x = element_text(
-        color = "black", size = 12, face = "plain", family = "sans", angle = 45, hjust = -0.1,
-        margin = margin(t = 20, r = 0, b = 20, l = 0)
+        color = "black", size = 12, face = "plain", family = "sans", angle = 45,
+        hjust = -0.1, margin = margin(t = 20, r = 0, b = 20, l = 0)
       ),
       axis.text.y = element_text(
         color = "black", size = 12,

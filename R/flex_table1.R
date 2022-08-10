@@ -10,12 +10,11 @@ utils::globalVariables("p")
 utils::globalVariables("Characteristic")
 utils::globalVariables("table_caption")
 
-#' @author Bjoern Buedenbender,
-#'
-#' Imports & Name Space
+#' @author Bjoern Buedenbender
 #'
 #' @importFrom utils globalVariables
-#' @importFrom stats terms as.formula var.test t.test chisq.test fisher.test oneway.test aov
+#' @importFrom stats terms as.formula var.test t.test chisq.test fisher.test
+#' oneway.test aov
 #' @importFrom table1 table1 stats.default stats.apply.rounding t1flex
 #' @importFrom flextable bold compose as_paragraph as_chunk align
 #' @importFrom rstatix levene_test
@@ -31,87 +30,116 @@ utils::globalVariables("table_caption")
 #'
 #' @title Creates a Descriptive Bivariate Table1 Ready for Publication
 #'
-#' @description A convenience function, that provides and easy wrapper for the two
-#'    main enginges of the function \itemize{
-#'         \item \code{\link[table1]{table1}} provides a nice API given a formula to create demographics tables.
-#'         I basically just advanced the functionality of the p-value function, added the possibility
-#'         to correct p-values with either Bonferroni or Sidark, and set some sensible defaults to achieve a nice look
-#'         \item \code{\link[flextable]{flextable}} which gives all the power to format the table as you please
-#'         (e.g., conditional formatting ->adding bold for p values below .05), adding italic headers or notes
-#'         explaining what was done.
+#' @description
+#'   A convenience function, that provides and easy wrapper for the
+#'   two main enginges of the function
+#'   \itemize{
+#'     \item \code{\link[table1]{table1}} provides a nice API given a
+#'       formula to create demographics tables. I basically just advanced the
+#'       functionality of the p-value function to also be able to run for
+#'       multiple groups (ANOVA), added the possibility
+#'       to correct p-values with either Bonferroni or Sidark, and set some
+#'       sensible defaults to achieve a nice look
+#'     \item \code{\link[flextable]{flextable}} which gives all the power
+#'       to format the table as you please (e.g., conditional formatting
+#'       ->adding bold for p values below .05), adding italic headers or notes
+#'       explaining what was done.
 #'     }
-#'     Really all credit should go to these two packages their developers, on full disclosure
-#'     my function just provides an easy to use API or wrapper around their packages to get
-#'     a beautiful publication ready bivariate comparison Table 1.
+#'
+#'     Really all credit should go to these two packages their developers.
+#'     My function just provides an easy to use API or wrapper around their
+#'     packages to get a beautiful publication ready bivariate comparison
+#'     Table 1.
 #'
 #' @details
 #'
 #'     \strong{On Fisher's Exact Test (FET) vs Pearson's χ²-test} \cr
-#'     Newest feature (as of 07/22), according to an excellent post on cross-validated \insertCite{Harrell_cross_11}{datscience}
-#'     the function refrains from using Fisher's exact test (FET) for categorical
-#'     variables and only applies FET in the the rare case of cells with an expected
-#'     cell frequencies do not exceed 1. This is due to the fact, that the FET can be
-#'     extreme ressource intensive (and slow), and can have type I error rates less
-#'     than the nominal level \insertCite{Crans2008}{datscience}
-#'     Contemporary evidence suggests, that Pearson s χ²-test with the
-#'     modification of \eqn{\frac{N-1}{N}}, nearly allways is more accurate than FET
-#'     and generally recommended \insertCite{Lydersen2009}{datscience}. Thus
-#'     in accordance we use the N-1 Pearson χ²-test proposed by (E.) Pearson and recommended
-#'     as optimum test policy by \insertCite{Campbell2007}{datscience}.\cr\cr
+#'     Newest feature (as of 07/22), according to an excellent post on
+#'     cross-validated \insertCite{Harrell_cross_11}{datscience}
+#'     the function refrains from using Fisher's exact test (FET) for
+#'     categorical variables and only applies FET in the the rare case of cells
+#'     with an expected cell frequencies do not exceed 1. This is due to the
+#'     fact, that the FET can be extreme resource intensive (and slow), and can
+#'     have type I error rates less than the nominal level
+#'     \insertCite{Crans2008}{datscience} Contemporary evidence suggests, that
+#'     Pearson s χ²-test with the modification of \eqn{\frac{N-1}{N}}, nearly
+#'     allways is more accurate than FET and generally recommended
+#'     \insertCite{Lydersen2009}{datscience}. Thus in accordance we use the N-1
+#'     Pearson χ²-test proposed by (E.) Pearson and recommended as optimum test
+#'     policy by \insertCite{Campbell2007}{datscience}.\cr\cr
 #'
 #'     \strong{On Multiple Comparisons} \cr
 #'     Let me start with a direct quote
 #'     "(..) \emph{researchers should not automatically (mindlessly)
 #'     assume that alpha adjustment is necessary during multiple testing.}"
 #'     \insertCite{Rubin2021}{datscience}\cr
-#'     Whether, how and when to correct for multiple comparison in inferential statistic, is
-#'     still a an area of ongoing debate. However it was recently argued that it is
-#'     essential to differentiate between different forms of multiple comparisons,
-#'     to make the decision for or against a correction \insertCite{Rubin2021}{datscience}.
-#'     The types of multiple testing are:
+#'     Whether, how and when to correct for multiple comparison in inferential
+#'     statistic, is still a an area of ongoing debate. However it was recently
+#'     argued that it is essential to differentiate between different forms of
+#'     multiple comparisons, to make the decision for or against a correction
+#'     \insertCite{Rubin2021}{datscience}. The types of multiple testing are:
 #'     \itemize{
 #'         \item disjunction testing
 #'         \item conjunction testing
 #'         \item individual testing
 #'     }
+#'     Correction is primarly adequate in case of disjunction testing.
 #'     Please refer to the very well written and laid out original publication
 #'     for more details. For the use case of this function, one can assume
 #'     a joint null hypotheses, being that Group A <...> Group N do not differ.
 #'     Now for example, if it is sufficient that the groups differ significantly
 #'     in one characteristic, this would be considered disjunction testing.\cr
-#'     However, if we are only interested in the constituent (null-)hypotheses (e.g.,
-#'     the groups differ in their highest level of education vs. they differ in the current
-#'     employment status), it could be categorized as individual testing.
-#'     Please chose considerately for your individual case.
-#'     However for the typical exploratory
-#'     bivariate comparison in sociodemographic table1, I deem it to be frequently
-#'     cases of individual testing, thus the \code{flex_table1()} function defaults
+#'     However, if we are only interested in the constituent (null-)hypotheses
+#'     (e.g., the groups differ in their highest level of education vs. they
+#'     differ in the current employment status), it could be categorized as
+#'     individual testing. Please chose considerately for your individual case.
+#'     However for the typical exploratory bivariate comparison in
+#'     sociodemographic table1, I deem it to be frequently cases of individual
+#'     testing, thus the \code{flex_table1()} function defaults
 #'     to applying no correction.
 #'
-#' @param str_formula A string representing a formula, e.g., \code{"~ Sepal.Length + Sepal.Width | Species"}
-#' used to construct the \code{\link[table1]{table1}}.
-#' @param data The dataset containing the variables for the table1 call (all terms from the str_formula must be present)
-#' @param correct Character, default = NA; NA for no correction.
-#' Currently available are "bonf" for
-#' Bonferroni correction or "sidark" for Sidark correction. If you want any
-#' other correction included just open an issue
-#' <https://github.com/Buedenbender/datscience/issues> or contact me via mail.
-#' Please see also the references and details on correction for multiple
-#' comparison
-#' @param num Integer number of comparisons. If NA will be determined automatically, by the number of terms in the formula
-#' @param table_caption Caption for the table, each element of the vector represents
-#' a new line. The first line will be bold face. All additional lines are in italic.
-#' @param ref_correction Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in the foot note.
-#' @param include_teststat Boolean, default = TRUE, if TRUE includes two additional columns in the table.
-#' 1) Test statistic (either t, f or X²) and 2) degrees of Freedom
-#' @param drop_unused_cats Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with 0 observations will be dropped.
-#' @param PCTexcludeNA Boolean, default = TRUE, Should calculation of percentages include or exclude Missings values.
-#' if PCTexcludeNA = TRUE, missings will be excluded.
-#' @param ... (Optional), Additional arguments that can be passed to \code{\link{format_flextable}}
-#' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
+#' @param str_formula
+#'   A string representing a formula, e.g.,
+#'   \code{"~ Sepal.Length + Sepal.Width | Species"} used to construct the
+#'   \code{\link[table1]{table1}}.
+#' @param data
+#'   The dataset containing the variables for the table1 call
+#'   (all terms from the str_formula must be present)
+#' @param correct
+#'   Character, default = NA; NA for no correction.
+#'   Currently available are "bonf" for
+#'   Bonferroni correction or "sidark" for Sidark correction. If you want any
+#'   other correction included just open an issue
+#'   <https://github.com/Buedenbender/datscience/issues> or contact me via mail.
+#'   Please see also the references and details on correction for multiple
+#'   comparison
+#' @param num
+#'   Integer number of comparisons. If NA will be determined
+#'   automatically, by the number of terms in the formula
+#' @param table_caption
+#'   Caption for the table, each element of the vector represents a new line.
+#'   The first line will be bold face. All additional lines are in italic.
+#' @param ref_correction
+#'   Boolean, default = TRUE, if TRUE corrected p-Values will be referenced in
+#'   the foot note.
+#' @param include_teststat
+#'   Boolean, default = TRUE, if TRUE includes two additional columns in the
+#'   table. 1) Test statistic (either t, f or X²) and 2) degrees of Freedom
+#' @param drop_unused_cats
+#'   Boolean, default = TRUE, if TRUE categories (i.e., factor levels) with
+#'   0 observations will be dropped.
+#' @param PCTexcludeNA
+#'   Boolean, default = TRUE, Should calculation of percentages include or
+#'   exclude Missings values. If PCTexcludeNA = TRUE, missings will be excluded.
+#' @param ...
+#'   (Optional), Additional arguments that can be passed to
+#'   \code{\link{format_flextable}} (e.g., fontsize, font ...) or to
+#'   \code{\link{serialNext}}
 #'
-#' @return A \code{\link[flextable]{flextable}} object with APA ready correlation table. If a filepath is provided
-#' it also creates the respective file (e.g., a word .docx file)
+#' @return
+#'   A \code{\link[flextable]{flextable}} object with APA ready correlation
+#'   table. If a filepath is provided it also creates the respective file
+#'   (e.g., a word .docx file)
 #'
 #' @examples
 #'

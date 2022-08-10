@@ -2,34 +2,45 @@
 % Please edit documentation in R/pretty_cm2.R
 \name{pretty_cm}
 \alias{pretty_cm}
-\title{pretty_cm - Pretty Caret Confusion Matrices}
+\title{pretty_cm - Pretty Confusion Matrices}
 \usage{
 pretty_cm(
   cm,
   color_grad = c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85)),
   midpoint = 50,
-  hideZero = FALSE,
+  hide_zero = FALSE,
   ord = NA,
   diag = c("r", "reverse"),
   tile = c("both", "b", "prop", "p", "freq", "f"),
+  tile_size = 3.5,
   plot = TRUE
 )
 }
 \arguments{
-\item{cm}{A \code{\link[caret]{confusionMatrix}} (mandatory parameter)}
+\item{cm}{Either a \code{\link[caret]{confusionMatrix}}, a table or a data.frame,
+with prediction as the
+the rows and reference as the columns (mandatory parameter)}
 
-\item{color_grad}{Pole of color gradient to use for the tiles, Default: c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))}
+\item{color_grad}{Pole of color gradient to use for the tiles, Default:
+c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))}
 
-\item{midpoint}{Manually setting a middle point in percentage for the color scale, Default: 50}
+\item{midpoint}{Manually setting a middle point in percentage for the color
+scale, Default: 50}
 
-\item{hideZero}{Hide tiles with 0 percentage, Default: FALSE}
+\item{hide_zero}{Hide tiles with 0 percentage, Default: FALSE}
 
-\item{ord}{Order of the factor levels to display (if you want to change it manually for the plot), Default: NA,}
+\item{ord}{Order of the factor levels to display (if you want to change it
+manually for the plot), Default: NA,}
 
-\item{diag}{Orientation of the diagonal (sensitivities), possible values diag = "r" or "reverse"}
+\item{diag}{Orientation of the diagonal (sensitivities), possible values
+diag = "r" or "reverse"}
 
-\item{tile}{Character, either "p" or "prop" for proportion | "f" or "freq" for frequency | "b" or "both" for both.
+\item{tile}{Character, either "p" or "prop" for proportion | "f" or
+"freq" for frequency | "b" or "both" for both.
 if character is not recognized or missing -> Default: "both"}
+
+\item{tile_size}{Numeric determines the size of the font in the tiles.
+Be wary, other scale than for usual font size, Default: 3.5}
 
 \item{plot}{Shall the output also be plotted? Default: TRUE}
 }
@@ -37,11 +48,25 @@ if character is not recognized or missing -> Default: "both"}
 ggplot2 object - visualization of the confusion matrix.
 }
 \description{
-Takes a caret confusion matrix and plots a nice visualization.
-Thanks to Felicitas Kininger for inspiring the inclusion of this function
-in the package.
+Takes a confusion matrix (either a data.frame, table or an
+  \code{\link[caret]{confusionMatrix}} object and plots a nice visualization.
+  Thanks to Felicitas Kininger for inspiring the inclusion of this function
+  into the package.
+}
+\details{
+You can change all fonts of the plot later on with
+  \code{\link[ggplot2]{theme}}. Use the following inside the call to theme
+  \itemize{
+    \item
+      \code{theme(axis.title.x = element_text(size=14))}
+      to change axis title
+    \item
+      \code{axis.text.x = element_text(size=12)}
+      to change axis ticks (description labels)
+  }
 }
 \examples{
+
 \dontrun{
 if (interactive()) {
   # Creating random example data: prediction of neural network on content of animal pictures
@@ -53,9 +78,11 @@ if (interactive()) {
   pretty_cm(cm)
 }
 }
+
 }
 \seealso{
 \code{\link[caret]{confusionMatrix}}
+\code{\link[ggplot2]{theme}}
 }
 \author{
 Björn Büdenbender

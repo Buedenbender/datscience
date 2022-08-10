@@ -5,7 +5,8 @@ test_that("pretty_cm stops with an error for invalid argument types", {
   set.seed(23)
   pred <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
   ref <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
-  cm <- caret::confusionMatrix(pred, ref)
+  # cm <- caret::confusionMatrix(pred, ref)
+  cm <- table(Prediction = pred, Reference = ref)
 
   # verifying that mandatory arguments are present
   expect_error(pretty_cm(), "Need to specify the mandatory argument")
@@ -18,11 +19,12 @@ test_that("pretty_cm stops with an error for invalid argument types", {
     # Testing numeric arguments: midpoint
     if(!is(dtype,"numeric")){
       expect_error(pretty_cm(cm, midpoint = dtype),"Invalid argument type")
+      expect_error(pretty_cm(cm, tile_size = dtype),"Invalid argument type")
     }
-    # Testing logical arguments: plot, hideZero
+    # Testing logical arguments: plot, hide_zero
     if(!is(dtype,"logical")){
       expect_error(pretty_cm(cm, plot = dtype),"Invalid argument type")
-      expect_error(pretty_cm(cm, hideZero = dtype),"Invalid argument type")
+      expect_error(pretty_cm(cm, hide_zero = dtype),"Invalid argument type")
     }
     # Testing character arguments: diag, tile
     if(!is(dtype,"character")|length(dtype)!=1){
