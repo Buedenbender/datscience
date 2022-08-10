@@ -50,6 +50,35 @@ pretty_cm <- function(cm,
                       diag = c("r","reverse"),
                       tile = c("both","b","prop","p","freq","f"),
                       plot = TRUE) {
+  # Validate correct inputs
+  if (missing(cm)) stop("Need to specify the mandatory argument \"cm\"")
+
+  if (!is(cm, "confusionMatrix")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"cm\" is required to be a confusionMatrix"
+    ))
+  }
+  # Check Numeric Vars: midpoint
+  if (!is(midpoint, "numeric")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"midpoint\" is required to be a numeric"
+    ))
+  }
+  # Check Logical Vars: plot, hideZero
+  if (!is(plot, "logical")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"plot\" is required to be a logical"
+    ))
+  }
+  if (!is(hideZero, "logical")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"hideZero\" is required to be a logical"
+    ))
+  }
 
   # PREPARATION OF THE DATA MATRIX
   cm_d <- as.data.frame(cm$table)

@@ -8,7 +8,7 @@ test_that("serialNext stops with an error for invalid argument types", {
   expect_error(independent_sample_means(mtcars, iv = "vs"), "Need to specify the mandatory argument")
 
   # verifying the correct dtypes are supplied
-  inappropriate_types <- list(21,c("vector","is","not","allowed"))
+  inappropriate_types <- list(21,c("vector","is","not","allowed"), TRUE)
   for (dtype in inappropriate_types) {
     # Testing data argument
     expect_error(
