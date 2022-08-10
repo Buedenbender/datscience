@@ -47,8 +47,8 @@ pretty_cm <- function(cm,
                         alpha("springgreen3", 0.85)
                       ),
                       midpoint = 50, hideZero = FALSE, ord = NA,
-                      diag = c("r","reverse"),
-                      tile = c("both","b","prop","p","freq","f"),
+                      diag = c("r", "reverse"),
+                      tile = c("both", "b", "prop", "p", "freq", "f"),
                       plot = TRUE) {
   # Validate correct inputs
   if (missing(cm)) stop("Need to specify the mandatory argument \"cm\"")
@@ -79,6 +79,20 @@ pretty_cm <- function(cm,
       "\"hideZero\" is required to be a logical"
     ))
   }
+  # Check character Vars: tile, diag
+  if (missing(tile)) tile <- "both"
+  if (!is(tile, "character") | length(tile) != 1) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"tile\" is required to be a character of length 1"
+    ))
+  }
+  if (!is(diag, "character") | length(diag) != 1) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"diag\" is required to be a character of length 1"
+    ))
+  }
 
   # PREPARATION OF THE DATA MATRIX
   cm_d <- as.data.frame(cm$table)
@@ -97,21 +111,24 @@ pretty_cm <- function(cm,
   # order for the CM
   if (missing(ord)) {
     ord <- levels(cm_d[[labels[2]]])
-  } else if (length(ord)==1){
-    if(ord == "r" | ord == "reverse") ord <- levels(util_rev_fac(cm_d[[labels[2]]]))
+  } else if (length(ord) == 1) {
+    if (ord == "r" | ord == "reverse") ord <- levels(util_rev_fac(cm_d[[labels[2]]]))
   }
 
   # Change order of the y Axis
   cm_d[[labels[2]]] <- factor(cm_d[[labels[2]]],
     levels = ord
   )
-  if(missing(diag) | length(diag) != 1){
+  if (missing(diag) | length(diag) != 1) {
     cm_d[[labels[1]]] <- factor(cm_d[[labels[1]]], levels = ord)
-  } else{
+  } else {
     if (diag == "r" | diag == "reverse") {
       cm_d[[labels[1]]] <- util_rev_fac(factor(cm_d[[labels[1]]],
-                                               levels = ord))
-    } else     cm_d[[labels[1]]] <- factor(cm_d[[labels[1]]], levels = ord)
+        levels = ord
+      ))
+    } else {
+      cm_d[[labels[1]]] <- factor(cm_d[[labels[1]]], levels = ord)
+    }
   }
 
 
@@ -127,14 +144,14 @@ pretty_cm <- function(cm,
   cm_d$ref_Freq <- cm_d$Freq * ifelse(is.na(cm_d$diag), -1, 1)
 
   # Setting inscription of the tiles
-  if(!missing(tile)){
+  if (!missing(tile)) {
     tile_content <- dplyr::case_when(
-      tile == "f" | tile == "freq"  ~ as.character(cm_d$Freq),
-      tile == "p" | tile == "prop"  ~ as.character(cm_d$Prop_t),
-      TRUE ~ paste0(cm_d$Freq," (",cm_d$Prop_t,")")
+      tile == "f" | tile == "freq" ~ as.character(cm_d$Freq),
+      tile == "p" | tile == "prop" ~ as.character(cm_d$Prop_t),
+      TRUE ~ paste0(cm_d$Freq, " (", cm_d$Prop_t, ")")
     )
-  } else{
-    tile_content <- paste0(cm_d$Freq," (",cm_d$Prop_t,")")
+  } else {
+    tile_content <- paste0(cm_d$Freq, " (", cm_d$Prop_t, ")")
   }
 
 
@@ -161,20 +178,20 @@ pretty_cm <- function(cm,
       panel.grid.minor = element_blank(),
       plot.margin = unit(c(1, 1, 1, 1), "cm"),
       axis.text.x = element_text(
-        color = "black", size = 13, face = "plain", family = "sans", angle = 45, hjust = -0.1,
+        color = "black", size = 12, face = "plain", family = "sans", angle = 45, hjust = -0.1,
         margin = margin(t = 20, r = 0, b = 20, l = 0)
       ),
       axis.text.y = element_text(
-        color = "black", size = 13,
+        color = "black", size = 12,
         face = "plain", family = "sans"
       ),
       # margin to slightly increase distance to the axis ticks
       axis.title.x = element_text(
-        color = "black", size = 16, face = "bold", family = "sans",
+        color = "black", size = 14, face = "bold", family = "sans",
         margin = margin(t = 20, r = 0, b = 20, l = 0)
       ),
       axis.title.y = element_text(
-        color = "black", size = 16, face = "bold", family = "sans",
+        color = "black", size = 14, face = "bold", family = "sans",
         margin = margin(t = 0, r = 20, b = 0, l = 0)
       )
     ) +

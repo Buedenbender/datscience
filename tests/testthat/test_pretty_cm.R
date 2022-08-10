@@ -24,6 +24,11 @@ test_that("pretty_cm stops with an error for invalid argument types", {
       expect_error(pretty_cm(cm, plot = dtype),"Invalid argument type")
       expect_error(pretty_cm(cm, hideZero = dtype),"Invalid argument type")
     }
+    # Testing character arguments: diag, tile
+    if(!is(dtype,"character")|length(dtype)!=1){
+      expect_error(pretty_cm(cm, tile = dtype),"Invalid argument type")
+      expect_error(pretty_cm(cm, diag = dtype),"Invalid argument type")
+    }
 
   }
 
