@@ -49,11 +49,68 @@
 #' \href{https://www.datanovia.com/en/lessons/t-test-assumptions/independent-t-test-assumptions/}{Guide for the t-test}
 #' \href{https://www.datanovia.com/en/lessons/anova-in-r/}{and for the ANOVA}
 
-independent_sample_means <- function(data,dv,iv, alternative =  c("two.sided", "less", "greater"),
+independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", "less", "greater"),
                                      stepwise = TRUE, verbose = TRUE,
-                                     add = "jitter",fill = iv, palette = "jco", ...) {
+                                     add = "jitter", fill = iv, palette = "jco", ...) {
 
-  if(missing(alternative)) alternative <- "two.sided"
+  # Validate correct inputs
+  if (missing(data)) stop("Need to specify the mandatory argument \"data\"")
+  if (missing(dv)) stop("Need to specify the mandatory argument \"dv\"")
+  if (missing(iv)) stop("Need to specify the mandatory argument \"iv\"")
+
+  if (!is(data, "data.frame")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"data\" is required to be a data.frame (incl. tibble)"
+    ))
+  }
+  # Check Dependent Var: Character, Length = 1
+  if (!is(dv, "character")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"dv\" is required to be a character"
+    ))
+  }
+  if (length(dv)!=1) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"dv\" can not handle character vectors"
+    ))
+  }
+  # Check Independent Var: Character, Length = 1
+  if (!is(iv, "character")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"iv\" is required to be a character"
+    ))
+  }
+  if (length(iv)!=1) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"dv\" can not handle character vectors"
+    ))
+  }
+  # Check Alternative
+  if (!is(alternative, "character")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"alternative\" is required to be a character"
+    ))
+  }
+  if (missing(alternative)) alternative <- "two.sided"
+  if (length(alternative)!=1) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"alternative\" can not handle character vectors"
+    ))
+  }
+  if (!alternative %in% c("two.sided", "less", "greater")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"alternative\" please provide one of: \"two.sided\",",
+      "\"less\", \"greater\""
+    ))
+  }
 
   # Adapted from Datanovia
   # https://www.datanovia.com/en/lessons/t-test-assumptions/independent-t-test-assumptions/
@@ -62,50 +119,51 @@ independent_sample_means <- function(data,dv,iv, alternative =  c("two.sided", "
     dplyr::tibble() %>%
     dplyr::mutate(dplyr::across(all_of(iv), ~ forcats::fct_drop(forcats::as_factor(.)))) %>%
     dplyr::mutate(dplyr::across(all_of(dv), ~ as.numeric(as.character(.)))) %>%
-    dplyr::select(all_of(c(iv,dv)))  %>%
+    dplyr::select(all_of(c(iv, dv))) %>%
     stats::na.omit()
 
   # Construction formula object
-  f <-stats::as.formula(paste(dv,"~",iv))
+  f <- stats::as.formula(paste(dv, "~", iv))
 
   # Number of groups k
   k <- length(levels(df[[iv]]))
 
-  print(paste("Recognizing k =", as.character(k) , "groups"))
+  if (verbose) print(paste("Recognizing k =", as.character(k), "groups"))
 
   # Determine if Colors
   if (fill != iv & fill != TRUE) {
-    fill = "white"
+    fill <- "white"
   }
 
 
   # 1) EXTREME VALUES
-  if(verbose) print("1) Checking for extreme values")
+  if (verbose) print("1) Checking for extreme values")
 
   outlier <- df %>%
     dplyr::group_by((!!as.symbol(iv))) %>%
     rstatix::identify_outliers((!!as.symbol(dv)))
 
-  bxp <-  ggpubr::ggboxplot(
-    df, x = iv, y = dv,
-    ylab = paste(dv,"(DV)"), xlab = paste(iv,"(IV)"), add = add,
+  bxp <- ggpubr::ggboxplot(
+    df,
+    x = iv, y = dv,
+    ylab = paste(dv, "(DV)"), xlab = paste(iv, "(IV)"), add = add,
     fill = fill
   )
 
-  if(fill != "white") bxp <- ggpubr::set_palette(bxp,palette)
+  if (fill != "white") bxp <- ggpubr::set_palette(bxp, palette)
 
-  if(verbose) print(outlier)
-  if(verbose) print(bxp)
-  if(stepwise) trash <- readline("2) Continue with Descriptives?")
+  if (verbose) print(outlier)
+  if (verbose) print(bxp)
+  if (stepwise) trash <- readline("2) Continue with Descriptives?")
 
   # 2) DESCRIPTIVES
   sum_stats <- df %>%
     dplyr::group_by((!!as.symbol(iv))) %>%
-    rstatix::get_summary_stats(type="mean_sd")
+    rstatix::get_summary_stats(type = "mean_sd")
 
 
-  if(verbose) print(sum_stats)
-  if(stepwise) trash <- readline("3) Continue with Normality Check?")
+  if (verbose) print(sum_stats)
+  if (stepwise) trash <- readline("3) Continue with Normality Check?")
 
   # 3) NORMALITY
   sw_test <- df %>%
@@ -115,26 +173,28 @@ independent_sample_means <- function(data,dv,iv, alternative =  c("two.sided", "
   qqplot <- ggpubr::ggqqplot(df, x = dv, facet.by = iv)
 
 
-  if(verbose) print(sw_test)
-  if(verbose) print(qqplot)
-  if(stepwise) trash <- readline("4) Continue with check Homogeneity of Variances?")
+  if (verbose) print(sw_test)
+  if (verbose) print(qqplot)
+  if (stepwise) trash <- readline("4) Continue with check Homogeneity of Variances?")
 
   # 4) HOMOGENITY
-  levene_test <- rstatix::levene_test(df,f)
+  levene_test <- rstatix::levene_test(df, f)
 
 
-  if(verbose) print(levene_test)
-  if(stepwise) trash <- readline("5) Continue with the Test, Effect Size and Final Plot?")
+  if (verbose) print(levene_test)
+  if (stepwise) trash <- readline("5) Continue with the Test, Effect Size and Final Plot?")
 
   # 5) HYPOTHESIS TEST
   if (k == 2) { # T-Test / Welch in Case of 2 Groups
-    stat.test <-  df %>%
-      rstatix::t_test(f, var.equal = (levene_test$p > .05),
-                      alternative = alternative, ...) %>%
+    stat.test <- df %>%
+      rstatix::t_test(f,
+        var.equal = (levene_test$p > .05),
+        alternative = alternative, ...
+      ) %>%
       rstatix::add_significance()
 
     # EFFECTSIZE
-    es <-   rstatix::cohens_d(df,f, var.equal = (levene_test$p > .05))
+    es <- rstatix::cohens_d(df, f, var.equal = (levene_test$p > .05))
 
 
     # FINAL PLOT
@@ -143,30 +203,29 @@ independent_sample_means <- function(data,dv,iv, alternative =  c("two.sided", "
       ggpubr::stat_pvalue_manual(stat.test, tip.length = 0) +
       labs(subtitle = rstatix::get_test_label(stat.test, detailed = TRUE))
 
-    pwc = NA
+    pwc <- NA
 
-    if(verbose) print(stat.test)
-    if(verbose) print(es)
-
-  } else{
-    stat.test <- rstatix::anova_test(df,f, effect.size = "pes")
-    pwc <- rstatix::tukey_hsd(df,f)
+    if (verbose) print(stat.test)
+    if (verbose) print(es)
+  } else {
+    stat.test <- rstatix::anova_test(df, f, effect.size = "pes")
+    pwc <- rstatix::tukey_hsd(df, f)
 
     # Visualization: box plots with p-values
     pwc <- pwc %>% rstatix::add_xy_position(x = iv)
-    bxp_final <- bxp+
+    bxp_final <- bxp +
       ggpubr::stat_pvalue_manual(pwc, hide.ns = TRUE) +
       labs(
         subtitle = rstatix::get_test_label(stat.test, detailed = TRUE),
         caption = rstatix::get_pwc_label(pwc)
       )
-    es = NA #TODO add Effect Size estimate for ANOVA
-    if(verbose) print(stat.test)
-    if(verbose) print(pwc)
+    es <- NA # TODO add Effect Size estimate for ANOVA
+    if (verbose) print(stat.test)
+    if (verbose) print(pwc)
   }
 
 
-  if(verbose) print(bxp_final)
+  if (verbose) print(bxp_final)
 
   # 6) GENERATING FINAL OUTPUT
   ls <- list(
@@ -184,4 +243,3 @@ independent_sample_means <- function(data,dv,iv, alternative =  c("two.sided", "
 
   return(ls)
 }
-
