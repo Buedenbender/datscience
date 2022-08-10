@@ -76,6 +76,7 @@
 <span>  diag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"reverse"</span><span class="op">)</span>,</span>
 <span>  tile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"b"</span>, <span class="st">"prop"</span>, <span class="st">"p"</span>, <span class="st">"freq"</span>, <span class="st">"f"</span><span class="op">)</span>,</span>
 <span>  tile_size <span class="op">=</span> <span class="fl">3.5</span>,</span>
+<span>  tile_nod <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,8 +95,9 @@ c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))</p></dd>
 
 
 <dt>midpoint</dt>
-<dd><p>Manually setting a middle point in percentage for the color
-scale, Default: 50</p></dd>
+<dd><p>Numeric, Default = 50;
+Manually setting a middle point in percentage for the color
+scale.</p></dd>
 
 
 <dt>hide_zero</dt>
@@ -103,8 +105,9 @@ scale, Default: 50</p></dd>
 
 
 <dt>ord</dt>
-<dd><p>Order of the factor levels to display (if you want to change it
-manually for the plot), Default: NA,</p></dd>
+<dd><p>Character, Default = NA;
+Order of the factor levels to display (if you want to change it
+manually for the plot).</p></dd>
 
 
 <dt>diag</dt>
@@ -113,18 +116,23 @@ diag = "r" or "reverse"</p></dd>
 
 
 <dt>tile</dt>
-<dd><p>Character, either "p" or "prop" for proportion | "f" or
+<dd><p>Character, Default = "both"; Either "p" or "prop" for proportion | "f" or
 "freq" for frequency | "b" or "both" for both.
-if character is not recognized or missing -&gt; Default: "both"</p></dd>
+If character is not recognized or missing it goes to "both".</p></dd>
 
 
 <dt>tile_size</dt>
-<dd><p>Numeric determines the size of the font in the tiles.
-Be wary, other scale than for usual font size, Default: 3.5</p></dd>
+<dd><p>Numeric, Default = 3.5; Determines the size of the font in the tiles.
+Be wary, other scale than for usual font size.</p></dd>
+
+
+<dt>tile_nod</dt>
+<dd><p>Numeric (or NA), Default = 1; Determines the number of decimals
+to be displayed in case tiles should show percentages "p".</p></dd>
 
 
 <dt>plot</dt>
-<dd><p>Shall the output also be plotted? Default: TRUE</p></dd>
+<dd><p>Logical, Default = TRUE; Shall the output also be plotted?</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -153,10 +161,10 @@ Be wary, other scale than for usual font size, Default: 3.5</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co"># Creating random example data: prediction of neural network on content of animal pictures</span></span></span>
+<span class="r-in"><span>  <span class="co"># Creating random example data: prediction of neural network on content</span></span></span>
+<span class="r-in"><span>  <span class="co"># of animal pictures</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">23</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
