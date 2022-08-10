@@ -44,23 +44,28 @@ utils::globalVariables(".")
 #'   Pole of color gradient to use for the tiles, Default:
 #'   c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))
 #' @param midpoint
+#'   Numeric, Default = 50;
 #'   Manually setting a middle point in percentage for the color
-#'   scale, Default: 50
+#'   scale.
 #' @param hide_zero Hide tiles with 0 percentage, Default: FALSE
 #' @param ord
+#'   Character, Default = NA;
 #'   Order of the factor levels to display (if you want to change it
-#'   manually for the plot), Default: NA,
+#'   manually for the plot).
 #' @param diag
 #'   Orientation of the diagonal (sensitivities), possible values
 #'   diag = "r" or "reverse"
 #' @param tile
-#'   Character, either "p" or "prop" for proportion | "f" or
+#'   Character, Default = "both"; Either "p" or "prop" for proportion | "f" or
 #'   "freq" for frequency | "b" or "both" for both.
-#'   if character is not recognized or missing -> Default: "both"
+#'   If character is not recognized or missing it goes to "both".
 #' @param tile_size
-#'   Numeric determines the size of the font in the tiles.
-#'   Be wary, other scale than for usual font size, Default: 3.5
-#' @param plot Shall the output also be plotted? Default: TRUE
+#'   Numeric, Default = 3.5; Determines the size of the font in the tiles.
+#'   Be wary, other scale than for usual font size.
+#' @param tile_nod
+#'   Numeric (or NA), Default = 1; Determines the number of decimals
+#'   to be displayed in case tiles should show percentages "p".
+#' @param plot Logical, Default = TRUE; Shall the output also be plotted?
 #'
 #' @return ggplot2 object - visualization of the confusion matrix.
 #'
@@ -91,6 +96,7 @@ pretty_cm <- function(cm,
                       diag = c("r", "reverse"),
                       tile = c("both", "b", "prop", "p", "freq", "f"),
                       tile_size = 3.5,
+                      tile_nod = 1,
                       plot = TRUE) {
 
   ### Validate correct inputs ###
@@ -102,7 +108,7 @@ pretty_cm <- function(cm,
       "\"cm\" is required to be a confusionMatrix, table or data.frame"
     ))
   }
-  # Check Numeric Vars: midpoint
+  # Check Numeric Vars: midpoint, tile_size, tile_nod
   if (!is(midpoint, "numeric")) {
     stop(paste(
       "Invalid argument type. The argument",
@@ -113,6 +119,21 @@ pretty_cm <- function(cm,
     stop(paste(
       "Invalid argument type. The argument",
       "\"tile_size\" is required to be a numeric"
+    ))
+  }
+  #   - confirm there is only a single number supplied to tile_nod
+  if(length(tile_nod)!=1){
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"tile_nod\" is required to be only a single numeric value"
+    ))
+  }
+  #   - if NA is provided convert it to 0
+  if(is.na(tile_nod)) tile_nod <- 0
+  if (!is(tile_nod, "numeric")) {
+    stop(paste(
+      "Invalid argument type. The argument",
+      "\"tile_nod\" is required to be a numeric"
     ))
   }
   # Check Logical Vars: plot, hide_zero
@@ -151,8 +172,8 @@ pretty_cm <- function(cm,
   } else {
     cm_d <- cm
   }
-
   labels <- names(cm_d)
+
   # extract the confusion matrix values as data.frame
   cm_d <- cm_d %>%
     # Create the proportion of the rowsum (in the diagonal it is sensitivity)
@@ -160,7 +181,7 @@ pretty_cm <- function(cm,
     dplyr::mutate(rowsum_ref = sum(.data[["Freq"]])) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(
-      Prop = round(.data[["Freq"]] / .data$rowsum_ref * 100, 1),
+      Prop = round(.data[["Freq"]] / .data$rowsum_ref * 100, tile_nod),
       Prop_t = paste0(.data[["Prop"]], "%")
     )
 

@@ -13,6 +13,7 @@ pretty_cm(
   diag = c("r", "reverse"),
   tile = c("both", "b", "prop", "p", "freq", "f"),
   tile_size = 3.5,
+  tile_nod = 1,
   plot = TRUE
 )
 }
@@ -24,25 +25,30 @@ the rows and reference as the columns (mandatory parameter)}
 \item{color_grad}{Pole of color gradient to use for the tiles, Default:
 c(alpha("yellowgreen", 0.4), alpha("springgreen3", 0.85))}
 
-\item{midpoint}{Manually setting a middle point in percentage for the color
-scale, Default: 50}
+\item{midpoint}{Numeric, Default = 50;
+Manually setting a middle point in percentage for the color
+scale.}
 
 \item{hide_zero}{Hide tiles with 0 percentage, Default: FALSE}
 
-\item{ord}{Order of the factor levels to display (if you want to change it
-manually for the plot), Default: NA,}
+\item{ord}{Character, Default = NA;
+Order of the factor levels to display (if you want to change it
+manually for the plot).}
 
 \item{diag}{Orientation of the diagonal (sensitivities), possible values
 diag = "r" or "reverse"}
 
-\item{tile}{Character, either "p" or "prop" for proportion | "f" or
+\item{tile}{Character, Default = "both"; Either "p" or "prop" for proportion | "f" or
 "freq" for frequency | "b" or "both" for both.
-if character is not recognized or missing -> Default: "both"}
+If character is not recognized or missing it goes to "both".}
 
-\item{tile_size}{Numeric determines the size of the font in the tiles.
-Be wary, other scale than for usual font size, Default: 3.5}
+\item{tile_size}{Numeric, Default = 3.5; Determines the size of the font in the tiles.
+Be wary, other scale than for usual font size.}
 
-\item{plot}{Shall the output also be plotted? Default: TRUE}
+\item{tile_nod}{Numeric (or NA), Default = 1; Determines the number of decimals
+to be displayed in case tiles should show percentages "p".}
+
+\item{plot}{Logical, Default = TRUE; Shall the output also be plotted?}
 }
 \value{
 ggplot2 object - visualization of the confusion matrix.
@@ -66,10 +72,10 @@ You can change all fonts of the plot later on with
   }
 }
 \examples{
-
 \dontrun{
 if (interactive()) {
-  # Creating random example data: prediction of neural network on content of animal pictures
+  # Creating random example data: prediction of neural network on content
+  # of animal pictures
   set.seed(23)
   pred <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
   ref <- factor(sample(c("dog", "cat"), 100, replace = TRUE))
