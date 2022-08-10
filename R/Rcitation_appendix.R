@@ -116,7 +116,7 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
   }
 
   # #### Write the Bibliography with all Citations for the Packages
-  knitr::write_bib(file = bib_file)
+  suppressWarnings(knitr::write_bib(file = bib_file))
 
   ### Create the Table
   # Check if APA 7th is desired & create it
