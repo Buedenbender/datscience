@@ -38,7 +38,7 @@ the output is printed is to the console and a user input is required. For a list
 \item{palette}{Color palette for the boxplot, see also \link[ggpubr]{ggboxplot}.}
 
 \item{...}{(Optional), Additional arguments that can be passed to \code{\link[rstatix]{t_test}}
-(e.g., fontsize, font ...) or to \code{\link{serialNext}}}
+(e.g., fontsize, font ...), to \code{\link{serialNext}} or to \code{\link[ggpubr]{ggboxplot}}}
 }
 \value{
 A list with all results of the check for the assumptions as well as the hypothesis test itself.
@@ -70,7 +70,8 @@ t_test <- independent_sample_means(mtcars, dv = "disp", iv = "vs", add = "none")
 ANOVA <- independent_sample_means(mtcars, dv = "disp", iv = "gear", add = "none")
 }
 \seealso{
-\link[ggpubr]{ggboxplot}
+\code{\link[ggpubr]{ggboxplot}}
+\code{\link[rstatix]{t_test}}
 \href{https://www.datanovia.com/en/lessons/t-test-assumptions/independent-t-test-assumptions/}{Guide for the t-test}
 \href{https://www.datanovia.com/en/lessons/anova-in-r/}{and for the ANOVA}
 }

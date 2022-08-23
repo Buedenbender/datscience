@@ -29,14 +29,16 @@ a beautiful publication-ready bivariate comparison table 1.
 Creating a descriptive sociodemographic table can be a tedious and repetitive task.
 Every published article has such a table (usually the first, so table1). However, 
 I found myself to be frustrated over the amount of work it took to create those table,
-especially because it is such a repetitive task, and I always believed that there has to be an easy solution for this in R. Recently I discovered the `table1::table1()` function, which made
-life much easier. I advanced the example given by Benjamin Rich and combined it
+especially because it is such a repetitive task, and I always believed that 
+there has to be an easy solution for this in R. Recently I discovered the 
+`table1::table1()` function, which made life much easier. 
+I advanced the example given by Benjamin Rich and combined it
 with the ability of `flextable::flextable()` to get it nicely formatted into Word.
 
 So what am I talking about, you might think? 
 See for yourself below; It just requires one function call!
 
-```{r eval=FALSE}
+```{r eval=FALSE, warning=FALSE}
 # Only 2 mandatory arguments: formula specifying variables to be used & data (see also table1::table1())
 flex_table1(
   str_formula = "~ random_Smoking  + Glucose + Insulin + Leptin +Age + BMI|Diagnosis", 
@@ -86,14 +88,23 @@ ft %>%
   set_table_properties(layout = "autofit", width = 1)
 ```
 
- In published articles, this kind of table (above) is usually 
+In published articles, this kind of table (above) is usually 
 the first table (thus called Table 1). The example above shows the descriptive stats 
 of two subgroups of the sample (aka bivariate descriptive).
 The function also automatically conducts group comparisons (and, if desired, corrects)
 the obtained p-values.
 
- * For **metric/interval** data: independent sample t-test or in case of heterogeneity of variances the Welch's correction is applied
- * For **categorical/ordinal** data: Pearon's `r knitr::asis_output("\u03C7\u00B2")`-test or respective Fisher\'s test for expected cell counts of `r knitr::asis_output("\u2264")` 5).
+ * For **metric/interval** data: independent sample t-test or in case of 
+ heterogeneity of variances the Welch's correction is applied
+ * For **categorical/ordinal** data: Egon Pearon's $N-1$ version of the 
+ $\chi^2$-test or respective Fisher\'s test (for 
+ expected cell counts of `r knitr::asis_output("\u2264")` 1). 
+ 
+See also the "Details" section in the documentation of the function 
+(`flex_table1()`), on why the function defaults to no correction for multiple
+comparisons and the use of the $N-1$ version of the $\chi^2$ test for cases with
+expected cell count above 1 (instead of Fisher's exact test for cell expected 
+cell count below 5).
  
   I will show you how you can create such a table and get it into Word with just a 
 few basic and simple steps. 

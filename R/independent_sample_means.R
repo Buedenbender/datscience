@@ -30,7 +30,7 @@
 #' @param fill False for no filled colors
 #' @param palette Color palette for the boxplot, see also \link[ggpubr]{ggboxplot}.
 #' @param ... (Optional), Additional arguments that can be passed to \code{\link[rstatix]{t_test}}
-#' (e.g., fontsize, font ...) or to \code{\link{serialNext}}
+#' (e.g., fontsize, font ...), to \code{\link{serialNext}} or to \code{\link[ggpubr]{ggboxplot}}
 #' @return A list with all results of the check for the assumptions as well as the hypothesis test itself.
 #'
 #' @author Bjoern Buedenbender (adapted from Alboukadel Kassambara)
@@ -45,7 +45,8 @@
 #' @importFrom rstatix identify_outliers shapiro_test get_summary_stats levene_test t_test add_significance cohens_d add_xy_position get_test_label anova_test tukey_hsd get_pwc_label
 #' @importFrom ggpubr ggboxplot set_palette ggqqplot stat_pvalue_manual
 #' @seealso
-#' \link[ggpubr]{ggboxplot}
+#' \code{\link[ggpubr]{ggboxplot}}
+#' \code{\link[rstatix]{t_test}}
 #' \href{https://www.datanovia.com/en/lessons/t-test-assumptions/independent-t-test-assumptions/}{Guide for the t-test}
 #' \href{https://www.datanovia.com/en/lessons/anova-in-r/}{and for the ANOVA}
 
@@ -147,7 +148,7 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
     df,
     x = iv, y = dv,
     ylab = paste(dv, "(DV)"), xlab = paste(iv, "(IV)"), add = add,
-    fill = fill
+    fill = fill, ...
   )
 
   if (fill != "white") bxp <- ggpubr::set_palette(bxp, palette)
