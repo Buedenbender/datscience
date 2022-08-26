@@ -17,7 +17,7 @@
 #' respective column \cr
 #' \strong{Note} I highly recommend to cite the main packages used for your
 #' analysis in the methods / analyses section of your manuscript. However to
-#' give full credit to all packages / package authors, you can created this table
+#' give full credit to all packages / package authors, you can create this table
 #' and reference it in the appendix. This also increases reproduciblity, as every
 #' dependency to run your script becomes transparent.
 #' @param outdirectory (Optional) Character vector for the output directory
