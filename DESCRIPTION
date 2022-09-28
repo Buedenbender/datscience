@@ -57,6 +57,7 @@ Collate:
     'booted_eigenvalues.R'
     'boxplot_t_test.R'
     'corstars.R'
+    'flex_caret_resample_metrics.R'
     'utility_numberparse.R'
     'flex_table1.R'
     'format_flextable.R'
