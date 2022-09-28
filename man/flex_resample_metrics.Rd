@@ -38,30 +38,28 @@ A convenience function, that extracts desire classification metrics
 }
 \examples{
 \dontrun{# Create Example Classifiers in the Iris Dataset
-set.seed(7)
-data(iris)
+# set.seed(7)
+# data(iris)
 # Settings for the Cross-Validation
-control <- caret::trainControl(method="repeatedcv", number=10, repeats=3,
-                              summaryFunction = caret::multiClassSummary)
+# control <- caret::trainControl(method="repeatedcv", number=10, repeats=3,
+#                               summaryFunction = caret::multiClassSummary)
 # Train Decision Tree
-suppressWarnings(
- decision_tree <- caret::train(Species~., data=iris, method="rpart",
-                               trControl=control, tuneLength=5)
-)
+# suppressWarnings(
+# decision_tree <- caret::train(Species~., data=iris, method="rpart",
+#                                trControl=control, tuneLength=5)
+# )
 # Train k-Nearest Neighbors
-knn <-  caret::train(Species~., data=iris, method="knn",
-                    trControl=control, tuneLength=5)
+# knn <-  caret::train(Species~., data=iris, method="knn",
+#                     trControl=control, tuneLength=5)
 
 # Create a list of objects
-models <- list("Decision Tree" = decision_tree$resample,
+# models <- list("Decision Tree" = decision_tree$resample,
               "KNN" = knn$resample)
 
 # Create table with performance metrics during training
-flex_caret_resample_metrics(models)
+# flex_resample_metrics(models)
 }
-}
-\references{
-\insertAllCited{}
+
 }
 \seealso{
 \code{\link{format_flextable}},
