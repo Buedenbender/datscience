@@ -110,10 +110,6 @@ reported for each metrics. The default is
   displays the performance metrics obtained during training with cross-validation</p>
     </div>
     <div class="section level2">
-    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>There are no references for Rd macro <code>\insertAllCites</code> on this help page.</p>
-    </div>
-    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="format_flextable.html">format_flextable</a></code>,
 <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></code>,
@@ -126,34 +122,7 @@ reported for each metrics. The default is
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create Example Classifiers in the Iris Dataset</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Settings for the Cross-Validation</span></span></span>
-<span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu">trainControl</span><span class="op">(</span>method<span class="op">=</span><span class="st">"repeatedcv"</span>, number<span class="op">=</span><span class="fl">10</span>, repeats<span class="op">=</span><span class="fl">3</span>,</span></span>
-<span class="r-in"><span>                              summaryFunction <span class="op">=</span> <span class="fu">caret</span><span class="fu">::</span><span class="va">multiClassSummary</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘caret’</span>
-<span class="r-in"><span><span class="co"># Train Decision Tree</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span> <span class="va">decision_tree</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu">train</span><span class="op">(</span><span class="va">Species</span><span class="op">~</span><span class="va">.</span>, data<span class="op">=</span><span class="va">iris</span>, method<span class="op">=</span><span class="st">"rpart"</span>,</span></span>
-<span class="r-in"><span>                               trControl<span class="op">=</span><span class="va">control</span>, tuneLength<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘caret’</span>
-<span class="r-in"><span><span class="co"># Train k-Nearest Neighbors</span></span></span>
-<span class="r-in"><span><span class="va">knn</span> <span class="op">&lt;-</span>  <span class="fu">caret</span><span class="fu">::</span><span class="fu">train</span><span class="op">(</span><span class="va">Species</span><span class="op">~</span><span class="va">.</span>, data<span class="op">=</span><span class="va">iris</span>, method<span class="op">=</span><span class="st">"knn"</span>,</span></span>
-<span class="r-in"><span>                    trControl<span class="op">=</span><span class="va">control</span>, tuneLength<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘caret’</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Create a list of objects</span></span></span>
-<span class="r-in"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Decision Tree"</span> <span class="op">=</span> <span class="va">decision_tree</span><span class="op">$</span><span class="va">resample</span>,</span></span>
-<span class="r-in"><span>              <span class="st">"KNN"</span> <span class="op">=</span> <span class="va">knn</span><span class="op">$</span><span class="va">resample</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'decision_tree' not found</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Create table with performance metrics during training</span></span></span>
-<span class="r-in"><span><span class="fu">flex_caret_resample_metrics</span><span class="op">(</span><span class="va">models</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in flex_caret_resample_metrics(models):</span> could not find function "flex_caret_resample_metrics"</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
+    
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
