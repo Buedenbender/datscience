@@ -76,26 +76,21 @@ additional dependency to the datscience package</p>
     </div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p># Create Example Classifiers in the Iris Dataset
-set.seed(7)
-data(iris)
-# Settings for the Cross-Validation
+    <p># Create Example Classifiers in the Iris Dataset<br>
+set.seed(7)<br>
+data(iris)<br>
+# Settings for the Cross-Validation<br>
 control &lt;- caret::trainControl(method="repeatedcv", number=10, repeats=3,
-                               summaryFunction = caret::multiClassSummary)
-# Train Decision Tree
-decision_tree &lt;- caret::train(Species~., data=iris, method="rpart",
-                                trControl=control, tuneLength=5)
-# Train k-Nearest Neighbors
+                               summaryFunction = caret::multiClassSummary)<br>
+# Train Decision Tree<br>
+decision_tree &lt;- caret::train(Species~., data=iris, method="rpart",<br>
+                                trControl=control, tuneLength=5)<br>
+# Train k-Nearest Neighbors<br>
 knn &lt;-  caret::train(Species~., data=iris, method="knn",
-                     trControl=control, tuneLength=5)</p>
-<p># Create a list of objects
+                     trControl=control, tuneLength=5)<br></p>
+<p># Create a list of objects<br>
 models &lt;- list("Decision Tree" = decision_tree$resample,
-               "KNN" = knn$resample)</p>
-    </div>
-    <div class="section level2">
-    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Moore et al. (2013) Genetics 195:1077-1086
-(<a href="https://www.ncbi.nlm.nih.gov/pubmed/23979570" class="external-link">PubMed</a>)</p>
+               "KNN" = knn$resample)<br></p>
     </div>
 
     <div class="section level2">
