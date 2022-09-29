@@ -4,7 +4,14 @@
 \alias{flex_resample_metrics}
 \title{Extracts Classification Metrics during CV in Caret and Creates a Table for Publication}
 \usage{
-flex_resample_metrics(ls, nod = 3, ...)
+flex_resample_metrics(
+  ls,
+  nod = 3,
+  metrics = c("Accuracy", "Mean_Balanced_Accuracy", "Kappa", "logLoss",
+    "Mean_Sensitivity", "Mean_Specificity"),
+  descriptives = c("min", "mean", "max"),
+  ...
+)
 }
 \arguments{
 \item{ls}{A list containing the name of the algorithm as index, and the resamples
@@ -14,21 +21,34 @@ extracted from caret e.g.
 
 \item{nod}{The number of decimals to show for each classification metric}
 
-\item{...}{(Optional), Additional arguments. You have the option to determine
-the metrics that shall be displayed by supplying a vector called
-metrics, the default is \cr
+\item{metrics}{Metrics that should be extracted from the resamples of the
+trained caret model. Please note that if you want to have full flexibility
+of parameters to evaluate you should use the summaryFunction
+\href{https://www.rdocumentation.org/packages/specmine/versions/3.1.6/topics/multiClassSummary}{caret::multiClassSummary} ,
+in \href{https://topepo.github.io/caret/model-training-and-tuning.html#the-traincontrol-function}{caret::trainControl}
+function. Defaults to a selection taken of multiClassSummary: \cr
 \code{metrics = c("Accuracy","Mean_Balanced_Accuracy", "Kappa", "logLoss",
-"Mean_Sensitivity", "Mean_Specificity" )}.
-Furthermore you can determine the descriptive statistics that shall be
-reported for each metrics. The default is
-\code{descriptives = c("min", "mean", "max")}}
+"Mean_Sensitivity", "Mean_Specificity" )}.}
+
+\item{descriptives}{Summary stats that shall be calculated from the
+the resamples obtained in k-fold cross-validation training of a
+caret machine learning model. Summary stats utilize the
+\code{\link[psych]{describe}} function for calculation of summary.
+Per default the function extracts:
+\code{descriptives = c("min", "mean", "max")}. Other alternatives can
+be seen in the documentaiton of \code{\link[psych]{describe}} and
+comprise, e.g., median, skew, kurtosis, se}
+
+\item{...}{(Optional), Additional arguments. to be passed to
+
+  \code{\link[flextable]{flextable}}}
 }
 \value{
 A \code{\link[flextable]{flextable}} object with APA ready table that
   displays the performance metrics obtained during training with cross-validation
 }
 \description{
-A convenience function, that extracts desire classification metrics
+A convenience function, that extracts desired classification metrics
   obtained during training (resampling, cross-validation), with caret,
   summarizes them (default min, mean, max, for more options see
   \code{\link[psych]{describe}}) and creates a
@@ -37,7 +57,8 @@ A convenience function, that extracts desire classification metrics
   \if{html}{\figure{flex_resample_metrics.jpg}{Screenshot of example}}
 }
 \examples{
-\dontrun{# Create Example Classifiers in the Iris Dataset
+\dontrun{
+# Create Example Classifiers in the Iris Dataset
 # set.seed(7)
 # data(iris)
 # Settings for the Cross-Validation
@@ -56,8 +77,10 @@ A convenience function, that extracts desire classification metrics
 # models <- list("Decision Tree" = decision_tree$resample,
               "KNN" = knn$resample)
 
+# save(models)
+ models <- data(models)
 # Create table with performance metrics during training
-# flex_resample_metrics(models)
+flex_resample_metrics(models)
 }
 
 }
