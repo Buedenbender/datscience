@@ -8,22 +8,22 @@
 An object of class \code{"list"};
 }
 \source{
-# Create Example Classifiers in the Iris Dataset
-set.seed(7)
-data(iris)
-# Settings for the Cross-Validation
+# Create Example Classifiers in the Iris Dataset\cr
+set.seed(7)\cr
+data(iris)\cr
+# Settings for the Cross-Validation\cr
 control <- caret::trainControl(method="repeatedcv", number=10, repeats=3,
-                               summaryFunction = caret::multiClassSummary)
-# Train Decision Tree
-decision_tree <- caret::train(Species~., data=iris, method="rpart",
-                                trControl=control, tuneLength=5)
-# Train k-Nearest Neighbors
+                               summaryFunction = caret::multiClassSummary)\cr
+# Train Decision Tree\cr
+decision_tree <- caret::train(Species~., data=iris, method="rpart",\cr
+                                trControl=control, tuneLength=5)\cr
+# Train k-Nearest Neighbors\cr
 knn <-  caret::train(Species~., data=iris, method="knn",
-                     trControl=control, tuneLength=5)
+                     trControl=control, tuneLength=5)\cr
 
-# Create a list of objects
+# Create a list of objects\cr
 models <- list("Decision Tree" = decision_tree$resample,
-               "KNN" = knn$resample)
+               "KNN" = knn$resample)\cr
 }
 \usage{
 data(models)
@@ -37,9 +37,5 @@ additional dependency to the datscience package
 \examples{
 data(models)
 flex_resample_metrics(models, table_caption = NA)
-}
-\references{
-Moore et al. (2013) Genetics 195:1077-1086
-(\href{https://www.ncbi.nlm.nih.gov/pubmed/23979570}{PubMed})
 }
 \keyword{datasets}
