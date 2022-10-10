@@ -42,8 +42,9 @@
 #' @importFrom dplyr tibble mutate select group_by
 #' @importFrom forcats fct_drop as_factor
 #' @importFrom tidyselect all_of
-#' @importFrom rstatix identify_outliers shapiro_test get_summary_stats levene_test t_test add_significance cohens_d add_xy_position get_test_label anova_test tukey_hsd get_pwc_label
+#' @importFrom rstatix identify_outliers shapiro_test get_summary_stats levene_test t_test add_significance cohens_d add_xy_position get_test_label anova_test tukey_hsd get_pwc_label welch_anova_test
 #' @importFrom ggpubr ggboxplot set_palette ggqqplot stat_pvalue_manual
+#' @importFrom ggplot2 labs
 #' @seealso
 #' \code{\link[ggpubr]{ggboxplot}}
 #' \code{\link[rstatix]{t_test}}
@@ -208,15 +209,20 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
 
     if (verbose) print(stat.test)
     if (verbose) print(es)
-  } else {
-    stat.test <- rstatix::anova_test(df, f, effect.size = "pes")
+  } else { # ANOVA k > 2
+    if (levene_test$p > .05) {
+      stat.test <- rstatix::anova_test(df, f, effect.size = "pes")
+    } else{
+      stat.test <- rstatix::welch_anova_test(df, f)
+    }
+
     pwc <- rstatix::tukey_hsd(df, f)
 
     # Visualization: box plots with p-values
     pwc <- pwc %>% rstatix::add_xy_position(x = iv)
     bxp_final <- bxp +
       ggpubr::stat_pvalue_manual(pwc, hide.ns = TRUE) +
-      labs(
+      ggplot2::labs(
         subtitle = rstatix::get_test_label(stat.test, detailed = TRUE),
         caption = rstatix::get_pwc_label(pwc)
       )
