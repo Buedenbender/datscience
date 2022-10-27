@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-![Last-changedate](https://img.shields.io/github/last-commit/buedenbender/datscience?style=plastic)
-![packageversion](https://img.shields.io/github/r-package/v/Buedenbender/datscience?style=plastic) 
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--10--27-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.4-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
@@ -203,6 +203,8 @@ formatted_loadings
 
 ## Next Steps for `datscience` R-Package
 
+-   Add an overall column to `flex_table1()` function see
+    [issue#1](https://github.com/Buedenbender/datscience/issues/1)
 -   Add a complete vignette for a factor analysis (utilizing `psych` and
     `datscience` package)
 -   Beautify / clarify the vignette for bootstrapping confidence
