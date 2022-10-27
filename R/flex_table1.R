@@ -131,6 +131,9 @@ utils::globalVariables("table_caption")
 #' @param PCTexcludeNA
 #'   Boolean, default = TRUE, Should calculation of percentages include or
 #'   exclude Missings values. If PCTexcludeNA = TRUE, missings will be excluded.
+#' @param overall_col
+#'   Boolean, default = FALSE, Should the final table also include a column
+#'   for the totals of the sample?
 #' @param ...
 #'   (Optional), Additional arguments that can be passed to
 #'   \code{\link{format_flextable}} (e.g., fontsize, font ...) or to
@@ -174,6 +177,7 @@ flex_table1 <- function(str_formula,
                         include_teststat = TRUE,
                         drop_unused_cats = TRUE,
                         PCTexcludeNA = TRUE,
+                        overall_col = TRUE,
                         ...) {
 
 
