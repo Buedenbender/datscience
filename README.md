@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-![Last-changedate](https://img.shields.io/github/last-commit/buedenbender/datscience?style=plastic)
-![packageversion](https://img.shields.io/github/r-package/v/Buedenbender/datscience?style=plastic) 
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--10--27-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.4-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
@@ -25,15 +25,15 @@ data for publication. Most of the current functions provide additional
 utility for conducting factor analyses or principal component analyses.
 
 The overall goal was to improve the workflow of data analysis and help
-with formatting challenges I frequently encounter. To illustrate this, I
-will present and briefly elaborate on one typical problem I frequently
-encounter (getting the stats from R with the right format into MS Word),
-and what this package provides to solve this.
+with formatting challenges I encountered in the preparation of
+submission to scientific journals. Below are exemplary problems I
+frequently encountered in the past: getting the stats from R with the
+right format into MS Word, and what this package provides to solve this.
 
 As of March 2022 the new function `datscience::flex_table1()` makes the
-creation of the Sociodemograhpic Table 1 (including a subsample
-comparison), basically a piece of cake. Take a look at the new article
-`vignette("flex_table1")`
+creation of the Sociodemograhpic Table 1 (including the statistical
+comparisons of subsamples), basically a piece of cake. Take a look at
+the new article `vignette("flex_table1")`
 
 ### Teaser of `datscience` Functionality
 
@@ -64,8 +64,8 @@ apa_corrTable() example](man/figures/README-apa_corrTableExample.png)
 
 **Please Note:** The code for the formatting was inspired and adapted
 from the blog post of [Rémi
-Thériault](https://remi-theriault.com/blog_table.html), the correlations
-with marked significance from [Dominik Vogel’s
+Thériault](https://rempsyc.remi-theriault.com/articles/table), the
+correlations with marked significance from [Dominik Vogel’s
 package](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)
 
 ### 
@@ -81,7 +81,7 @@ directly from
 devtools::install_github("Buedenbender/datscience")
 ```
 
-**Plesae Note:** that datscience depends on many useful packages, which
+**Please Note:** that datscience depends on many useful packages, which
 will be installed in the process (e.g. dplyr, ggplot2, …).
 
 #### Installation Troubleshoot
@@ -108,7 +108,7 @@ cran website: <https://cran.r-project.org/bin/windows/Rtools/>
 
 ## Examples
 
-The functions I appreciated the most, and use the most are
+The functions I recommed and use the most are
 `datscience::format_flextable()` and `datscience::apa_corrTable()`
 
 ### apa_corrTable() Function
@@ -158,7 +158,7 @@ formatting necessary to convert a flextable to a “publication ready” APA
 formatted table.
 
 One example of the flexibility would be to just try to print the factor
-loadings from a prinicipal component analysis (PCA, `psych::prinicial`)
+loadings from a principal component analysis (PCA, `psych::prinicial`)
 
 **Let’s first create an exemplary
 PCA**<sup>\[[1](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/Harman74.cor),
@@ -210,9 +210,9 @@ formatted_loadings
 
 ## Related Work
 
--   [rempsyc](https://github.com/RemPsyc) I highly recommend this now
-    available package. It offers great utility for psychologist and
-    social scientist getting into R and provides nicely on-point
+-   [rempsyc](https://rempsyc.remi-theriault.com/) I highly recommend
+    this now available package. It offers great utility for psychologist
+    and social scientist getting into R and provides nicely on-point
     tutorials on how to implement the provided functions
     ([one](https://remi-theriault.com/blog_table.html) of which was the
     origin of `datscience::format_flextable()`)
