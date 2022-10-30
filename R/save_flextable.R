@@ -23,9 +23,9 @@
 #' @seealso \code{\link{serialNext}}
 save_flextable <- function(ft, filepath, overwrite = FALSE) {
   # Validate user input
-  if(!is(ft,"flextable")) stop("Invalid argument type, ft requires a flextable::flextable() object",call.= FALSE)
-  if(!is.character(filepath)) stop("Invalid argument type, fielpath requires a character",call.= FALSE)
-  if(!is.logical(overwrite)) stop("Invalid argument type, overwrite only takes a logical (TRUE or FALSE)",call.= FALSE)
+  if (!is(ft, "flextable")) stop("Invalid argument type, ft requires a flextable::flextable() object", call. = FALSE)
+  if (!is.character(filepath)) stop("Invalid argument type, fielpath requires a character", call. = FALSE)
+  if (!is.logical(overwrite)) stop("Invalid argument type, overwrite only takes a logical (TRUE or FALSE)", call. = FALSE)
 
   #### Check if directory exists, if not create it
   if (!file.exists(dirname(filepath))) {
@@ -39,19 +39,20 @@ save_flextable <- function(ft, filepath, overwrite = FALSE) {
   filetype <- xfun::file_ext(filepath)
   # Save depending on filetype
   switch(filetype,
-         docx = {
-           flextable::save_as_docx(ft, path = filepath)
-         },
-         pptx = {
-           flextable::save_as_pptx(ft, path = filepath)
-         },
-         html = {
-           flextable::save_as_html(ft, path = filepath)
-         },
-         {
-           warning("The given file format is not supported by the package,
+    docx = {
+      flextable::save_as_docx(ft, path = filepath)
+    },
+    pptx = {
+      flextable::save_as_pptx(ft, path = filepath)
+    },
+    html = {
+      flextable::save_as_html(ft, path = filepath)
+    },
+    {
+      warning("The given file format is not supported by the package,
                    try using .docx, .pptx or .html",
-                   call.= FALSE)
-         }
+        call. = FALSE
+      )
+    }
   )
 }

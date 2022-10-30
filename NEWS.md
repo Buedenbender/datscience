@@ -1,3 +1,11 @@
+# datscience 0.2.5
+
+* softfork for `flex_table1()` having the opportunity to showcase an overall column
+* Updated all GH Actions to v2 ([link](https://github.com/r-lib/actions/tree/v2/examples))
+* Added additional GH Actions / Workflows (render markdown, style code)
+* Corrected styling (indentation, ..)
+* Updated all dependencies and R to 4.2.1
+
 # datscience 0.2.4
 
 * Improved units tests (code cov) and further implemented CI support

@@ -37,7 +37,7 @@ spss_swap <- function(df, repl_umlaut = TRUE, old_itemnames = c("remove", "prepe
   if (missing(df)) stop("Need to specify the mandatory argument \"df\"")
 
   if (!is(df, "tbl_df")) {
-    stop(paste(
+    warning(paste(
       "Invalid argument type. The argument",
       "\"df\" is required to be an spss matrix read with haven::read_sav()"
     ))

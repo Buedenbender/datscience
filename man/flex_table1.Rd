@@ -14,6 +14,7 @@ flex_table1(
   include_teststat = TRUE,
   drop_unused_cats = TRUE,
   PCTexcludeNA = TRUE,
+  overall = FALSE,
   ...
 )
 }
@@ -50,6 +51,10 @@ table. 1) Test statistic (either t, f or X²) and 2) degrees of Freedom}
 
 \item{PCTexcludeNA}{Boolean, default = TRUE, Should calculation of percentages include or
 exclude Missings values. If PCTexcludeNA = TRUE, missings will be excluded.}
+
+\item{overall}{Character, default = FALSE, Should the final table also include a column
+for the totals of the sample? If a character is provided this give the
+name of the new column (recommendation "Overall")}
 
 \item{...}{(Optional), Additional arguments that can be passed to
 \code{\link{format_flextable}} (e.g., fontsize, font ...) or to
@@ -128,23 +133,22 @@ A convenience function, that provides and easy wrapper for the
     to applying no correction.
 }
 \examples{
-
 \dontrun{
-  # Comparison of just two Groups
-   str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
-   data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
-   data$test <- factor(rep(c("Female", "Male"), 50))
-   table_caption <- c("Table 1", "A test on the Iris Data")
-   flex_table1(str_formula, data = data, table_caption = table_caption)
+# Comparison of just two Groups
+str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
+data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
+data$test <- factor(rep(c("Female", "Male"), 50))
+table_caption <- c("Table 1", "A test on the Iris Data")
+flex_table1(str_formula, data = data, table_caption = table_caption)
 
-  # Comparison of Multiple Groups (ANOVA)
-   str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
-   data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
-   data <- iris
-   data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
-   table_caption <- c("Table 1", "A test on the Iris Data")
-   flex_table1(str_formula, data = data, table_caption = table_caption)
-   }
+# Comparison of Multiple Groups (ANOVA)
+str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
+data <- dplyr::filter(iris, Species \%in\% c("setosa", "versicolor"))
+data <- iris
+data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data) / 2))
+table_caption <- c("Table 1", "A test on the Iris Data")
+flex_table1(str_formula, data = data, table_caption = table_caption)
+}
 
 }
 \references{

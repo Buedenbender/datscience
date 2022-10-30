@@ -28,7 +28,6 @@ serialNext <- function(path,
                        n_digits = 3,
                        maxruns = 500,
                        ...) {
-
   # Validate correct inputs
   if (missing(path)) stop("Need to specify the mandatory argument \"path\"")
   if (!is(path, "character")) {

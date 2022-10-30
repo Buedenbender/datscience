@@ -52,7 +52,6 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
                              italize_stats = TRUE,
                              linespacing = 1.25,
                              ...) {
-
   # Construct Borders
   apa.border <- list("width" = 1, color = "black", style = "solid")
   invis.borders <- list("width" = 0, color = "black", style = "solid")
@@ -91,7 +90,7 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
   if (!anyNA(table_note)) {
     formatted_ft <- formatted_ft %>%
       flextable::add_footer_lines(., values = "") %>%
-      flextable::compose(.,i=1,j=1,value=as_paragraph(as_i("Note. "),table_note), part = "footer")
+      flextable::compose(., i = 1, j = 1, value = as_paragraph(as_i("Note. "), table_note), part = "footer")
   }
 
   formatted_ft <- formatted_ft %>%
