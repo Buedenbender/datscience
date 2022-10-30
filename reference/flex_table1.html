@@ -44,7 +44,7 @@ Really all credit should go to these two packages their developers.
     
     <a class="navbar-brand me-2" href="../index.html">datscience</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,6 +116,7 @@ Really all credit should go to these two packages their developers.
 <span>  include_teststat <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  drop_unused_cats <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  PCTexcludeNA <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  overall <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -171,6 +172,12 @@ table. 1) Test statistic (either t, f or X²) and 2) degrees of Freedom</p></dd>
 <dt>PCTexcludeNA</dt>
 <dd><p>Boolean, default = TRUE, Should calculation of percentages include or
 exclude Missings values. If PCTexcludeNA = TRUE, missings will be excluded.</p></dd>
+
+
+<dt>overall</dt>
+<dd><p>Character, default = FALSE, Should the final table also include a column
+for the totals of the sample? If a character is provided this give the
+name of the new column (recommendation "Overall")</p></dd>
 
 
 <dt>...</dt>
@@ -272,23 +279,22 @@ ISBN 0123456789, <a href="https://doi.org/10.1007/s11229-021-03276-4" class="ext
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co"># Comparison of just two Groups</span></span></span>
-<span class="r-in"><span>   <span class="va">str_formula</span> <span class="op">&lt;-</span> <span class="st">"~ Sepal.Length + Sepal.Width +test | Species"</span></span></span>
-<span class="r-in"><span>   <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="va">data</span><span class="op">$</span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="va">table_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"A test on the Iris Data"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu">flex_table1</span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">data</span>, table_caption <span class="op">=</span> <span class="va">table_caption</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Comparison of just two Groups</span></span></span>
+<span class="r-in"><span><span class="va">str_formula</span> <span class="op">&lt;-</span> <span class="st">"~ Sepal.Length + Sepal.Width +test | Species"</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span><span class="op">$</span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">table_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"A test on the Iris Data"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">flex_table1</span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">data</span>, table_caption <span class="op">=</span> <span class="va">table_caption</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Comparison of Multiple Groups (ANOVA)</span></span></span>
-<span class="r-in"><span>   <span class="va">str_formula</span> <span class="op">&lt;-</span> <span class="st">"~ Sepal.Length + Sepal.Width + Gender_example | Species"</span></span></span>
-<span class="r-in"><span>   <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span></span>
-<span class="r-in"><span>   <span class="va">data</span><span class="op">$</span><span class="va">Gender_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="va">table_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"A test on the Iris Data"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu">flex_table1</span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">data</span>, table_caption <span class="op">=</span> <span class="va">table_caption</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># Comparison of Multiple Groups (ANOVA)</span></span></span>
+<span class="r-in"><span><span class="va">str_formula</span> <span class="op">&lt;-</span> <span class="st">"~ Sepal.Length + Sepal.Width + Gender_example | Species"</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span></span>
+<span class="r-in"><span><span class="va">data</span><span class="op">$</span><span class="va">Gender_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">table_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 1"</span>, <span class="st">"A test on the Iris Data"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">flex_table1</span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">data</span>, table_caption <span class="op">=</span> <span class="va">table_caption</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
