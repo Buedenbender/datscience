@@ -572,7 +572,7 @@ flex_table1 <- function(str_formula,
   #   - get all column names
   names <- df %>% names()
   #   - iterate over all groups
-  for (j in c(2:(n_grps + 1))) {
+  for (j in c(2:(n_grps + 1 + overall_counter))) {
     # Extract Name an N for the respective group
     group_name <- names[j]
     n <- number_parse(df[1, j])
