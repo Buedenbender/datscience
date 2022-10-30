@@ -201,14 +201,6 @@ formatted_loadings
 
 ![](man/figures/README-format_flextableExample.png)
 
-## Next Steps for `datscience` R-Package
-
--   Add an overall column to `flex_table1()` function see
-    [issue#1](https://github.com/Buedenbender/datscience/issues/1)
--   Add a complete vignette for a factor analysis (utilizing `psych` and
-    `datscience` package)
--   Beautify / clarify the vignette for bootstrapping confidence
-    intervals for observed Eigenvalues in parallel analysis
 
 ## Related Work
 
@@ -220,7 +212,3 @@ formatted_loadings
     origin of `datscience::format_flextable()`)
 
 <!-- # Testing Packagedown -->
-<!-- ### Additional Remarks -->
-<!-- To Be Added Vignette on "Normal" Factor Analysis -->
-<!-- #TODO: INCLUDE Reference to Vignettes OR Include Factor Analysis -->
-<!-- Minor Changes to Test Github Workflow: Removed Oldrel -->
