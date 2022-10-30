@@ -131,6 +131,10 @@ utils::globalVariables("table_caption")
 #' @param PCTexcludeNA
 #'   Boolean, default = TRUE, Should calculation of percentages include or
 #'   exclude Missings values. If PCTexcludeNA = TRUE, missings will be excluded.
+#' @param overall
+#'   Character, default = FALSE, Should the final table also include a column
+#'   for the totals of the sample? If a character is provided this give the
+#'   name of the new column (recommendation "Overall")
 #' @param ...
 #'   (Optional), Additional arguments that can be passed to
 #'   \code{\link{format_flextable}} (e.g., fontsize, font ...) or to
@@ -142,23 +146,22 @@ utils::globalVariables("table_caption")
 #'   (e.g., a word .docx file)
 #'
 #' @examples
-#'
 #' \dontrun{
-#'   # Comparison of just two Groups
-#'    str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
-#'    data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
-#'    data$test <- factor(rep(c("Female", "Male"), 50))
-#'    table_caption <- c("Table 1", "A test on the Iris Data")
-#'    flex_table1(str_formula, data = data, table_caption = table_caption)
+#' # Comparison of just two Groups
+#' str_formula <- "~ Sepal.Length + Sepal.Width +test | Species"
+#' data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
+#' data$test <- factor(rep(c("Female", "Male"), 50))
+#' table_caption <- c("Table 1", "A test on the Iris Data")
+#' flex_table1(str_formula, data = data, table_caption = table_caption)
 #'
-#'   # Comparison of Multiple Groups (ANOVA)
-#'    str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
-#'    data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
-#'    data <- iris
-#'    data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data)/2))
-#'    table_caption <- c("Table 1", "A test on the Iris Data")
-#'    flex_table1(str_formula, data = data, table_caption = table_caption)
-#'    }
+#' # Comparison of Multiple Groups (ANOVA)
+#' str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
+#' data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
+#' data <- iris
+#' data$Gender_example <- factor(rep(c("Female", "Male"), nrow(data) / 2))
+#' table_caption <- c("Table 1", "A test on the Iris Data")
+#' flex_table1(str_formula, data = data, table_caption = table_caption)
+#' }
 #'
 #' @references
 #'   \insertAllCited{}
@@ -174,12 +177,13 @@ flex_table1 <- function(str_formula,
                         include_teststat = TRUE,
                         drop_unused_cats = TRUE,
                         PCTexcludeNA = TRUE,
+                        overall = FALSE,
                         ...) {
 
 
   # 1) Prepare Formula String -----------------------------------------------
   # Remove line breaks
-  str_formula <- sub("\\\n","",str_formula)
+  str_formula <- sub("\\\n", "", str_formula)
 
   # Determine the number of Comparisons: Necessary for Correction of the p-value
   #   - Use the number of Terms in the formula
@@ -190,20 +194,26 @@ flex_table1 <- function(str_formula,
   }
 
   # Drop unused / empty categorie
-  if(missing(drop_unused_cats) | drop_unused_cats){
+  if (missing(drop_unused_cats) | drop_unused_cats) {
     data <- data %>%
-      dplyr::mutate(dplyr::across(where(is.factor), ~forcats::fct_drop(.)))
+      dplyr::mutate(dplyr::across(where(is.factor), ~ forcats::fct_drop(.)))
   }
 
   grp_var <- trimws(unlist(strsplit(str_formula, "\\|"))[2])
   n_grps <- unname(lengths(unique(data[grp_var])))
 
 
-  # 2) Preparing additional arguments ---------------------------------------
-  if(!missing(correct) & !is.na(correct)) correct <- tolower(correct)
+  # 2) Preparing & checking additional arguments ---------------------------------------
+  if (!missing(correct) & !is.na(correct)) correct <- tolower(correct)
+  # Index variable to format test stat col correct
+  # As this depends on whether the overall col is present or not
+  overall_counter <- 0
+  if (!is.na(overall) & !is.null(overall)) overall_counter <- 1
 
-  ### Helper Functions for the table1
+  # 3) Helper Functions for the table1+ ----------------------------------------
   # https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
+
+  ## 3.1) Function for p-value col ----------------------------------------------
   pvalue <- function(x, ...) {
     # Flaggs for append superscript letters for correction
     fisher <- FALSE
@@ -291,7 +301,8 @@ flex_table1 <- function(str_formula,
   }
 
 
-  # Function for test statistic
+
+  ## 3.2 Function for test stat column -------------------------------------
   teststat <- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
     y <- unlist(x)
@@ -312,7 +323,7 @@ flex_table1 <- function(str_formula,
       else {
         if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
           res <- stats::aov(y ~ g)
-          stat <- summary(res)[[1]][1,4]
+          stat <- summary(res)[[1]][1, 4]
         } else {
           res <- stats::oneway.test(y ~ g)
           stat <- res$statistic
@@ -351,10 +362,11 @@ flex_table1 <- function(str_formula,
       }
     }
 
-    if (is.character(stat)) stat else round(stat,2)
+    if (is.character(stat)) stat else round(stat, 2)
   }
 
-  # Function for test statistic
+
+  ## 3.3) Function for degrees of freedom column -----------------------------
   degreesfreedom <- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
     y <- unlist(x)
@@ -369,17 +381,17 @@ flex_table1 <- function(str_formula,
       # t-Test
       if (n_grps == 2) {
         # Either perform a standard t-Test or a Welch Test for Heterogeneity of variances
-        df <- round(stats::t.test(y ~ g, var.equal = homogeneity)$parameter,2)
+        df <- round(stats::t.test(y ~ g, var.equal = homogeneity)$parameter, 2)
       }
       # ANOVA
       else {
         if (homogeneity) { # "Normal" ANOVA for Homogenous Variances Between Groups
           res <- stats::aov(y ~ g)
-          df <- paste0(summary(res)[[1]][1,1],", ",summary(res)[[1]][2,1])
+          df <- paste0(summary(res)[[1]][1, 1], ", ", summary(res)[[1]][2, 1])
         } else {
           res <- stats::oneway.test(y ~ g)
-          param <- round(res$parameter,2)
-          df <- paste0(param[1],", ",param[2])
+          param <- round(res$parameter, 2)
+          df <- paste0(param[1], ", ", param[2])
         }
       }
     }
@@ -418,6 +430,7 @@ flex_table1 <- function(str_formula,
   }
 
 
+  ## 3.4 Helper function for formatting of values ----------------------------
   # Helper to format the output of Metric Vars
   my.render.cont <- function(x) {
     with(
@@ -442,16 +455,19 @@ flex_table1 <- function(str_formula,
   # Number of Extra Columns
   if (include_teststat) {
     extra_col <- list(
-      "t / X"=teststat,
+      "t / X" = teststat,
       "df" = degreesfreedom,
-      "p" = pvalue)
-  }else extra_col <- list("p" = pvalue)
+      "p" = pvalue
+    )
+  } else {
+    extra_col <- list("p" = pvalue)
+  }
 
   tbl1 <- table1::table1(
     form,
     data = data,
     render.continuous = my.render.cont, render.categorical = my.render.cat,
-    render.missing = NULL, droplevels = TRUE, overall = FALSE,
+    render.missing = NULL, droplevels = TRUE, overall = overall,
     extra.col = extra_col,
     rowlabelhead = "Characteristic"
   )
@@ -493,41 +509,41 @@ flex_table1 <- function(str_formula,
     ) %>%
     flextable::bold(., part = "body", j = 1, bold = FALSE) %>%
     flextable::bold(.,
-                    i = ~ number_parse(p) < 0.05,
-                    j = ~Characteristic,
-                    bold = TRUE
+      i = ~ number_parse(p) < 0.05,
+      j = ~Characteristic,
+      bold = TRUE
     ) %>%
     flextable::compose(.,
-                       part = "body",
-                       j = ~Characteristic,
-                       i = ~ number_parse(as.character(p)) < 0.05,
-                       value = flextable::as_paragraph(
-                         Characteristic,
-                         flextable::as_chunk(ifelse(number_parse(p) <= 0.001,
-                                                    " ***",
-                                                    ifelse(number_parse(p) < 0.01, " **", " *")
-                         ))
-                       )
+      part = "body",
+      j = ~Characteristic,
+      i = ~ number_parse(as.character(p)) < 0.05,
+      value = flextable::as_paragraph(
+        Characteristic,
+        flextable::as_chunk(ifelse(number_parse(p) <= 0.001,
+          " ***",
+          ifelse(number_parse(p) < 0.01, " **", " *")
+        ))
+      )
     ) %>%
     flextable::align(.,
-                     i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-                     part = "header", align = "center"
+      i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+      part = "header", align = "center"
     ) %>%
     flextable::italic(., j = ~p, part = "header")
 
   # When Teststatistic included in the table
   if (include_teststat) {
-    if (n_grps == 2) header_teststat <- "t / \u03C7\u00B2" else  header_teststat <- "F / \u03C7\u00B2"
+    if (n_grps == 2) header_teststat <- "t / \u03C7\u00B2" else header_teststat <- "F / \u03C7\u00B2"
     ft <- ft %>%
       # Correct heading for the teststatistic
       flextable::compose(.,
-                         part = "header",
-                         j = (n_grps + 2),
-                         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-                         value = flextable::as_paragraph(header_teststat)) %>%
+        part = "header",
+        j = (n_grps + 2 + overall_counter),
+        i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+        value = flextable::as_paragraph(header_teststat)
+      ) %>%
       # Make Degrees of Freedom italic
       flextable::italic(., j = ~df, part = "header")
-
   }
 
   # convert table 1 to data.frame for manual adjustments of the table
@@ -539,7 +555,7 @@ flex_table1 <- function(str_formula,
     if (any(grepl("\u0363", df$p))) {
       ft <- ft %>%
         flextable::add_footer_lines(.,
-                                    values = "\u0363 Fisher's exact test, expected cell-count \u2264 1."
+          values = "\u0363 Fisher's exact test, expected cell-count \u2264 1."
         )
     }
 
@@ -547,7 +563,7 @@ flex_table1 <- function(str_formula,
     if (any(grepl("\u1D47", df$p))) {
       ft <- ft %>%
         flextable::add_footer_lines(.,
-                                    value = "\u1D47 Welch's correction for heterogeneity of variances.",
+          value = "\u1D47 Welch's correction for heterogeneity of variances.",
         )
     }
   }
@@ -556,7 +572,7 @@ flex_table1 <- function(str_formula,
   #   - get all column names
   names <- df %>% names()
   #   - iterate over all groups
-  for(j in c(2:(n_grps+1))){
+  for (j in c(2:(n_grps + 1 + overall_counter))) {
     # Extract Name an N for the respective group
     group_name <- names[j]
     n <- number_parse(df[1, j])
@@ -564,16 +580,16 @@ flex_table1 <- function(str_formula,
     # Replace Header with cursive N
     ft <- ft %>%
       flextable::compose(.,
-                         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
-                         j = j,
-                         part = "header",
-                         # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
-                         value = as_paragraph(
-                           group_name, "\n(",
-                           flextable::as_i("N"),
-                           " = ",
-                           as.character(n), ")"
-                         )
+        i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
+        j = j,
+        part = "header",
+        # value = as_paragraph("(",flextable::as_b(N)," = ",as.character(49)")"))
+        value = as_paragraph(
+          group_name, "\n(",
+          flextable::as_i("N"),
+          " = ",
+          as.character(n), ")"
+        )
       )
   }
 
