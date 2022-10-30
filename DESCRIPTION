@@ -1,7 +1,7 @@
 Package: datscience
 Type: Package
 Title: Dataanalysis and Science Utility Functions
-Version: 0.2.4
+Version: 0.2.5
 Author: Björn Büdenbender
 Maintainer: Björn Büdenbender <b_buedenbender@yahoo.de>
 Description: The datscience (dataanalysis and science) R-package contains
