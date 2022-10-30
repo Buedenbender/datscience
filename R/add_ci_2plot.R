@@ -41,7 +41,6 @@ add_ci_2plot <- function(plot,
                          transparency = 0.5,
                          type = "band",
                          lt = "dotted") {
-
   # globalVariables(c("mpg", "hp", "mpg_div_hp"))
   method <- index <- observed <- lwr <- upr <- NULL
 
@@ -76,4 +75,3 @@ add_ci_2plot <- function(plot,
 
   return(new_plot)
 }
-
