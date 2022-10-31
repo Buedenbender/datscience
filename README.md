@@ -1,5 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<style type="text/css">
+.centerImage
+{
+ text-align:center;
+ display:block;
+}
+</style>
 
 # datscience R-Package
 
@@ -13,62 +20,28 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--10--27-yellowgreen.svg)](commits/main)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.4-orange.svg?style=flat-square)](commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--10--31-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.5-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
 
 The datscience (**dat**aanalysis and **science**) R-package contains
-some useful functions frequently required in the process of preparing
-data for publication. Most of the current functions provide additional
-utility for conducting factor analyses or principal component analyses.
+functions, which are frequently required in the process of preparing
+data for publication. Among those are:
+
+-   `format_flextable()` applies the APA 7th theme to a flextable object
+-   `apa_factorLoadings()` creates APA 7th based factor-loadings table
+-   `flex_table1()` tabular group comparison of 2 or more groups (usualy
+    table 1)
+-   `Rcitation_appendix()` Function that allows the creation of a full
+    APA-style table with all citations and informations on the
+    R-packages utilized.
 
 The overall goal was to improve the workflow of data analysis and help
 with formatting challenges I encountered in the preparation of
-submission to scientific journals. Below are exemplary problems I
-frequently encountered in the past: getting the stats from R with the
-right format into MS Word, and what this package provides to solve this.
-
-As of March 2022 the new function `datscience::flex_table1()` makes the
-creation of the Sociodemograhpic Table 1 (including the statistical
-comparisons of subsamples), basically a piece of cake. Take a look at
-the new article `vignette("flex_table1")`
-
-### Teaser of `datscience` Functionality
-
-While R provides so many opportunities and power to conduct whatever
-analyses one can imagine, I found myself often having difficulties with
-the transfer of the analysis or the results from R session into MS Word.
-
-**Example Problem:** Get a *nicely* formatted (in accordance with APA
-7th publication manual) correlation table directly into a Word file
-(\*.docx).
-
-`datscience` provides with the `apa_corrTable()` function an easy
-solution for this task.
-
-``` r
-datscience::apa_corrTable(
-  df = iris[1:4], summarystats = c("median", "range"),
-  filepath = "man/figures/CorrelationTable_iris.docx",
-  table_caption = c("Table 1", "Correlation and Descriptive Statistics")
-)
-```
-
-This creates the path (i.e., directories) `man/figures/` in the current
-working directory of R and also the desired word file (see below).
-
-**Screenshot of “CorrelationTable_iris.docx”** ![Screenshot of
-apa_corrTable() example](man/figures/README-apa_corrTableExample.png)
-
-**Please Note:** The code for the formatting was inspired and adapted
-from the blog post of [Rémi
-Thériault](https://rempsyc.remi-theriault.com/articles/table), the
-correlations with marked significance from [Dominik Vogel’s
-package](https://rdrr.io/github/DominikVogel/vogelR/src/R/output.R)
-
-### 
+submission to scientific journals. For example: getting stats from R
+with the right format into MS Word.
 
 ## Installation
 
@@ -77,12 +50,19 @@ directly from
 [GitHub](https://github.com/Buedenbender/datscience#readme) with:
 
 ``` r
-# install.packages("devtools")
+# Normal intsallation
+install.packages("devtools")
 devtools::install_github("Buedenbender/datscience")
 ```
 
-**Please Note:** that datscience depends on many useful packages, which
-will be installed in the process (e.g. dplyr, ggplot2, …).
+My recommendation would be to use a the
+[pacman](https://github.com/trinker/pacman) package manger instead, as
+this installs the latest version from github and directly loads it
+
+``` r
+# Recommendation: pacman
+pacman::p_load_gh("Buedenbender/datscience")
+```
 
 #### Installation Troubleshoot
 
@@ -98,22 +78,60 @@ Sys.setenv(R_REMOTES_STANDALONE="true")
 remotes::install_github("Buedenbender/datscience")
 ```
 
-Further, some users might need to update some of the packages
-`datscience` depends on (most prominently
-e.g. [stringi](https://cran.r-project.org/web/packages/stringi/index.html)).
-Since R-Version 4.x you probably will need to manually download and
-install Rtools (and add it to the path) in advance, to be able to
-successfully update stringi. A quick guide on RTools is given on the
-cran website: <https://cran.r-project.org/bin/windows/Rtools/>
+### A Teaser of `datscience` Functionality: `flex_table1()`
 
-## Examples
+While R provides so many opportunities and power to conduct whatever
+analyses one can imagine, I found myself often having difficulties with
+the transfer of the analysis or the results from R session into MS Word.
 
-The functions I recommed and use the most are
-`datscience::format_flextable()` and `datscience::apa_corrTable()`
+**Example Problem:** Get a *nicely* formatted (in accordance with APA
+7th publication manual) sociodemographic table 1 directly into a Word
+file (\*.docx).
 
-### apa_corrTable() Function
+As of March 2022 the new function `datscience::flex_table1()` makes the
+creation of the Sociodemograhpic Table 1 (including the statistical
+comparisons of subsamples), basically a piece of cake. Take a look at
+the new article `vignette("flex_table1")`. For the example we took the
+popular [iris]() dataset and included a simulated categorial variable
+called *Color* that contains either “Blue” or “Orange”. We supply the
+function with a formula that determines which variables are to be
+included in the table. For the example we include the two metric
+variables *Sepal.Length*, *Sepal.Width* as well as the simulated *Color*
 
-The `datscience::apa_corrTable()` function was already showcased aboved.
+``` r
+# To load datscience
+pacman::p_load_gh("Buedenbender/datscience")
+str_formula <- "~ Sepal.Length + Sepal.Width + Color | Species"
+flex_table1(str_formula, data = iris_sim, overall = "Overall") #%>% 
+```
+
+``` r
+# save_flextable("Table1.docx")
+```
+
+<center>
+<img src = "man/figures/flex_table1.png" 
+centerImage width = "80%" />
+</center>
+
+Uncomment the pipe `%>%` operator above and the line after the call to
+`flex_table1()` to diretly save this nicely formatted tabular comparison
+as .docs (Word) document.
+
+## Further Examples of `datscience` Functionality
+
+### The apa_corrTable() Function
+
+The `datscience::apa_corrTable()` displays correlations with marked
+significance and additionally adds descriptive statistics to the table,
+*see below*:
+
+**Screenshot of “CorrelationTable_iris.docx”**
+<center>
+<img src = "man/figures/README-apa_corrTableExample.png" 
+centerImage width = "95%" />
+</center>
+
 This function resolves around three other useful functions from this
 package.
 
@@ -149,6 +167,15 @@ package.
     naming) write the flextable object to a Word (.docx) file
 
 ### format_flextable() Function
+
+One of the most utilized functions inside the package is the
+`datscience::format_flextable()` which takes a `flextable` objects and
+applies the APA 7th edition theme on it. It also provides a work-around
+to give an APA ready table caption and a note.
+
+**Note:** The code for the formatting (theme) for `format_flextable()`
+function was inspired from the blog post of [Rémi
+Thériault](https://rempsyc.remi-theriault.com/articles/table)
 
 The flextable package is so versatile and it was exactly what I was
 looking for to get nicely formatted tables directly from R(studio) into
@@ -200,7 +227,6 @@ formatted_loadings
 ```
 
 ![](man/figures/README-format_flextableExample.png)
-
 
 ## Related Work
 
