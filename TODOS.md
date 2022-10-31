@@ -31,7 +31,6 @@
   
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
-## Archive 
 
 ### Patch to work with R 4.2.2
 - ~~Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)~~
