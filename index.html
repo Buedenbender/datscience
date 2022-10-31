@@ -124,9 +124,9 @@
 <code><a href="reference/Rcitation_appendix.html">Rcitation_appendix()</a></code> Function that allows the creation of a full APA-style table with all citations and informations on the R-packages utilized.</li>
 </ul>
 <p>The overall goal was to improve the workflow of data analysis and help with formatting challenges I encountered in the preparation of submission to scientific journals. For example: getting stats from R with the right format into MS Word.</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>You can install the latest released version of datscience easily, directly from <a href="https://github.com/Buedenbender/datscience#readme" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Normal intsallation</span></span>
@@ -143,6 +143,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>R_REMOTES_STANDALONE<span class="op">=</span><span class="st">"true"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="a-teaser-of-datscience-functionality-flex_table1">A Teaser of <code>datscience</code> Functionality: <code>flex_table1()</code>
@@ -163,13 +164,12 @@
 </center>
 <p>Uncomment the pipe <code>%&gt;%</code> operator above and the line after the call to <code><a href="reference/flex_table1.html">flex_table1()</a></code> to diretly save this nicely formatted tabular comparison as .docs (Word) document.</p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="further-examples-of-datscience-functionality">Further Examples of <code>datscience</code> Functionality<a class="anchor" aria-label="anchor" href="#further-examples-of-datscience-functionality"></a>
-</h2>
+<div class="section level3">
+<h3 id="further-examples-of-datscience-functionality">Further Examples of <code>datscience</code> Functionality<a class="anchor" aria-label="anchor" href="#further-examples-of-datscience-functionality"></a>
+</h3>
 <p>Below are just a few examples of the functionality of the package</p>
 <div class="section level4">
-<h4 id="id_--the-apa_corrtable-function">- The apa_corrTable() Function<a class="anchor" aria-label="anchor" href="#id_--the-apa_corrtable-function"></a>
+<h4 id="the-apa_corrtable-function">The apa_corrTable() Function<a class="anchor" aria-label="anchor" href="#the-apa_corrtable-function"></a>
 </h4>
 <p>The <code><a href="reference/apa_corrTable.html">datscience::apa_corrTable()</a></code> displays correlations with marked significance and additionally adds descriptive statistics to the table, <em>see below</em>:</p>
 <strong>Screenshot of “CorrelationTable_iris.docx”</strong>
@@ -203,7 +203,7 @@
 </ol>
 </div>
 <div class="section level4">
-<h4 id="id_--the-format_flextable-function">- The format_flextable() Function<a class="anchor" aria-label="anchor" href="#id_--the-format_flextable-function"></a>
+<h4 id="the-format_flextable-function">The format_flextable() Function<a class="anchor" aria-label="anchor" href="#the-format_flextable-function"></a>
 </h4>
 <p>One of the most utilized functions inside the package is the <code><a href="reference/format_flextable.html">datscience::format_flextable()</a></code> which takes a <code>flextable</code> objects and applies the APA 7th edition theme on it. It also provides a work-around to give an APA ready table caption and a note.</p>
 <p><strong>Note:</strong> The code for the formatting (theme) for <code><a href="reference/format_flextable.html">format_flextable()</a></code> function was inspired from the blog post of <a href="https://rempsyc.remi-theriault.com/articles/table" class="external-link">Rémi Thériault</a></p>
@@ -242,6 +242,7 @@
 <img src="reference/figures/README-format_flextableExample.png" centerimage width="75%">
 </center>
 </div>
+</div>
 <div class="section level3">
 <h3 id="related-work">Related Work<a class="anchor" aria-label="anchor" href="#related-work"></a>
 </h3>
@@ -250,7 +251,6 @@
 <a href="https://rempsyc.remi-theriault.com/" class="external-link">rempsyc</a> I highly recommend this now available package. It offers great utility for psychologist and social scientist getting into R and provides nicely on-point tutorials on how to implement the provided functions (<a href="https://remi-theriault.com/blog_table.html" class="external-link">one</a> of which was the origin of <code><a href="reference/format_flextable.html">datscience::format_flextable()</a></code>)</li>
 </ul>
 <!-- # Testing Packagedown -->
-</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
