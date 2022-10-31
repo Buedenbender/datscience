@@ -126,7 +126,7 @@
 <code class="sourceCode R"><span><span class="co"># To load datscience</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load_gh.html" class="external-link">p_load_gh</a></span><span class="op">(</span><span class="st">"Buedenbender/datscience"</span><span class="op">)</span></span>
 <span><span class="va">str_formula</span> <span class="op">&lt;-</span> <span class="st">"~ Sepal.Length + Sepal.Width + Color | Species"</span></span>
-<span><span class="fu"><a href="reference/flex_table1.html">flex_table1</a></span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">iris_sim</span>, overall <span class="op">=</span> <span class="st">"Overall"</span><span class="op">)</span> <span class="co">#%&gt;% </span></span></code></pre></div>
+<span><span class="fu"><a href="reference/flex_table1.html">flex_table1</a></span><span class="op">(</span><span class="va">str_formula</span>, data <span class="op">=</span> <span class="va">iris_sim</span>, overall <span class="op">=</span> <span class="st">"Overall"</span><span class="op">)</span> <span class="co"># %&gt;%</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># save_flextable("Table1.docx")</span></span></code></pre></div>
 <center>
@@ -165,9 +165,9 @@
 <code class="sourceCode R"><span><span class="fu">datscience</span><span class="fu">::</span><span class="fu"><a href="reference/format_flextable.html">format_flextable</a></span><span class="op">(</span><span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 2"</span>, <span class="st">"Illustrating Functionality of format_flextable()"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-format_flextableIris.png" alt=""><p class="caption">FFIE.png</p>
-</div>
+<center>
+<p><img src="reference/figures/README-format_flextableIris.png" centerimage width="65%"></p>
+</center>
 </li>
 <li><p>Utilizing the <code><a href="reference/save_flextable.html">datscience::save_flextable()</a></code> function. This will savely (i.e., prohibiting overwrite of files by serializing the naming) write the flextable object to a Word (.docx) file</p></li>
 </ol>
@@ -208,7 +208,9 @@
 <span>  table_caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Table 3"</span>, <span class="st">"Factor Loadings in Exemplary PCA"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">formatted_loadings</span></span></code></pre></div>
-<p><img src="reference/figures/README-format_flextableExample.png"></p>
+<center>
+<img src="reference/figures/README-format_flextableExample.png" centerimage width="75%">
+</center>
 </div>
 </div>
 <div class="section level2">
