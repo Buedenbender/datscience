@@ -1,12 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<style type="text/css">
-.centerImage
-{
- text-align:center;
- display:block;
-}
-</style>
 
 # datscience R-Package
 
@@ -102,7 +95,7 @@ variables *Sepal.Length*, *Sepal.Width* as well as the simulated *Color*
 # To load datscience
 pacman::p_load_gh("Buedenbender/datscience")
 str_formula <- "~ Sepal.Length + Sepal.Width + Color | Species"
-flex_table1(str_formula, data = iris_sim, overall = "Overall") #%>% 
+flex_table1(str_formula, data = iris_sim, overall = "Overall") # %>%
 ```
 
 ``` r
@@ -160,7 +153,12 @@ package.
     )
     ```
 
-    ![FFIE.png](man/figures/README-format_flextableIris.png)
+    <center>
+
+    <img src = "man/figures/README-format_flextableIris.png" 
+    centerImage width = "65%" />
+
+    </center>
 
 4.  Utilizing the `datscience::save_flextable()` function. This will
     savely (i.e., prohibiting overwrite of files by serializing the
@@ -226,7 +224,10 @@ formatted_loadings <- datscience::format_flextable(flextable::flextable(pc_loadi
 formatted_loadings
 ```
 
-![](man/figures/README-format_flextableExample.png)
+<center>
+<img src = "man/figures/README-format_flextableExample.png" 
+centerImage width = "75%" />
+</center>
 
 ## Related Work
 
