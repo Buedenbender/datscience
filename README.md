@@ -113,7 +113,9 @@ as .docs (Word) document.
 
 ## Further Examples of `datscience` Functionality
 
-### The apa_corrTable() Function
+Below are just a few examples of the functionality of the package
+
+#### - The apa_corrTable() Function
 
 The `datscience::apa_corrTable()` displays correlations with marked
 significance and additionally adds descriptive statistics to the table,
@@ -164,7 +166,7 @@ package.
     savely (i.e., prohibiting overwrite of files by serializing the
     naming) write the flextable object to a Word (.docx) file
 
-### format_flextable() Function
+#### - The format_flextable() Function
 
 One of the most utilized functions inside the package is the
 `datscience::format_flextable()` which takes a `flextable` objects and
@@ -229,7 +231,7 @@ formatted_loadings
 centerImage width = "75%" />
 </center>
 
-## Related Work
+### Related Work
 
 -   [rempsyc](https://rempsyc.remi-theriault.com/) I highly recommend
     this now available package. It offers great utility for psychologist

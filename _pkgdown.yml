@@ -2,4 +2,44 @@ url: https://buedenbender.github.io/datscience/
 template:
   bootstrap: 5
   bootswatch: flatly
+  includes:
+    in_header: |
+       <!-- Global site tag (gtag.js) - Google Analytics -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id={YOUR TRACKING ID}"#' ></script>
+       <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
 
+         gtag('config', '{YOUR TRACKING ID}');
+       </script>
+
+navbar:
+  type: default
+  toc: TRUE
+  right:
+  - icon: fa-brands fa-orcid
+    href: https://orcid.org/0000-0003-1909-1224
+    aria-label: ORCID
+  - icon: fa-github
+    href: https://github.com/Buedenbender/datscience
+    aria-label: GitHub
+  - icon: fa-solid fa-heart
+    href: https://github.com/sponsors/Buedenbender
+    aria-label: Donate
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Tutorials
+    href: articles/index.html
+    menu:
+      - text: Scree Plot with CI
+        href: articles/ScreePlot_ConfidenceIntervalls_ForObservedEigenvalues.html
+      - text: Table 1 - Tabular Comparison
+        href: articles/flex_table1.html
+  - text: Changelog
+    href: news/index.html
+  - text: To-dos
+    href: TODOS.html
