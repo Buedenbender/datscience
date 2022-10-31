@@ -36,7 +36,7 @@ with formatting challenges I encountered in the preparation of
 submission to scientific journals. For example: getting stats from R
 with the right format into MS Word.
 
-## Installation
+### Installation
 
 You can install the latest released version of datscience easily,
 directly from
@@ -111,11 +111,11 @@ Uncomment the pipe `%>%` operator above and the line after the call to
 `flex_table1()` to diretly save this nicely formatted tabular comparison
 as .docs (Word) document.
 
-## Further Examples of `datscience` Functionality
+### Further Examples of `datscience` Functionality
 
 Below are just a few examples of the functionality of the package
 
-#### - The apa_corrTable() Function
+#### The apa_corrTable() Function
 
 The `datscience::apa_corrTable()` displays correlations with marked
 significance and additionally adds descriptive statistics to the table,
@@ -166,7 +166,7 @@ package.
     savely (i.e., prohibiting overwrite of files by serializing the
     naming) write the flextable object to a Word (.docx) file
 
-#### - The format_flextable() Function
+#### The format_flextable() Function
 
 One of the most utilized functions inside the package is the
 `datscience::format_flextable()` which takes a `flextable` objects and
