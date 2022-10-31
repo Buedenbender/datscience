@@ -1,3 +1,14 @@
+# Patch to work with R 4.2.2
+- Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)
+  * remove out of all .yaml the hot fix of `r-version: '4.2.1'`
+    * check-standard.yaml
+    * pkgdown.yaml
+    * render-markdown.yaml
+    * style.yaml
+    * test-coverage.yaml
+- Update the R Version (mb with `installr::updateR()`)
+- Manually ensure all packages are up to date
+
 # Goals for Future Developments (to do)
 - Add todos to navbar on pkgdown (edit yaml)
 
