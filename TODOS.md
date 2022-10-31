@@ -2,13 +2,6 @@
   
 
 ### Patch to work with R 4.2.2
-- Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)
-  * undo all changes made to the .yaml the hot fix of `r-version: '4.2.1'`
-    * check-standard.yaml
-    * pkgdown.yaml
-    * render-markdown.yaml
-    * style.yaml
-    * test-coverage.yaml
 - Update the R Version (mb with `installr::updateR()`)
 - Manually ensure all packages are up to date
 
@@ -21,3 +14,17 @@
   `datscience` package)
 - Beautify / clarify the vignette for bootstrapping confidence
   intervals for observed Eigenvalues in parallel analysis
+
+### Package Collaboration
+- Experiment with Merging PR from a forked version of this repo
+
+## Archive 
+
+### Patch to work with R 4.2.2
+- ~~Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)~~
+  * ~~undo all changes made to the .yaml the hot fix of `r-version: '4.2.1'`
+    * ~~check-standard.yaml~~
+    * ~~pkgdown.yaml~~
+    * ~~render-markdown.yaml~~
+    * ~~style.yaml~~
+    * ~~test-coverage.yaml~~
