@@ -115,7 +115,7 @@ as .docs (Word) document.
 
 Below are just a few examples of the functionality of the package
 
-#### The apa_corrTable() Function
+#### The `apa_corrTable()` Function
 
 The `datscience::apa_corrTable()` displays correlations with marked
 significance and additionally adds descriptive statistics to the table,
@@ -166,7 +166,7 @@ package.
     savely (i.e., prohibiting overwrite of files by serializing the
     naming) write the flextable object to a Word (.docx) file
 
-#### The format_flextable() Function
+#### The `format_flextable()` Function
 
 One of the most utilized functions inside the package is the
 `datscience::format_flextable()` which takes a `flextable` objects and
@@ -233,11 +233,11 @@ centerImage width = "75%" />
 
 ### Related Work
 
--   [rempsyc](https://rempsyc.remi-theriault.com/) I highly recommend
-    this now available package. It offers great utility for psychologist
-    and social scientist getting into R and provides nicely on-point
-    tutorials on how to implement the provided functions
-    ([one](https://remi-theriault.com/blog_table.html) of which was the
-    origin of `datscience::format_flextable()`)
+[rempsyc](https://rempsyc.remi-theriault.com/) I highly recommend this
+now available package. It offers great utility for psychologist and
+social scientist getting into R and provides nicely on-point tutorials
+on how to implement the provided functions
+([one](https://remi-theriault.com/blog_table.html) of which was the
+origin of `datscience::format_flextable()`)
 
 <!-- # Testing Packagedown -->

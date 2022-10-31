@@ -1,3 +1,6 @@
+## Development Goals
+  
+
 ### Patch to work with R 4.2.2
 - Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)
   * undo all changes made to the .yaml the hot fix of `r-version: '4.2.1'`
@@ -9,8 +12,6 @@
 - Update the R Version (mb with `installr::updateR()`)
 - Manually ensure all packages are up to date
 
-### Goals for Future Developments (to do)
-- Add todos to navbar on pkgdown (edit yaml)
 
 ### Goals for Version 3.0
 - Add linter to CI (GH Actions)
