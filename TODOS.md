@@ -14,6 +14,11 @@
   `datscience` package)
 - Beautify / clarify the vignette for bootstrapping confidence
   intervals for observed Eigenvalues in parallel analysis
+- Exchange all magrittr pipes %>% to the new native R pipe |> 
+  * Excluded the dependency (DESCRIPTION) of magrittr
+- Reduces number of dependencies
+  * is `methods` an necessary import for the  `is()` function
+  * maybe `tibble` find a replacement for `rownames_to_column`and `as_tibble`
 
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
