@@ -19,10 +19,18 @@
 - Reduces number of dependencies
   * is `methods` an necessary import for the  `is()` function
   * maybe `tibble` find a replacement for `rownames_to_column`and `as_tibble`
-
+- Increase the overall number of unit tests
+  
+#### Changes to `flex_table1()`
+- Develop unit test for string not starting with a tilde `~`
+- Provide alternative methods of feeding the function the desires variables
+- Include auto conversion, if `attributes(df$var)` class is of `"haven_labelled"`
+  * E.g., with `"haven_labelled" %in% class(df$var)` 
+  * Release a hotfix for colum test stat now showing a Sample Size insertion  
+  <center>![ ](inst/TODOS_insertimage_2.png)</center>
+  
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
-
 ## Archive 
 
 ### Patch to work with R 4.2.2
