@@ -1,6 +1,6 @@
 ## Development Goals
+   
   
-
 ### Patch to work with R 4.2.2
 - Update the R Version (mb with `installr::updateR()`)
 - Manually ensure all packages are up to date
@@ -22,7 +22,6 @@
 - Increase the overall number of unit tests
   
 #### Changes to `flex_table1()`
-- Develop unit test for string not starting with a tilde `~`
 - Provide alternative methods of feeding the function the desires variables
 - Include auto conversion, if `attributes(df$var)` class is of `"haven_labelled"`
   * E.g., with `"haven_labelled" %in% class(df$var)` 
@@ -31,13 +30,17 @@
   
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
+
 ## Archive 
 
 ### Patch to work with R 4.2.2
 - ~~Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)~~
-  * ~~undo all changes made to the .yaml the hot fix of `r-version: '4.2.1'`
+  * ~~undo all changes made to the .yaml the hot fix of `r-version: '4.2.1'`~~
     * ~~check-standard.yaml~~
     * ~~pkgdown.yaml~~
     * ~~render-markdown.yaml~~
     * ~~style.yaml~~
     * ~~test-coverage.yaml~~
+
+#### Changes to `flex_table1()`
+- ~~Develop unit test for string not starting with a tilde `~`~~ -> added in 2.6
