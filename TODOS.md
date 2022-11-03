@@ -25,13 +25,14 @@
 - Provide alternative methods of feeding the function the desires variables
 - Include auto conversion, if `attributes(df$var)` class is of `"haven_labelled"`
   * E.g., with `"haven_labelled" %in% class(df$var)` 
-  * Release a hotfix for colum test stat now showing a Sample Size insertion  
-  <center>![ ](inst/TODOS_insertimage_2.png)</center>
+  
   
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
 
 ## Archive 
+
+See also the release notes
 
 ### Patch to work with R 4.2.2
 - ~~Currently GH actions fail see [issue #665](https://github.com/r-lib/actions/issues/655)~~
@@ -44,3 +45,4 @@
 
 #### Changes to `flex_table1()`
 - ~~Develop unit test for string not starting with a tilde `~`~~ -> added in 2.6
+- ~~Release a hotfix for colum test stat now showing a Sample Size insertion~~
