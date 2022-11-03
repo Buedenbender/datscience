@@ -31,7 +31,6 @@
   
 ### Package Collaboration
 - Experiment with Merging PR from a forked version of this repo
-
 ## Archive 
 
 ### Patch to work with R 4.2.2
