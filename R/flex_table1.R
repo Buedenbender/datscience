@@ -180,10 +180,27 @@ flex_table1 <- function(str_formula,
                         overall = FALSE,
                         ...) {
 
+  # Check availability of mandatory arguments -------------------------------
+  if(missing(str_formula)) stop("Error: str_formula needs to be specified")
+  if(missing(data)) stop("Error: data needs to be specified")
 
-  # 1) Prepare Formula String -----------------------------------------------
+  # Prepare Formula String -----------------------------------------------
   # Remove line breaks
-  str_formula <- sub("\\\n", "", str_formula)
+  str_formula <- gsub("\\\n", "", str_formula)
+  # Remove spaces
+  str_formula <- gsub(" ", "", str_formula)
+
+  # Unit Test: determine if starts with a tilde
+  if (!startsWith(str_formula, "~")) {
+    warning("The argument str_formula does not start with a \"~\"
+             Prepending is adviced")
+    str_formula <- paste0("~",str_formula)
+  }
+
+  # Determine if a grouping variable is present
+  if (!grepl("\\|",str_formula)) {
+    stop("The str_formula needs to specify a grouping variable by adding \"|var\"")
+  }
 
   # Determine the number of Comparisons: Necessary for Correction of the p-value
   #   - Use the number of Terms in the formula
@@ -208,7 +225,7 @@ flex_table1 <- function(str_formula,
   # Index variable to format test stat col correct
   # As this depends on whether the overall col is present or not
   overall_counter <- 0
-  if (!is.na(overall) & !is.null(overall)) overall_counter <- 1
+  if (!is.na(overall) & !is.null(overall) & is.character(overall)) overall_counter <- 1
 
   # 3) Helper Functions for the table1+ ----------------------------------------
   # https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html
@@ -256,7 +273,6 @@ flex_table1 <- function(str_formula,
 
       # Or if one expected cell count is below 5a fishers exact test
       if (any(tmp$expected < 1)) {
-
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(
           {
@@ -338,7 +354,6 @@ flex_table1 <- function(str_formula,
 
       # Or if one expected cell count is below 1 a fishers exact test
       if (any(tmp$expected < 1)) {
-
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(
           {
@@ -402,7 +417,6 @@ flex_table1 <- function(str_formula,
 
       # Or if one expected cell count is below 1 a fishers exact test
       if (any(tmp$expected < 1)) {
-
         # Try to run a Fisher test w default workspace for comupting time advantage
         result <- tryCatch(
           {
@@ -550,7 +564,6 @@ flex_table1 <- function(str_formula,
   df <- as.data.frame(tbl1)
 
   if (ref_correction) {
-
     # When Fishers Test was applied add note
     if (any(grepl("\u0363", df$p))) {
       ft <- ft %>%

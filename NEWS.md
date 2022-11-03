@@ -1,3 +1,12 @@
+# datscience 0.2.6
+
+* Improved landing page
+* Added the todos section to GH Pages (navbar)
+* Changes to `flex_table1()`
+  - Hot-Fix for trouble when overall colum is included (messed up headers)
+  - Improved overall parsing of the str_formula argument
+  - Included additional unit tests and warnings / errors for argument
+
 # datscience 0.2.5
 
 * softfork for `flex_table1()` having the opportunity to showcase an overall column

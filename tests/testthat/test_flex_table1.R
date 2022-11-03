@@ -14,8 +14,6 @@ bivariate_nocorrection <- flex_table1(biv_str_formula, data = biv_data,
 bivariate_corrected <- flex_table1(biv_str_formula, data = biv_data,
                          table_caption = biv_table_caption,correct = "sida")
 
-
-
 # Creating Multivariate  Groups (ANOVA)
 mult_str_formula <- "~ Sepal.Length + Sepal.Width + Gender_example | Species"
 mult_data <- dplyr::filter(iris, Species %in% c("setosa", "versicolor"))
@@ -27,6 +25,7 @@ multiple_comp <- flex_table1(mult_str_formula, data = mult_data,
 multiple_comp_corrected <- flex_table1(mult_str_formula, data = mult_data,
                              table_caption = mult_table_caption,
                              correct = "bonf")
+
 
 
 
@@ -48,3 +47,11 @@ test_that("flex_table1 does not correct if F is passed", {
                              multiple_comp_corrected$footer)), TRUE)
 })
 
+test_that("flex_table1 warns or stops when formula is not specified correctly",{
+  expect_warning(flex_table1(gsub("~","",biv_str_formula),
+                             data = biv_data,
+  ))
+  expect_error(flex_table1(gsub("\\|","",biv_str_formula),
+                             data = biv_data,
+  ))
+})

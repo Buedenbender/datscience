@@ -1,7 +1,7 @@
 Type: Package
 Package: datscience
 Title: Data and Science Utility Functions
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: c(
     person("Bjoern", "Buedenbender", , "b_buedenbender@yahoo.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1909-1224")))
