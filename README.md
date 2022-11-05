@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/Buedenbender/datscience/branch/main/graph/badge.
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--10--31-yellowgreen.svg)](commits/main)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.2.5-orange.svg?style=flat-square)](commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--11--05-yellowgreen.svg)](commits/main)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.2.6-orange.svg?style=flat-square)](commits/main)
 
 </center>
 <!-- badges: end -->
@@ -95,7 +95,7 @@ variables *Sepal.Length*, *Sepal.Width* as well as the simulated *Color*
 # To load datscience
 pacman::p_load_gh("Buedenbender/datscience")
 str_formula <- "~ Sepal.Length + Sepal.Width + Color | Species"
-flex_table1(str_formula, data = iris_sim, overall = "Overall") # %>%
+flex_table1(str_formula, data = iris_sim, overall = "Overall") # |>
 ```
 
 ``` r
@@ -107,7 +107,7 @@ flex_table1(str_formula, data = iris_sim, overall = "Overall") # %>%
 centerImage width = "80%" />
 </center>
 
-Uncomment the pipe `%>%` operator above and the line after the call to
+Uncomment the pipe `|>` operator above and the line after the call to
 `flex_table1()` to diretly save this nicely formatted tabular comparison
 as .docs (Word) document.
 
@@ -198,22 +198,21 @@ PCA**<sup>\[[1](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/
 # Creation of an Example Prinicipal Component Analysis
 pacman::p_load(psych, dplyr)
 pc <- principal(Harman74.cor$cov, 4, rotate = "varimax")
-pc_loadings <- pc %>%
-  fa.sort() %>%
-  .[["loadings"]] %>%
-  round(3) %>%
-  unclass() %>%
-  as.data.frame() %>%
+pc_loadings <- pc$loadings |>
+  fa.sort() |>
+  round(3) |>
+  unclass() |>
+  as.data.frame() |>
   mutate(across(
     everything(),
     ~ if_else((. < 0.3), "", as.character(.))
-  )) %>%
+  )) |>
   bind_cols(
     Communality = pc$communality,
     Uniqueness = pc$uniquenesses,
     Complexity = pc$complexity
-  ) %>%
-  mutate(across(where(is.numeric), round, 2)) %>%
+  ) |>
+  mutate(across(where(is.numeric), round, 2)) |>
   tibble::rownames_to_column("items")
 ```
 

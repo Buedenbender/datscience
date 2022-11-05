@@ -112,13 +112,13 @@ iris_sim$Color <- factor(sample(c(rep("Orange", 30), rep("Blue", 120))))
 # To load datscience
 pacman::p_load_gh("Buedenbender/datscience")
 str_formula <- "~ Sepal.Length + Sepal.Width + Color | Species"
-flex_table1(str_formula, data = iris_sim, overall = "Overall") # %>%
+flex_table1(str_formula, data = iris_sim, overall = "Overall") # |>
 # save_flextable("Table1.docx")
 ```
 <center><img src = "man/figures/flex_table1.png" 
 centerImage width = "80%" /> </center>
 
-Uncomment the pipe ` %>% ` operator above and the line after the call to `flex_table1()`
+Uncomment the pipe ` |> ` operator above and the line after the call to `flex_table1()`
 to diretly save this nicely formatted tabular comparison as .docs (Word) document.
 
 
@@ -188,22 +188,21 @@ from a principal component analysis (PCA, `psych::prinicial`)
 # Creation of an Example Prinicipal Component Analysis
 pacman::p_load(psych, dplyr)
 pc <- principal(Harman74.cor$cov, 4, rotate = "varimax")
-pc_loadings <- pc %>%
-  fa.sort() %>%
-  .[["loadings"]] %>%
-  round(3) %>%
-  unclass() %>%
-  as.data.frame() %>%
+pc_loadings <- pc$loadings |>
+  fa.sort() |>
+  round(3) |>
+  unclass() |> 
+  as.data.frame() |>
   mutate(across(
     everything(),
     ~ if_else((. < 0.3), "", as.character(.))
-  )) %>%
+  )) |>
   bind_cols(
     Communality = pc$communality,
     Uniqueness = pc$uniquenesses,
     Complexity = pc$complexity
-  ) %>%
-  mutate(across(where(is.numeric), round, 2)) %>%
+  ) |>
+  mutate(across(where(is.numeric), round, 2)) |>
   tibble::rownames_to_column("items")
 ```
 

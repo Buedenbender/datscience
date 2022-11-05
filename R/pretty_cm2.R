@@ -175,11 +175,11 @@ pretty_cm <- function(cm,
   labels <- names(cm_d)
 
   # extract the confusion matrix values as data.frame
-  cm_d <- cm_d %>%
+  cm_d <- cm_d |>
     # Create the proportion of the rowsum (in the diagonal it is sensitivity)
-    dplyr::group_by(.data[[labels[2]]]) %>%
-    dplyr::mutate(rowsum_ref = sum(.data[["Freq"]])) %>%
-    dplyr::ungroup() %>%
+    dplyr::group_by(.data[[labels[2]]]) |>
+    dplyr::mutate(rowsum_ref = sum(.data[["Freq"]])) |>
+    dplyr::ungroup() |>
     dplyr::mutate(
       Prop = round(.data[["Freq"]] / .data$rowsum_ref * 100, tile_nod),
       Prop_t = paste0(.data[["Prop"]], "%")

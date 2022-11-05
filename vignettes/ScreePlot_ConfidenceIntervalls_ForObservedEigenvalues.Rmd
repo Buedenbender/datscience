@@ -75,8 +75,8 @@ Below you can get first insights into the data.frame. For the overview we used t
 set.seed(42) # necessary for reproducible results
 data(bfi)
 # Select only agreeableness and extraversion and sample participants
-df <- bfi %>%  
-    select(matches("^(E\\d|A\\d)")) %>% 
+df <- bfi |>  
+    select(matches("^(E\\d|A\\d)")) |> 
   # Regex run down 
   #   ^ : starts with
   #   (|) : Logical or
@@ -87,10 +87,10 @@ df <- bfi %>%
 dim(df)
 str(df)
 class(df)
-df %>%
-  head(5) %>%
-  flextable() %>%
-  datscience::format_flextable(.,table_caption = c("Table 1", 
+df |>
+  head(5) |>
+  flextable() |>
+  datscience::format_flextable(table_caption = c("Table 1", 
                                                  "Glimpse at the First 5 Rows of Shortened bfi Data"))
 ```
 

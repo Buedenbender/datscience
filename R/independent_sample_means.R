@@ -117,11 +117,11 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
   # Adapted from Datanovia
   # https://www.datanovia.com/en/lessons/t-test-assumptions/independent-t-test-assumptions/
   # Prep of Data
-  df <- data %>%
-    dplyr::tibble() %>%
-    dplyr::mutate(dplyr::across(all_of(iv), ~ forcats::fct_drop(forcats::as_factor(.)))) %>%
-    dplyr::mutate(dplyr::across(all_of(dv), ~ as.numeric(as.character(.)))) %>%
-    dplyr::select(all_of(c(iv, dv))) %>%
+  df <- data |>
+    dplyr::tibble() |>
+    dplyr::mutate(dplyr::across(all_of(iv), ~ forcats::fct_drop(forcats::as_factor(.)))) |>
+    dplyr::mutate(dplyr::across(all_of(dv), ~ as.numeric(as.character(.)))) |>
+    dplyr::select(all_of(c(iv, dv))) |>
     stats::na.omit()
 
   # Construction formula object
@@ -141,8 +141,8 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
   # 1) EXTREME VALUES
   if (verbose) print("1) Checking for extreme values")
 
-  outlier <- df %>%
-    dplyr::group_by((!!as.symbol(iv))) %>%
+  outlier <- df |>
+    dplyr::group_by((!!as.symbol(iv))) |>
     rstatix::identify_outliers((!!as.symbol(dv)))
 
   bxp <- ggpubr::ggboxplot(
@@ -159,8 +159,8 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
   if (stepwise) trash <- readline("2) Continue with Descriptives?")
 
   # 2) DESCRIPTIVES
-  sum_stats <- df %>%
-    dplyr::group_by((!!as.symbol(iv))) %>%
+  sum_stats <- df |>
+    dplyr::group_by((!!as.symbol(iv))) |>
     rstatix::get_summary_stats(type = "mean_sd")
 
 
@@ -168,8 +168,8 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
   if (stepwise) trash <- readline("3) Continue with Normality Check?")
 
   # 3) NORMALITY
-  sw_test <- df %>%
-    dplyr::group_by((!!as.symbol(iv))) %>%
+  sw_test <- df |>
+    dplyr::group_by((!!as.symbol(iv))) |>
     rstatix::shapiro_test((!!as.symbol(dv)))
 
   qqplot <- ggpubr::ggqqplot(df, x = dv, facet.by = iv)
@@ -188,11 +188,11 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
 
   # 5) HYPOTHESIS TEST
   if (k == 2) { # T-Test / Welch in Case of 2 Groups
-    stat.test <- df %>%
+    stat.test <- df |>
       rstatix::t_test(f,
         var.equal = (levene_test$p > .05),
         alternative = alternative, ...
-      ) %>%
+      ) |>
       rstatix::add_significance()
 
     # EFFECTSIZE
@@ -200,7 +200,7 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
 
 
     # FINAL PLOT
-    stat.test <- stat.test %>% rstatix::add_xy_position(x = iv)
+    stat.test <- stat.test |> rstatix::add_xy_position(x = iv)
     bxp_final <- bxp +
       ggpubr::stat_pvalue_manual(stat.test, tip.length = 0) +
       labs(subtitle = rstatix::get_test_label(stat.test, detailed = TRUE))
@@ -219,7 +219,7 @@ independent_sample_means <- function(data, dv, iv, alternative = c("two.sided", 
     pwc <- rstatix::tukey_hsd(df, f)
 
     # Visualization: box plots with p-values
-    pwc <- pwc %>% rstatix::add_xy_position(x = iv)
+    pwc <- pwc |> rstatix::add_xy_position(x = iv)
     bxp_final <- bxp +
       ggpubr::stat_pvalue_manual(pwc, hide.ns = TRUE) +
       ggplot2::labs(
