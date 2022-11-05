@@ -34,7 +34,6 @@ utils::globalVariables(".")
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyselect all_of
 #' @importFrom ggpubr theme_pubr
-#' @importFrom magrittr "%>%"
 boxplot_t_test <-
   function(df,
            dependentvars,
@@ -48,12 +47,12 @@ boxplot_t_test <-
     if (!is.character(adjust_p)) stop("Invalid argument type, adjust_p is required to be a character or a vector of characters containing the names of the respective columns")
 
     variables <- NULL
-    df_s <- df %>%
-      dplyr::select(tidyselect::all_of(dependentvars), tidyselect::all_of(group)) %>%
+    df_s <- df |>
+      dplyr::select(tidyselect::all_of(dependentvars), tidyselect::all_of(group)) |>
       dplyr::as_tibble()
 
     # Pivot Table
-    df_p <- df_s %>%
+    df_p <- df_s |>
       tidyr::pivot_longer(-tidyselect::all_of(group),
         names_to = "variables", values_to = "value"
       )
@@ -63,10 +62,10 @@ boxplot_t_test <-
 
     for (g in group) {
       # Calc T Test
-      stat.test <- df_p %>%
-        dplyr::group_by(`variables`) %>%
-        rstatix::t_test(stats::as.formula(paste("value ~", g))) %>%
-        rstatix::adjust_pvalue(method = adjust_p) %>%
+      stat.test <- df_p |>
+        dplyr::group_by(`variables`) |>
+        rstatix::t_test(stats::as.formula(paste("value ~", g))) |>
+        rstatix::adjust_pvalue(method = adjust_p) |>
         rstatix::add_significance()
       # stat.test
 
@@ -84,7 +83,7 @@ boxplot_t_test <-
         # ylim(ylimits)+
         ggplot2::facet_wrap(~variables)
 
-      stat.test <- stat.test %>% rstatix::add_xy_position(x = g)
+      stat.test <- stat.test |> rstatix::add_xy_position(x = g)
       p1 <-
         p1 + ggpubr::stat_pvalue_manual(stat.test, label = "p.adj.signif")
 

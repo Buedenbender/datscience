@@ -108,19 +108,19 @@ descriptives = c("min", "mean", "max"),
   extract_resample_metrics <- function(Algorithm, resamples,
                                        descriptives,
                                        metrics) {
-    extracted_values <- resamples %>%
-      psych::describe() %>%
-      as.data.frame() %>%
-      tibble::rownames_to_column(var = "Measure") %>%
-      dplyr::select(Measure, dplyr::all_of(descriptives)) %>%
-      dplyr::filter(Measure %in% metrics) %>%
-      tibble::as_tibble() %>%
-      tidyr::gather(key = Tune, value = value, 2:ncol(.)) %>%
-      tidyr::spread(key = names(.)[1], value = "value") %>%
+    extracted_values <-      resamples |>
+      psych::describe() |>
+      as.data.frame() |>
+      tibble::rownames_to_column(var = "Measure") |>
+      dplyr::select(Measure, dplyr::all_of(descriptives)) |>
+      dplyr::filter(Measure %in% metrics) |>
+      tibble::as_tibble() |>
+      tidyr::gather(key = "Tune", value = value, 2:(1+length(descriptives))) |>
+      tidyr::spread(key = "Measure", value = "value") |>
       dplyr::arrange(dplyr::desc(Tune))
 
     extracted_values$Algorithm <- Algorithm
-    extracted_values <- extracted_values %>%
+    extracted_values <- extracted_values |>
       dplyr::relocate(Algorithm)
 
     return(extracted_values)
@@ -138,9 +138,9 @@ descriptives = c("min", "mean", "max"),
   if ("Mean_Sensitivity" %in% names(res)) res <- rename(res, "Mean Sens." = "Mean_Sensitivity")
   if ("Mean_Specificity" %in% names(res)) res <- rename(res, "Mean Spec." = "Mean_Specificity")
 
-  ft <- flextable::flextable(res) %>%
-    flextable::merge_v("Algorithm") %>%
-    format_flextable(ft = ., ...)
+  ft <- flextable::flextable(res) |>
+    flextable::merge_v("Algorithm") |>
+    format_flextable( ...)
 
   return(ft)
 }

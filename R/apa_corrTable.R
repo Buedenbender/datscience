@@ -76,7 +76,6 @@ utils::globalVariables(".")
 #' apa_corrTable(mtcars, table_caption = c("Table 2", "Correlations in the mtcars Data Set"))
 #' @export
 #' @importFrom stats na.omit
-#' @importFrom magrittr "%>%"
 #' @importFrom dplyr select summarise across everything
 #' @importFrom stringr str_to_title
 #' @importFrom psych describe
@@ -95,7 +94,7 @@ apa_corrTable <- function(df,
                           overwrite = FALSE,
                           ...) {
   # Exclude non-numeric cols
-  df <- df %>% dplyr::select(where(is.numeric))
+  df <- df |>  dplyr::select(where(is.numeric))
 
   # TODO: Add problematic correlations (as summarystat?, ferketisch)
 
@@ -135,7 +134,7 @@ apa_corrTable <- function(df,
     if (any(stat %in% psych_sumstats)) {
       correlations[stringr::str_to_title(stat), ] <- round(psych::describe(df)[[stat]], nod_sum)
     } else if (stat == "missing" || stat == "missings") {
-      correlations[stringr::str_to_title(stat), ] <- df %>%
+      correlations[stringr::str_to_title(stat), ] <- df |>
         dplyr::summarise(dplyr::across(
           dplyr::everything(),
           ~ sum(is.na(.))
@@ -144,7 +143,7 @@ apa_corrTable <- function(df,
   }
 
   ### Flextable
-  flextable::flextable(correlations %>%
+  flextable::flextable(correlations |>
     tibble::rownames_to_column(" ")) -> corr_table
 
   # Formatting of the table by datscience::format_flextable(), inspired by Remi Theriault

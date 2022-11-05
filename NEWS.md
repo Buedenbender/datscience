@@ -1,3 +1,10 @@
+# datscience 0.3.0
+
+* Set the minimum required R version to `4.1`.
+  - Package now uses `|>` "new" R native pipe over the magrittr pipe `%>%`
+  - Accordingly exchanged all pipe operators
+  - Removed dependency of `magrittr`
+
 # datscience 0.2.6
 
 * Improved landing page

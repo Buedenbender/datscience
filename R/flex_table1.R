@@ -212,7 +212,7 @@ flex_table1 <- function(str_formula,
 
   # Drop unused / empty categorie
   if (missing(drop_unused_cats) | drop_unused_cats) {
-    data <- data %>%
+    data <- data |>
       dplyr::mutate(dplyr::across(where(is.factor), ~ forcats::fct_drop(.)))
   }
 
@@ -515,19 +515,19 @@ flex_table1 <- function(str_formula,
   }
   # t / \u03C7\u00B2
 
-  ft <- table1::t1flex(tbl1) %>%
+  ft <- table1::t1flex(tbl1) |>
     datscience::format_flextable(
       table_note = note,
       table_caption = table_caption,
       ...
-    ) %>%
-    flextable::bold(., part = "body", j = 1, bold = FALSE) %>%
-    flextable::bold(.,
+    ) |>
+    flextable::bold(part = "body", j = 1, bold = FALSE) |>
+    flextable::bold(
       i = ~ number_parse(p) < 0.05,
       j = ~Characteristic,
       bold = TRUE
-    ) %>%
-    flextable::compose(.,
+    ) |>
+    flextable::compose(
       part = "body",
       j = ~Characteristic,
       i = ~ number_parse(as.character(p)) < 0.05,
@@ -538,26 +538,26 @@ flex_table1 <- function(str_formula,
           ifelse(number_parse(p) < 0.01, " **", " *")
         ))
       )
-    ) %>%
-    flextable::align(.,
+    ) |>
+    flextable::align(
       i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
       part = "header", align = "center"
-    ) %>%
-    flextable::italic(., j = ~p, part = "header")
+    ) |>
+    flextable::italic( j = ~p, part = "header")
 
   # When Teststatistic included in the table
   if (include_teststat) {
     if (n_grps == 2) header_teststat <- "t / \u03C7\u00B2" else header_teststat <- "F / \u03C7\u00B2"
-    ft <- ft %>%
+    ft <- ft |>
       # Correct heading for the teststatistic
-      flextable::compose(.,
+      flextable::compose(
         part = "header",
         j = (n_grps + 2 + overall_counter),
         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
         value = flextable::as_paragraph(header_teststat)
-      ) %>%
+      ) |>
       # Make Degrees of Freedom italic
-      flextable::italic(., j = ~df, part = "header")
+      flextable::italic(j = ~df, part = "header")
   }
 
   # convert table 1 to data.frame for manual adjustments of the table
@@ -566,16 +566,16 @@ flex_table1 <- function(str_formula,
   if (ref_correction) {
     # When Fishers Test was applied add note
     if (any(grepl("\u0363", df$p))) {
-      ft <- ft %>%
-        flextable::add_footer_lines(.,
+      ft <- ft |>
+        flextable::add_footer_lines(
           values = "\u0363 Fisher's exact test, expected cell-count \u2264 1."
         )
     }
 
     # When Welchs COrrection was applied
     if (any(grepl("\u1D47", df$p))) {
-      ft <- ft %>%
-        flextable::add_footer_lines(.,
+      ft <- ft |>
+        flextable::add_footer_lines(
           value = "\u1D47 Welch's correction for heterogeneity of variances.",
         )
     }
@@ -583,7 +583,7 @@ flex_table1 <- function(str_formula,
 
   # Set the N in column header to italic
   #   - get all column names
-  names <- df %>% names()
+  names <- df |> names()
   #   - iterate over all groups
   for (j in c(2:(n_grps + 1 + overall_counter))) {
     # Extract Name an N for the respective group
@@ -591,8 +591,8 @@ flex_table1 <- function(str_formula,
     n <- number_parse(df[1, j])
 
     # Replace Header with cursive N
-    ft <- ft %>%
-      flextable::compose(.,
+    ft <- ft |>
+      flextable::compose(
         i = if (anyNA(table_caption)) 1 else (length(table_caption) + 1),
         j = j,
         part = "header",
