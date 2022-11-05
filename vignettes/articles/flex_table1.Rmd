@@ -61,15 +61,15 @@ library(flextable)
 path <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00451/dataR2.csv"
 breast_cancer <- read.csv(path)
 
-breast_cancer_modified <- breast_cancer %>%
+breast_cancer_modified <- breast_cancer |>
   mutate(Diagnosis = factor(Classification,
     labels = c("Healthy Controls", "Breast Cancer Patients")
-  )) %>%
-  select(-Classification) %>%
+  )) |>
+  select(-Classification) |>
   mutate(random_Smoking = sample(c("Smoker", "Non-Smoker", "Occasionally"),
     size = nrow(breast_cancer),
     replace = TRUE, prob = c(0.49, 0.49, 0.02)
-  )) %>%
+  )) |>
   # Convert the Randomly Generated Variable into a Factor
   mutate(random_Smoking = factor(random_Smoking))
 
@@ -84,7 +84,7 @@ ft <- flex_table1(
   # )
 )
 
-ft %>%
+ft |>
   set_table_properties(layout = "autofit", width = 1)
 ```
 
@@ -170,19 +170,19 @@ Additionally we will generate a new fictional variable called `random_Smoking` w
 
 ```{r eval=FALSE}
 # Modify the Data
-breast_cancer_modified <- breast_cancer %>%
+breast_cancer_modified <- breast_cancer |>
   # Create a Factor Variable from Classification Column
   # And add Labels to the Factor Levels
   mutate(Diagnosis = factor(Classification,
     labels = c("Healthy Controls", "Breast Cancer Patients")
-  )) %>%
+  )) |>
   # Remove the old Variable
-  select(-Classification) %>%
+  select(-Classification) |>
   # Generate a New Fictional Categorical Variable: random_Smoking
   mutate(random_Smoking = sample(c("Smoker", "Non-Smoker", "Occasionally"),
     size = nrow(breast_cancer),
     replace = TRUE, prob = c(0.49, 0.49, 0.02)
-  )) %>%
+  )) |>
   # Convert the Randomly Generated Variable into a Factor
   mutate(random_Smoking = factor(random_Smoking))
 
@@ -200,10 +200,10 @@ useful function of this (`datscience`) package the `format_flextable()`
 ```{r}
 # determine how many number of decimal places by convention
 nod <- get_number_of_decimals(nrow(breast_cancer_modified))
-head(breast_cancer_modified) %>% 
+head(breast_cancer_modified) |> 
   # round numeric columns
-  mutate(across(where(is.numeric), ~ round(.x,nod))) %>% 
-  flextable() %>% 
+  mutate(across(where(is.numeric), ~ round(.x,nod))) |> 
+  flextable() |> 
   format_flextable(table_caption = c("Table 2","First Cases (N = 5) of the Cancer Patients Data Set"))
 
 
@@ -219,18 +219,18 @@ conveniently saved to word with `datscience::save_flextable()`
 **Descriptive Statistics and Distribution**
 
 ```{r}
-breast_cancer_modified %>% 
+breast_cancer_modified |> 
   # remove categorical variables
-  select(where(is.numeric)) %>% 
+  select(where(is.numeric)) |> 
   # get descriptives of metric variables
-    psych::describe() %>%
-    as.data.frame() %>% 
-    round(nod) %>% 
+    psych::describe() |>
+    as.data.frame() |> 
+    round(nod) |> 
   # add rownmaes (name of variable) as a separate columns
-    tibble::rownames_to_column(., var = "Variable") %>% 
-    select(-vars) %>% 
+    tibble::rownames_to_column(var = "Variable") |> 
+    select(-vars) |> 
   # generate flextable
-    flextable() %>% 
+    flextable() |> 
   # format flextable
     format_flextable(table_caption = c("Table 3","Complete Sample - Numeric Variables: Distribution and Descriptive Stat."))
 ```
@@ -264,7 +264,7 @@ flex_table1(
     "Sample Characteristics, Comparison of Healthy Controls and Cancer Patients."
   ),
   ref_correction = TRUE
-)%>%
+)|>
   # Only For markdown we additionally need to fix the autofit property, this step is not
   # needed when directly saved to word e.g. with datscience::save_flextable()
   set_table_properties(layout = "autofit", width = 1)

@@ -57,7 +57,6 @@ utils::globalVariables(".")
 #' datscience::apa_factorLoadings(psych::fa(mtcars, nfactors = 2))
 #' @export
 #'
-#' @importFrom magrittr "%>%"
 #' @importFrom psych fa.sort
 #' @importFrom dplyr mutate across everything if_else bind_cols
 #' @importFrom tibble rownames_to_column
@@ -102,24 +101,23 @@ apa_factorLoadings <- function(fa_object, filepath = NA,
   # Create Table / Extract Factor Loadings
   # pc_loadings <-
   if (orderbyloading) {
-    fa_object <- fa_object %>%
+    fa_object <- fa_object |>
       psych::fa.sort()
   }
-  pc_loadings <- fa_object %>%
-    .[["loadings"]] %>%
-    round(nod_loadings) %>%
-    unclass() %>%
-    as.data.frame() %>%
+  pc_loadings <- fa_object$loadings |>
+    round(nod_loadings) |>
+    unclass() |>
+    as.data.frame() |>
     dplyr::mutate(dplyr::across(
       dplyr::everything(),
       ~ dplyr::if_else((. < cutoff), "", as.character(.))
-    )) %>%
+    )) |>
     dplyr::bind_cols(
       Communality = fa_object$communality,
       Uniqueness = fa_object$uniquenesses,
       Complexity = fa_object$complexity
-    ) %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), round, nod_additional)) %>%
+    ) |>
+    dplyr::mutate(dplyr::across(where(is.numeric), round, nod_additional)) |>
     tibble::rownames_to_column("Item")
 
   # Create APA Flextable

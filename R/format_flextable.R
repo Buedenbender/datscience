@@ -42,7 +42,6 @@ utils::globalVariables(".")
 #' @author Bjoern Buedenbender / Remi Theriault
 #'
 #' @export
-#' @importFrom magrittr "%>%"
 #' @import flextable
 #' @seealso
 #' \code{\link[flextable]{flextable}}
@@ -65,38 +64,38 @@ format_flextable <- function(ft, font = "Times New Roman", fontsize = 12,
   }
 
   # Create Flextable
-  formatted_ft <- ft %>%
-    flextable::theme_booktabs() %>%
-    flextable::hline_top(., part = "head", border = apa.border) %>%
-    flextable::hline_bottom(., part = "head", border = apa.border) %>%
-    flextable::hline_top(., part = "body", border = apa.border) %>%
-    flextable::hline_bottom(., part = "body", border = apa.border) %>%
-    flextable::align(., align = "center", part = "head") %>%
-    flextable::height(., height = 0.55, part = "body") %>%
-    # hrule(rule = "exact", part = "all") %>%
-    flextable::height(., height = 0.55, part = "head") %>%
-    flextable::set_table_properties(., layout = "autofit")
+  formatted_ft <- ft |>
+    flextable::theme_booktabs() |>
+    flextable::hline_top(part = "head", border = apa.border) |>
+    flextable::hline_bottom(part = "head", border = apa.border) |>
+    flextable::hline_top(part = "body", border = apa.border) |>
+    flextable::hline_bottom(part = "body", border = apa.border) |>
+    flextable::align(align = "center", part = "head") |>
+    flextable::height(height = 0.55, part = "body") |>
+    # hrule(rule = "exact", part = "all") |>
+    flextable::height(height = 0.55, part = "head") |>
+    flextable::set_table_properties(layout = "autofit")
   # If provided, add table caption
   if (is(table_caption, "character")) {
-    formatted_ft <- formatted_ft %>%
-      flextable::add_header_lines(., values = rev(table_caption)) %>%
-      flextable::bold(., part = "header", i = 1) %>%
-      flextable::italic(., part = "header", i = c(2:length(table_caption))) %>%
-      flextable::align(., part = "header", i = c(1:length(table_caption)), align = "left") %>%
-      flextable::border(., part = "head", i = c(1:length(table_caption)), border = invis.borders)
+    formatted_ft <- formatted_ft |>
+      flextable::add_header_lines(values = rev(table_caption)) |>
+      flextable::bold(part = "header", i = 1) |>
+      flextable::italic(part = "header", i = c(2:length(table_caption))) |>
+      flextable::align(part = "header", i = c(1:length(table_caption)), align = "left") |>
+      flextable::border(part = "head", i = c(1:length(table_caption)), border = invis.borders)
   }
 
   # If provided, add table note
   if (!anyNA(table_note)) {
-    formatted_ft <- formatted_ft %>%
-      flextable::add_footer_lines(., values = "") %>%
-      flextable::compose(., i = 1, j = 1, value = as_paragraph(as_i("Note. "), table_note), part = "footer")
+    formatted_ft <- formatted_ft |>
+      flextable::add_footer_lines(values = "") |>
+      flextable::compose(i = 1, j = 1, value = as_paragraph(as_i("Note. "), table_note), part = "footer")
   }
 
-  formatted_ft <- formatted_ft %>%
-    flextable::fontsize(., part = "all", size = fontsize) %>%
-    flextable::font(., part = "all", fontname = font) %>%
-    flextable::line_spacing(., space = linespacing, part = "all")
+  formatted_ft <- formatted_ft |>
+    flextable::fontsize(part = "all", size = fontsize) |>
+    flextable::font(part = "all", fontname = font) |>
+    flextable::line_spacing(space = linespacing, part = "all")
 
 
   return(formatted_ft)

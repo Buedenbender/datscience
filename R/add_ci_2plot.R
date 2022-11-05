@@ -31,7 +31,6 @@ utils::globalVariables(".")
 #' @export
 #' @importFrom dplyr rename select mutate
 #' @importFrom ggplot2 geom_ribbon geom_errorbar aes
-#' @importFrom magrittr "%>%"
 #' @seealso \code{\link{booted_eigenvalues}}, \code{\link{getCIs}}
 add_ci_2plot <- function(plot,
                          CIs,
@@ -44,10 +43,10 @@ add_ci_2plot <- function(plot,
   # globalVariables(c("mpg", "hp", "mpg_div_hp"))
   method <- index <- observed <- lwr <- upr <- NULL
 
-  cis <- CIs %>%
-    filter(method == met) %>%
-    dplyr::rename(num = index) %>%
-    dplyr::select(-method) %>%
+  cis <- CIs |>
+    filter(method == met) |>
+    dplyr::rename(num = index) |>
+    dplyr::select(-method) |>
     dplyr::mutate(
       type = "Observed Data",
       eigenvalue = observed

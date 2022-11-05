@@ -53,7 +53,6 @@
 #' @importFrom xfun file_ext
 #' @importFrom dplyr add_row arrange
 #' @importFrom knitr write_bib
-#' @importFrom magrittr "%>%"
 #' @importFrom pacman p_loaded
 #' @importFrom flextable flextable
 #' @importFrom rlang .data
@@ -81,7 +80,7 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
   )
   # Iterate over loadead packages, and append information
   for (pkg in pacman::p_loaded()) {
-    appendix_packages <- appendix_packages %>% dplyr::add_row(
+    appendix_packages <- appendix_packages |>  dplyr::add_row(
       Packagename = pkg,
       Version = as.character(utils::packageVersion(pkg)),
       Maintainer = utils::maintainer(pkg),
@@ -120,7 +119,7 @@ Rcitation_appendix <- function(outdirectory = "Appendix",
 
   ### Create the Table
   # Check if APA 7th is desired & create it
-  raw_table <- flextable::flextable(appendix_packages %>%
+  raw_table <- flextable::flextable(appendix_packages |>
                                       dplyr::arrange(.data$Packagename))
   output_table <- format_flextable(
     ft = raw_table,
