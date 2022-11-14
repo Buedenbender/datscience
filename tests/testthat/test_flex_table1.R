@@ -55,9 +55,3 @@ test_that("flex_table1 warns or stops when formula is not specified correctly",{
                              data = biv_data,
   ))
 })
-
-# Testing PR
-fun.function <- function() {
-  print("This is a test!! :)")
-}
-fun.function()
